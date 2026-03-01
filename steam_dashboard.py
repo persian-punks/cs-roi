@@ -320,7 +320,7 @@ def generate_dashboard(data, price_data, input_file):
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Steam CS2 Dashboard</title>
+<title>remilio CS2 Dashboard</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3"></script>
 <style>
@@ -940,9 +940,15 @@ def main():
     html = generate_dashboard(data, price_data, input_file)
     with open(output_file, "w") as f:
         f.write(html)
+        f.close()
+
+    with open('docs/index.html', "w") as f:
+        f.write(html)
+        f.close()    
 
     size_kb = len(html) / 1024
     print(f"✅ Dashboard written to {output_file} ({size_kb:.0f} KB)")
+    print(f"✅ Dashboard written to docs/index.html ({size_kb:.0f} KB)")
 
 
 if __name__ == "__main__":
