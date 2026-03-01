@@ -2,6 +2,8 @@
 
 A toolkit for tracking the value and price history of your CS2 (Counter-Strike 2) Steam inventory. Scrapes inventory data, fetches market prices and lifetime price histories, and generates visual reports as Markdown, HTML, or an interactive dashboard.
 
+URL: `https://persian-punks.github.io/cs-roi/`
+
 ## Overview
 
 ```
