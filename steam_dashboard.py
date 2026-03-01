@@ -656,7 +656,7 @@ def generate_dashboard(data, price_data, input_file):
 
 <header>
   <div class="header-top">
-    <h1>🎮 Steam CS2 Dashboard</h1>
+    <h1>🎮 remilio CS2 Dashboard</h1>
     <span class="timestamp">Generated on {now}</span>
   </div>
   <nav class="tab-nav">
