@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Steam CS2 Inventory Report</title>
+<style>
+  :root {
+    --bg: #1b2838;
+    --card-bg: #1e2a3a;
+    --text: #c6d4df;
+    --accent: #66c0f4;
+    --accent-green: #a4d007;
+    --border: #2a475e;
+    --header-bg: #171a21;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+  }
+  header {
+    background: var(--header-bg);
+    padding: 28px 32px;
+    border-bottom: 2px solid var(--border);
+    text-align: center;
+  }
+  header h1 {
+    font-size: 2em;
+    color: #fff;
+    margin-bottom: 6px;
+  }
+  header p {
+    color: #8f98a0;
+    font-size: 0.9em;
+  }
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px;
+  }
+
+  /* ── Summary cards ── */
+  .summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .summary-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+  }
+  .summary-card .value {
+    font-size: 2em;
+    font-weight: bold;
+    color: #fff;
+  }
+  .summary-card .label {
+    color: #8f98a0;
+    font-size: 0.85em;
+    margin-top: 4px;
+  }
+  .accent-green { color: var(--accent-green); }
+
+  /* ── Leaderboard ── */
+  .leaderboard {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 32px;
+  }
+  .leaderboard h3 {
+    color: #fff;
+    margin-bottom: 12px;
+  }
+  .leaderboard-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .leaderboard-row:last-child { border-bottom: none; }
+  .medal { font-size: 1.4em; }
+  .lb-name { flex: 1; color: #fff; font-weight: 600; }
+  .lb-value { color: var(--accent-green); font-weight: bold; }
+  .lb-count { color: #8f98a0; font-size: 0.85em; }
+
+  /* ── Profile section ── */
+  .profile-section {
+    margin-bottom: 40px;
+  }
+  .profile-header {
+    background: var(--header-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  .profile-header h2 {
+    color: #fff;
+    font-size: 1.5em;
+    margin-bottom: 8px;
+  }
+  .profile-meta {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    color: #8f98a0;
+    font-size: 0.9em;
+  }
+  .profile-meta code {
+    background: rgba(0,0,0,0.3);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 0.9em;
+  }
+  .alert {
+    background: rgba(255,200,0,0.1);
+    border: 1px solid rgba(255,200,0,0.3);
+    border-radius: 6px;
+    padding: 12px 16px;
+    color: #ffd700;
+    font-style: italic;
+  }
+
+  /* ── Rarity breakdown ── */
+  .rarity-breakdown {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  .rarity-breakdown h3 {
+    color: #fff;
+    margin-bottom: 14px;
+  }
+  .rarity-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 6px 0;
+  }
+  .rarity-label {
+    min-width: 160px;
+    font-weight: 600;
+    font-size: 0.9em;
+  }
+  .rarity-bar-track {
+    flex: 1;
+    height: 8px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .rarity-bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.3s;
+  }
+  .rarity-stat {
+    min-width: 200px;
+    text-align: right;
+    font-size: 0.85em;
+    color: #8f98a0;
+  }
+
+  /* ── Category ── */
+  .category {
+    margin-bottom: 24px;
+  }
+  .category h3 {
+    color: #fff;
+    font-size: 1.2em;
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* ── Item cards ── */
+  .item-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+    gap: 16px;
+  }
+  .item-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    display: flex;
+    overflow: hidden;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .item-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent);
+  }
+  .item-image {
+    width: 160px;
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.2);
+    flex-shrink: 0;
+  }
+  .item-image img {
+    max-width: 140px;
+    max-height: 105px;
+    object-fit: contain;
+  }
+  .no-image {
+    color: #555;
+    font-size: 0.8em;
+  }
+  .item-details {
+    flex: 1;
+    padding: 14px 16px;
+  }
+  .item-name {
+    color: #fff;
+    font-size: 1em;
+    margin-bottom: 4px;
+  }
+  .rarity-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 0.72em;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+  .price-row {
+    margin-bottom: 8px;
+  }
+  .price-main {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: var(--accent-green);
+    margin-right: 8px;
+  }
+  .price-sub {
+    font-size: 0.8em;
+    color: #8f98a0;
+  }
+  .detail-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85em;
+    margin-bottom: 4px;
+    flex-wrap: wrap;
+  }
+  .detail-label {
+    color: #8f98a0;
+    min-width: 55px;
+  }
+  .detail-row code {
+    background: rgba(0,0,0,0.3);
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-size: 0.9em;
+  }
+
+  /* ── Wear bar ── */
+  .wear-bar-container {
+    width: 120px;
+    height: 8px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .wear-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #a4d007, #ffd700, #ff4444);
+    border-radius: 4px;
+  }
+  .wear-value {
+    font-size: 0.8em;
+    color: #8f98a0;
+    font-family: monospace;
+  }
+
+  /* ── Badges ── */
+  .badge {
+    font-size: 0.8em;
+    padding: 2px 8px;
+    border-radius: 3px;
+  }
+  .badge.tradable {
+    background: rgba(164,208,7,0.15);
+    color: #a4d007;
+  }
+  .badge.not-tradable {
+    background: rgba(255,68,68,0.15);
+    color: #ff6666;
+  }
+  .asset-id {
+    font-size: 0.8em;
+    color: #555;
+  }
+
+  /* ── No-value items ── */
+  .no-value-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .no-value-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 0.9em;
+  }
+  .no-value-item .mini-img {
+    width: 48px;
+    height: 36px;
+    object-fit: contain;
+  }
+  .item-type {
+    color: #8f98a0;
+    font-size: 0.85em;
+    margin-left: auto;
+  }
+
+  /* ── Footer ── */
+  footer {
+    text-align: center;
+    padding: 24px;
+    color: #555;
+    font-size: 0.8em;
+    border-top: 1px solid var(--border);
+    margin-top: 40px;
+  }
+
+  @media (max-width: 700px) {
+    .item-grid { grid-template-columns: 1fr; }
+    .item-card { flex-direction: column; }
+    .item-image { width: 100%; min-height: 80px; }
+    .rarity-label { min-width: 100px; }
+    .rarity-stat { min-width: auto; }
+    header h1 { font-size: 1.4em; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🎮 Steam CS2 Inventory Report</h1>
+  <p>Generated on February 28, 2026 at 22:40 UTC</p>
+</header>
+
+<div class="container">
+  <div class="summary">
+    <div class="summary-card">
+      <div class="value">1</div>
+      <div class="label">Profiles Scanned</div>
+    </div>
+    <div class="summary-card">
+      <div class="value">32</div>
+      <div class="label">Total Items</div>
+    </div>
+    <div class="summary-card">
+      <div class="value accent-green">$2,330.52</div>
+      <div class="label">Combined Value</div>
+    </div>
+  </div>
+
+  
+
+  <section class="profile-section">
+    <div class="profile-header">
+        <h2>👤 remilio</h2>
+        <div class="profile-meta">
+            <span>Steam ID: <code>76561199093084778</code></span>
+            <span>Items: <b>32</b></span>
+            <span>Estimated Value: <b class="accent-green">$2,330.52</b></span>
+        </div>
+    </div><div class="rarity-breakdown"><h3>Breakdown by Rarity</h3><div class="rarity-bars"><div class="rarity-row">
+            <span class="rarity-label" style="color:#eb4b4b">🔴 Covert</span>
+            <div class="rarity-bar-track">
+                <div class="rarity-bar-fill" style="width:100.0%;background:#eb4b4b"></div>
+            </div>
+            <span class="rarity-stat"><b>11</b> items — <b>$2,179.01</b></span>
+        </div><div class="rarity-row">
+            <span class="rarity-label" style="color:#ffd700">🟡 Extraordinary</span>
+            <div class="rarity-bar-track">
+                <div class="rarity-bar-fill" style="width:5.5%;background:#ffd700"></div>
+            </div>
+            <span class="rarity-stat"><b>1</b> item — <b>$120.66</b></span>
+        </div><div class="rarity-row">
+            <span class="rarity-label" style="color:#4b69ff">🟢 High Grade</span>
+            <div class="rarity-bar-track">
+                <div class="rarity-bar-fill" style="width:0.8%;background:#4b69ff"></div>
+            </div>
+            <span class="rarity-stat"><b>10</b> items — <b>$17.41</b></span>
+        </div><div class="rarity-row">
+            <span class="rarity-label" style="color:#d32ce6">🟣 Classified</span>
+            <div class="rarity-bar-track">
+                <div class="rarity-bar-fill" style="width:0.4%;background:#d32ce6"></div>
+            </div>
+            <span class="rarity-stat"><b>1</b> item — <b>$9.50</b></span>
+        </div><div class="rarity-row">
+            <span class="rarity-label" style="color:#8847ff">🔵 Restricted</span>
+            <div class="rarity-bar-track">
+                <div class="rarity-bar-fill" style="width:0.2%;background:#8847ff"></div>
+            </div>
+            <span class="rarity-stat"><b>1</b> item — <b>$3.57</b></span>
+        </div><div class="rarity-row">
+            <span class="rarity-label" style="color:#b0c3d9">⬜ Consumer Grade</span>
+            <div class="rarity-bar-track">
+                <div class="rarity-bar-fill" style="width:0.0%;background:#b0c3d9"></div>
+            </div>
+            <span class="rarity-stat"><b>4</b> items — <b>$0.20</b></span>
+        </div><div class="rarity-row">
+            <span class="rarity-label" style="color:#5e98d9">⚪ Industrial Grade</span>
+            <div class="rarity-bar-track">
+                <div class="rarity-bar-fill" style="width:0.0%;background:#5e98d9"></div>
+            </div>
+            <span class="rarity-stat"><b>1</b> item — <b>$0.11</b></span>
+        </div><div class="rarity-row">
+            <span class="rarity-label" style="color:#b0c3d9">⚫ Base Grade</span>
+            <div class="rarity-bar-track">
+                <div class="rarity-bar-fill" style="width:0.0%;background:#b0c3d9"></div>
+            </div>
+            <span class="rarity-stat"><b>3</b> items — <b>$0.06</b></span>
+        </div></div></div><div class="category"><h3>🗡️ Knives & Gloves</h3><div class="item-grid"><div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL6kJ_m-B1Z-ua6bbZrLOmsCXSvw_tipOR7SSWqqh8rsj6OpYP4LCLJP0J1Zc8lEb5P7w68m9PhZL7g5VHdjoNEny3_insavClq6-4BBaFw_6GBilrHNb1uspQGOr_5GtAKpkye" alt="★ Butterfly Knife | Black Laminate (Field-Tested)" /></div>
+    <div class="item-details">
+        <h3 class="item-name">★ Butterfly Knife | Black Laminate (Field-Tested)</h3>
+        <span class="rarity-badge" style="background:#eb4b4b">🔴 Covert</span>
+        <div class="price-row">
+            <span class="price-main">$1,030.00</span>
+            <span class="price-sub">Low: $1,030.00 / Med: $1,035.01</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Exterior</span><span>Field-Tested</span></div>
+        <div class="detail-row">
+            <span class="detail-label">Wear</span>
+            <div class="wear-bar-container">
+        <div class="wear-bar-fill" style="width:37.9%"></div>
+    </div>
+    <span class="wear-value">0.3792</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Pattern</span><code>990</code></div>
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49691573725</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL6kJ_m-B1d7v6tYK1iLs-QG1iWwOJ1uOhmQRa_mg8ijDGMnYftby-SalJ1AsQiEecC4xiwlobjMLnjsQffjtkQzSj2iS9I63xj4OwDVqo7uvqAGhE4d3k" alt="★ Falchion Knife | Lore (Minimal Wear)" /></div>
+    <div class="item-details">
+        <h3 class="item-name">★ Falchion Knife | Lore (Minimal Wear)</h3>
+        <span class="rarity-badge" style="background:#eb4b4b">🔴 Covert</span>
+        <div class="price-row">
+            <span class="price-main">$196.88</span>
+            <span class="price-sub">Low: $196.88 / Med: $194.53</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Exterior</span><span>Minimal Wear</span></div>
+        <div class="detail-row">
+            <span class="detail-label">Wear</span>
+            <div class="wear-bar-container">
+        <div class="wear-bar-fill" style="width:13.8%"></div>
+    </div>
+    <span class="wear-value">0.1377</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Pattern</span><code>151</code></div>
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49666770421</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL6kJ_m-B1L-uGmV6VgH-qWDHWR_uNztOh8QmeywUwl6zvSw4yvcH3GPQAoCJt5ROZZ4Ra_kdGzNOy3tFfb3doRmSyrkGoXuVUgigBA" alt="★ Shadow Daggers | Slaughter (Field-Tested)" /></div>
+    <div class="item-details">
+        <h3 class="item-name">★ Shadow Daggers | Slaughter (Field-Tested)</h3>
+        <span class="rarity-badge" style="background:#eb4b4b">🔴 Covert</span>
+        <div class="price-row">
+            <span class="price-main">$153.03</span>
+            <span class="price-sub">Low: $153.03 / Med: —</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Exterior</span><span>Field-Tested</span></div>
+        <div class="detail-row">
+            <span class="detail-label">Wear</span>
+            <div class="wear-bar-container">
+        <div class="wear-bar-fill" style="width:16.8%"></div>
+    </div>
+    <span class="wear-value">0.1683</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Pattern</span><code>304</code></div>
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49650495997</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Tg_13jRBnOlo_k7yNk6P6hfqF-H_KfAWiUyeFjvuVWRzC3hxwYsDyWn7DxIDnDO1h1Xv0tELNT902mwNy1YePm5g2P39hFm36o33gdvytp6utQBatxrKzVi13ANeE45sYCIuHnE0oMgVC6Yg" alt="★ Hydra Gloves | Case Hardened (Well-Worn)" /></div>
+    <div class="item-details">
+        <h3 class="item-name">★ Hydra Gloves | Case Hardened (Well-Worn)</h3>
+        <span class="rarity-badge" style="background:#ffd700">🟡 Extraordinary</span>
+        <div class="price-row">
+            <span class="price-main">$120.66</span>
+            <span class="price-sub">Low: $120.66 / Med: $119.57</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Exterior</span><span>Well-Worn</span></div>
+        <div class="detail-row">
+            <span class="detail-label">Wear</span>
+            <div class="wear-bar-container">
+        <div class="wear-bar-fill" style="width:38.5%"></div>
+    </div>
+    <span class="wear-value">0.3854</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Pattern</span><code>759</code></div>
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>48979080900</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL6kJ_m-B1L-uGmV6x0H_-QC2ae_uV4uedscHDjqhEutDWR1NapdiiWblJxCpdyROVftBS9lNa1Meng5wXd3oJEyy_7ji1J6ilu6-0cEf1yYi7ebTk" alt="★ Shadow Daggers | Bright Water (Factory New)" /></div>
+    <div class="item-details">
+        <h3 class="item-name">★ Shadow Daggers | Bright Water (Factory New)</h3>
+        <span class="rarity-badge" style="background:#eb4b4b">🔴 Covert</span>
+        <div class="price-row">
+            <span class="price-main">$78.00</span>
+            <span class="price-sub">Low: $78.00 / Med: $80.00</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Exterior</span><span>Factory New</span></div>
+        <div class="detail-row">
+            <span class="detail-label">Wear</span>
+            <div class="wear-bar-container">
+        <div class="wear-bar-fill" style="width:6.0%"></div>
+    </div>
+    <span class="wear-value">0.0599</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Pattern</span><code>12</code></div>
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49667098507</code></span>
+        </div>
+    </div>
+</div></div></div><div class="category"><h3>🔫 Weapon Skins</h3><div class="item-grid"><div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8ypexwjFS4_ega6F_H_eAMWrEwL9lj_JnTiK2lxQztgKClYP9HibCOl9lV4wiRuACuxfrkoXiNL_i4VDXjIgTxSr43X4f7ik457wAWfAjrKTRjgHGL_RjtqbVPGVJ" alt="StatTrak™ M4A1-S | Golden Coil (Well-Worn)" /></div>
+    <div class="item-details">
+        <h3 class="item-name">StatTrak™ M4A1-S | Golden Coil (Well-Worn)</h3>
+        <span class="rarity-badge" style="background:#eb4b4b">🔴 Covert</span>
+        <div class="price-row">
+            <span class="price-main">$189.44</span>
+            <span class="price-sub">Low: $189.44 / Med: —</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Exterior</span><span>Well-Worn</span></div>
+        <div class="detail-row">
+            <span class="detail-label">Wear</span>
+            <div class="wear-bar-container">
+        <div class="wear-bar-fill" style="width:40.2%"></div>
+    </div>
+    <span class="wear-value">0.4019</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Pattern</span><code>702</code></div>
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49647686266</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8ypexwjFS4_ega6F_H_3HDzaD_vh3oO57WCilkCIrujqNjsH_In7DZgYnWcAiR-MJshO6koDlN7vhsQyLi41HySX6iXlAvCZrsb0HT-N7rW-9qIHE" alt="M4A1-S | Vaporwave (Minimal Wear)" /></div>
+    <div class="item-details">
+        <h3 class="item-name">M4A1-S | Vaporwave (Minimal Wear)</h3>
+        <span class="rarity-badge" style="background:#eb4b4b">🔴 Covert</span>
+        <div class="price-row">
+            <span class="price-main">$176.10</span>
+            <span class="price-sub">Low: $176.10 / Med: $173.84</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Exterior</span><span>Minimal Wear</span></div>
+        <div class="detail-row">
+            <span class="detail-label">Wear</span>
+            <div class="wear-bar-container">
+        <div class="wear-bar-fill" style="width:11.2%"></div>
+    </div>
+    <span class="wear-value">0.1120</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Pattern</span><code>566</code></div>
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49685083162</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLkjYbf7itX6vytbbZSI-WsG3SA_uV_vO1WTCa9kxQ1vjiBpYL8JSLSMxghCMEjEeNe5hHpw9zhYuOz5VfcitpBmyqt3X9O6itrsesFUfYmrKzTkUifZqPQtnZK" alt="USP-S | Kill Confirmed (Field-Tested)" /></div>
+    <div class="item-details">
+        <h3 class="item-name">USP-S | Kill Confirmed (Field-Tested)</h3>
+        <span class="rarity-badge" style="background:#eb4b4b">🔴 Covert</span>
+        <div class="price-row">
+            <span class="price-main">$106.08</span>
+            <span class="price-sub">Low: $106.08 / Med: $101.54</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Exterior</span><span>Field-Tested</span></div>
+        <div class="detail-row">
+            <span class="detail-label">Wear</span>
+            <div class="wear-bar-container">
+        <div class="wear-bar-fill" style="width:32.6%"></div>
+    </div>
+    <span class="wear-value">0.3260</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Pattern</span><code>678</code></div>
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49651370577</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwiYbf_DVL0OK8Yap5M-SBC2ad_uNztOh8QmexzUt1tj7UnN-vc3KWbw8nCpJzRrJY5xa8xNHuZOLr51bYjtkXyyj5kGoXuQMtNgKM" alt="AWP | Printstream (Field-Tested)" /></div>
+    <div class="item-details">
+        <h3 class="item-name">AWP | Printstream (Field-Tested)</h3>
+        <span class="rarity-badge" style="background:#eb4b4b">🔴 Covert</span>
+        <div class="price-row">
+            <span class="price-main">$81.56</span>
+            <span class="price-sub">Low: $81.56 / Med: $80.00</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Exterior</span><span>Field-Tested</span></div>
+        <div class="detail-row">
+            <span class="detail-label">Wear</span>
+            <div class="wear-bar-container">
+        <div class="wear-bar-fill" style="width:33.1%"></div>
+    </div>
+    <span class="wear-value">0.3309</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Pattern</span><code>812</code></div>
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49253993374</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwlcK3wiNQ0OKheqdoLPGaAFidxOp_pewnSn6wl0p-4D7Ryo34cSqeOwMlWZt5QbJfuhW9koKyMO3ksgWMiY8TzDK-0H009BnnIw" alt="AK-47 | Inheritance (Field-Tested)" /></div>
+    <div class="item-details">
+        <h3 class="item-name">AK-47 | Inheritance (Field-Tested)</h3>
+        <span class="rarity-badge" style="background:#eb4b4b">🔴 Covert</span>
+        <div class="price-row">
+            <span class="price-main">$75.99</span>
+            <span class="price-sub">Low: $75.99 / Med: $75.93</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Exterior</span><span>Field-Tested</span></div>
+        <div class="detail-row">
+            <span class="detail-label">Wear</span>
+            <div class="wear-bar-container">
+        <div class="wear-bar-fill" style="width:23.5%"></div>
+    </div>
+    <span class="wear-value">0.2351</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Pattern</span><code>524</code></div>
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49432935654</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL2kpnj9h1c4_2tY5tuKP-eHmKC_uZzsfdwAXzmlhhz6j7RnNn_dX_FaQUhD8NzFOdYshO5x9e2Y7vktVDZ2tlGnirgznQetWdhWVs" alt="Glock-18 | Gold Toof (Battle-Scarred)" /></div>
+    <div class="item-details">
+        <h3 class="item-name">Glock-18 | Gold Toof (Battle-Scarred)</h3>
+        <span class="rarity-badge" style="background:#eb4b4b">🔴 Covert</span>
+        <div class="price-row">
+            <span class="price-main">$47.81</span>
+            <span class="price-sub">Low: $47.81 / Med: $45.23</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Exterior</span><span>Battle-Scarred</span></div>
+        <div class="detail-row">
+            <span class="detail-label">Wear</span>
+            <div class="wear-bar-container">
+        <div class="wear-bar-fill" style="width:58.8%"></div>
+    </div>
+    <span class="wear-value">0.5884</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Pattern</span><code>124</code></div>
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49506155163</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwlcK3wiFO0POlV6xoIfSsHW-f1dF-v-1mcCS2kRQyvnPWn9egI3mWbA4kCZJxRbFf5haxwYHuYezntg2Ljt1Mnnr8jngfuHo__a9cBiDIU36L" alt="StatTrak™ AK-47 | Head Shot (Well-Worn)" /></div>
+    <div class="item-details">
+        <h3 class="item-name">StatTrak™ AK-47 | Head Shot (Well-Worn)</h3>
+        <span class="rarity-badge" style="background:#eb4b4b">🔴 Covert</span>
+        <div class="price-row">
+            <span class="price-main">$44.12</span>
+            <span class="price-sub">Low: $44.12 / Med: $40.49</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Exterior</span><span>Well-Worn</span></div>
+        <div class="detail-row">
+            <span class="detail-label">Wear</span>
+            <div class="wear-bar-container">
+        <div class="wear-bar-fill" style="width:40.7%"></div>
+    </div>
+    <span class="wear-value">0.4074</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Pattern</span><code>534</code></div>
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>48979040750</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL1m5fn8Sdk6OGRbKFsJ_yWMWqVwuZ3j-xsSyCmmFNxtzvUnouqdi_EZgB2X5d5ELUNuhDqxoazYu634QPX3oxAnyj_jnlP8G81tF-I545Z" alt="Desert Eagle | Mecha Industries (Field-Tested)" /></div>
+    <div class="item-details">
+        <h3 class="item-name">Desert Eagle | Mecha Industries (Field-Tested)</h3>
+        <span class="rarity-badge" style="background:#d32ce6">🟣 Classified</span>
+        <div class="price-row">
+            <span class="price-main">$9.50</span>
+            <span class="price-sub">Low: $9.50 / Med: $9.47</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Exterior</span><span>Field-Tested</span></div>
+        <div class="detail-row">
+            <span class="detail-label">Wear</span>
+            <div class="wear-bar-container">
+        <div class="wear-bar-fill" style="width:28.3%"></div>
+    </div>
+    <span class="wear-value">0.2832</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Pattern</span><code>258</code></div>
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49665037123</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8n5WxrR1W7vH_OJtiOvGYB1idxOp_pewnTnzqlksh4Dndw9r8ciiSaFUoXJAlF-UCtkO-ltKxNe_q4QTegt1GxDK-0H0O2S-Bcg" alt="StatTrak™ MAC-10 | Saibā Oni (Field-Tested)" /></div>
+    <div class="item-details">
+        <h3 class="item-name">StatTrak™ MAC-10 | Saibā Oni (Field-Tested)</h3>
+        <span class="rarity-badge" style="background:#8847ff">🔵 Restricted</span>
+        <div class="price-row">
+            <span class="price-main">$3.57</span>
+            <span class="price-sub">Low: $3.57 / Med: $3.51</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Exterior</span><span>Field-Tested</span></div>
+        <div class="detail-row">
+            <span class="detail-label">Wear</span>
+            <div class="wear-bar-container">
+        <div class="wear-bar-fill" style="width:16.1%"></div>
+    </div>
+    <span class="wear-value">0.1608</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Pattern</span><code>270</code></div>
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49507995020</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLyhMG1_B1T9veReKVkM_yWF1iUxP13pN5lRi67gVN2tW3Sntuvd3OROFUoXsB2Q-9Zs0Hqlta0Pujr7waIiYJAxS-sjy0c8G81tBzzAWSY" alt="CZ75-Auto | Honey Paisley (Factory New)" /></div>
+    <div class="item-details">
+        <h3 class="item-name">CZ75-Auto | Honey Paisley (Factory New)</h3>
+        <span class="rarity-badge" style="background:#b0c3d9">⬜ Consumer Grade</span>
+        <div class="price-row">
+            <span class="price-main">$0.11</span>
+            <span class="price-sub">Low: $0.11 / Med: $0.14</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Exterior</span><span>Factory New</span></div>
+        <div class="detail-row">
+            <span class="detail-label">Wear</span>
+            <div class="wear-bar-container">
+        <div class="wear-bar-fill" style="width:6.2%"></div>
+    </div>
+    <span class="wear-value">0.0615</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Pattern</span><code>771</code></div>
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49811200533</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwlcK3wjFL0P-re6xSNPGdMWqVxedjva86HSrnxkx3tTjdz42ud36fbwVxD8RyQbICtBe8kdXgZe624gCK2YhB02yg2fLyHdkl" alt="AK-47 | Safari Mesh (Field-Tested)" /></div>
+    <div class="item-details">
+        <h3 class="item-name">AK-47 | Safari Mesh (Field-Tested)</h3>
+        <span class="rarity-badge" style="background:#5e98d9">⚪ Industrial Grade</span>
+        <div class="price-row">
+            <span class="price-main">$0.11</span>
+            <span class="price-sub">Low: $0.11 / Med: $0.11</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Exterior</span><span>Field-Tested</span></div>
+        <div class="detail-row">
+            <span class="detail-label">Wear</span>
+            <div class="wear-bar-container">
+        <div class="wear-bar-fill" style="width:20.1%"></div>
+    </div>
+    <span class="wear-value">0.2013</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Pattern</span><code>82</code></div>
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>48967265005</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8n5G3wjFU0PW8bb1vLOWWMWqVxedjva89THnmkxt_sGvWwt-hc3-QZgAkWZVyFOJZtBewlobnN-_l7lPdi4MR02yg2ZdaTT0b" alt="MAG-7 | Copper Oxide (Field-Tested)" /></div>
+    <div class="item-details">
+        <h3 class="item-name">MAG-7 | Copper Oxide (Field-Tested)</h3>
+        <span class="rarity-badge" style="background:#b0c3d9">⬜ Consumer Grade</span>
+        <div class="price-row">
+            <span class="price-main">$0.03</span>
+            <span class="price-sub">Low: $0.03 / Med: $0.04</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Exterior</span><span>Field-Tested</span></div>
+        <div class="detail-row">
+            <span class="detail-label">Wear</span>
+            <div class="wear-bar-container">
+        <div class="wear-bar-fill" style="width:15.4%"></div>
+    </div>
+    <span class="wear-value">0.1538</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Pattern</span><code>782</code></div>
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49645693762</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL3n5vh7h1I__2ReKVhLc-bC2aG2KBw4bk_Ti3gk0Qmtmrcntitc3_EblJ1D8YhQeQI4USwkNDlMb-35ADYlcsbmqxDnyx2" alt="FAMAS | Palm (Battle-Scarred)" /></div>
+    <div class="item-details">
+        <h3 class="item-name">FAMAS | Palm (Battle-Scarred)</h3>
+        <span class="rarity-badge" style="background:#b0c3d9">⬜ Consumer Grade</span>
+        <div class="price-row">
+            <span class="price-main">$0.03</span>
+            <span class="price-sub">Low: $0.03 / Med: $0.04</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Exterior</span><span>Battle-Scarred</span></div>
+        <div class="detail-row">
+            <span class="detail-label">Wear</span>
+            <div class="wear-bar-container">
+        <div class="wear-bar-fill" style="width:66.8%"></div>
+    </div>
+    <span class="wear-value">0.6679</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Pattern</span><code>122</code></div>
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49429492805</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLhx8bf7jJk_OK8ab1SM_GdClidxOp_pewnGy2xzEh0t2jRzNugci3FP1MiW8BzFrMDuxC-mt2yP-i3tVTeitgXzTK-0H0VdESbcw" alt="P90 | Sand Spray (Field-Tested)" /></div>
+    <div class="item-details">
+        <h3 class="item-name">P90 | Sand Spray (Field-Tested)</h3>
+        <span class="rarity-badge" style="background:#b0c3d9">⬜ Consumer Grade</span>
+        <div class="price-row">
+            <span class="price-main">$0.03</span>
+            <span class="price-sub">Low: $0.03 / Med: $0.04</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Exterior</span><span>Field-Tested</span></div>
+        <div class="detail-row">
+            <span class="detail-label">Wear</span>
+            <div class="wear-bar-container">
+        <div class="wear-bar-fill" style="width:25.4%"></div>
+    </div>
+    <span class="wear-value">0.2539</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Pattern</span><code>736</code></div>
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49109016855</code></span>
+        </div>
+    </div>
+</div></div></div><div class="category"><h3>🎵 Music Kits, Stickers & Other</h3><div class="item-grid"><div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIijyEKzb_3d19nuPnKb6UV25o7k_ma3EFPym86wqSAKu_H7PKE4JKiWV2GVx71z57k6Sy3hzURwsWjXyouod3KfcEZ-XaDU2Jmf" alt="Music Kit | KILL SCRIPT, All Night" /></div>
+    <div class="item-details">
+        <h3 class="item-name">Music Kit | KILL SCRIPT, All Night</h3>
+        <span class="rarity-badge" style="background:#4b69ff">🟢 High Grade</span>
+        <div class="price-row">
+            <span class="price-main">$4.62</span>
+            <span class="price-sub">Low: $4.62 / Med: $4.55</span>
+        </div>
+        
+        
+        
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49690482633</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIijyEKzb_3d19nuMWmO4VN7y9elpAiyEUynyZSwrSMOu6v-MaI8cqjCDzXIluwmtLRtHy2wzB4mtzuDyNi3MSXAPV825k0" alt="Music Kit | DRYDEN, Feel The Power" /></div>
+    <div class="item-details">
+        <h3 class="item-name">Music Kit | DRYDEN, Feel The Power</h3>
+        <span class="rarity-badge" style="background:#4b69ff">🟢 High Grade</span>
+        <div class="price-row">
+            <span class="price-main">$2.53</span>
+            <span class="price-sub">Low: $2.53 / Med: $2.63</span>
+        </div>
+        
+        
+        
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49690453947</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIijyEKzb_3d19nuPnWY5l0ny9empA21F0ijnMS3rXoO6qv2Oac4cKfDXz-Uw7p0tLk9TXHllkVx5W2HzNa3MSXAGLCr2ac" alt="Music Kit | Knock2, Make U SWEAT!" /></div>
+    <div class="item-details">
+        <h3 class="item-name">Music Kit | Knock2, Make U SWEAT!</h3>
+        <span class="rarity-badge" style="background:#4b69ff">🟢 High Grade</span>
+        <div class="price-row">
+            <span class="price-main">$2.20</span>
+            <span class="price-sub">Low: $2.20 / Med: $2.19</span>
+        </div>
+        
+        
+        
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49690470138</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJai0ki7VeTHjMmuOHaC619h7dempVvrSAnrlYTp-CUVt6L8baI4caiSVmLClLsg6bE_HCviwkh_tTyDyYugcy3DaAcjCpVxQvlK7Efq531Jbw" alt="Sticker | Blitzkrieg" /></div>
+    <div class="item-details">
+        <h3 class="item-name">Sticker | Blitzkrieg</h3>
+        <span class="rarity-badge" style="background:#4b69ff">🟢 High Grade</span>
+        <div class="price-row">
+            <span class="price-main">$1.22</span>
+            <span class="price-sub">Low: $1.22 / Med: $1.15</span>
+        </div>
+        
+        
+        
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49682169875</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJai0ki7VeTHjMmuOHaC619h7dempVvrSAnrlYTp-CUVt6L8baI4caiSVmLClLsg6bE_HCviwkh_tTyDyYugcy3DaAcjCpVxQvlK7Efq531Jbw" alt="Sticker | Blitzkrieg" /></div>
+    <div class="item-details">
+        <h3 class="item-name">Sticker | Blitzkrieg</h3>
+        <span class="rarity-badge" style="background:#4b69ff">🟢 High Grade</span>
+        <div class="price-row">
+            <span class="price-main">$1.22</span>
+            <span class="price-sub">Low: $1.22 / Med: $1.15</span>
+        </div>
+        
+        
+        
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49682169873</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJai0ki7VeTHjMmuOHaC619h7dempVvrSAnrlYTp-CUVt6L8baI4caiSVmLClLsg6bE_HCviwkh_tTyDyYugcy3DaAcjCpVxQvlK7Efq531Jbw" alt="Sticker | Blitzkrieg" /></div>
+    <div class="item-details">
+        <h3 class="item-name">Sticker | Blitzkrieg</h3>
+        <span class="rarity-badge" style="background:#4b69ff">🟢 High Grade</span>
+        <div class="price-row">
+            <span class="price-main">$1.22</span>
+            <span class="price-sub">Low: $1.22 / Med: $1.15</span>
+        </div>
+        
+        
+        
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49682169871</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJai0ki7VeTHjMmuOHaC619h7dempVvrSAnrlYTp-CUVt6L8baI4caiSVmLClLsg6bE_HCviwkh_tTyDyYugcy3DaAcjCpVxQvlK7Efq531Jbw" alt="Sticker | Blitzkrieg" /></div>
+    <div class="item-details">
+        <h3 class="item-name">Sticker | Blitzkrieg</h3>
+        <span class="rarity-badge" style="background:#4b69ff">🟢 High Grade</span>
+        <div class="price-row">
+            <span class="price-main">$1.22</span>
+            <span class="price-sub">Low: $1.22 / Med: $1.15</span>
+        </div>
+        
+        
+        
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49682169869</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJai0ki7VeTHjMmuOHaC619h7dempU3oTx7witjj-HsCv6P2avVrI_SXVmSWxeoj6bFtTnznl0RwtTyHw9moeSmTOlQlFNIuEofCjY9p" alt="Sticker | T On Cat" /></div>
+    <div class="item-details">
+        <h3 class="item-name">Sticker | T On Cat</h3>
+        <span class="rarity-badge" style="background:#4b69ff">🟢 High Grade</span>
+        <div class="price-row">
+            <span class="price-main">$1.06</span>
+            <span class="price-sub">Low: $1.06 / Med: $1.04</span>
+        </div>
+        
+        
+        
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49682289943</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJai0ki7VeTHjMmuOHaC619h7dempU3oTx7witjj-HsCv6P2avVrI_SXVmSWxeoj6bFtTnznl0RwtTyHw9moeSmTOlQlFNIuEofCjY9p" alt="Sticker | T On Cat" /></div>
+    <div class="item-details">
+        <h3 class="item-name">Sticker | T On Cat</h3>
+        <span class="rarity-badge" style="background:#4b69ff">🟢 High Grade</span>
+        <div class="price-row">
+            <span class="price-main">$1.06</span>
+            <span class="price-sub">Low: $1.06 / Med: $1.04</span>
+        </div>
+        
+        
+        
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49682289941</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJai0ki7VeTHjMmuOHaC619h7dempU3oTx7witjj-HsCv6P2avVrI_SXVmSWxeoj6bFtTnznl0RwtTyHw9moeSmTOlQlFNIuEofCjY9p" alt="Sticker | T On Cat" /></div>
+    <div class="item-details">
+        <h3 class="item-name">Sticker | T On Cat</h3>
+        <span class="rarity-badge" style="background:#4b69ff">🟢 High Grade</span>
+        <div class="price-row">
+            <span class="price-main">$1.06</span>
+            <span class="price-sub">Low: $1.06 / Med: $1.04</span>
+        </div>
+        
+        
+        
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49682289939</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/IzMF03bi9WpSBq-S-ekoE33L-iLqGFHVaU25ZzQNQcXdB2ozio1RrlIWFK3UfvMYB8UsvjiMXojflsZalyxSh31CIyHz2GZ-KuFpPsrTzBG0qe6yD3n-ZDLdYSXcTVg9ROEKZ2HYqGHzsevASzHPSb0tEV8Cf6YN9W0fbJjbPEFo3Y8Vu2u_0UdyEhk6f9BKZAarxm1ONekmkXQQYJqelPQ" alt="Sealed Graffiti | Still Happy (Tracer Yellow)" /></div>
+    <div class="item-details">
+        <h3 class="item-name">Sealed Graffiti | Still Happy (Tracer Yellow)</h3>
+        <span class="rarity-badge" style="background:#b0c3d9">⚫ Base Grade</span>
+        <div class="price-row">
+            <span class="price-main">$0.06</span>
+            <span class="price-sub">Low: $0.06 / Med: $0.10</span>
+        </div>
+        
+        
+        
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49948597499</code></span>
+        </div>
+    </div>
+</div></div></div><div class="category"><h3>📦 Other Items (No Market Value)</h3><div class="no-value-list"><div class="no-value-item">🔒 <img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJG51EejH_3R2smpNHKZ2kRw-Yji72bzThL9oYbh_ikVv6qqPPQ0JaOXCmWRl7shtbhsFnHlkxl16miGy477dnmQb1R2DpBzF_lK7EckGgI0TA" class="mini-img" /><b>Charm Detachment Pack</b><span class="item-type">Base Grade Tool</span></div><div class="no-value-item">🔒 <img src="https://community.akamai.steamstatic.com/economy/image/IzMF03bi9WpSBq-S-ekoE33L-iLqGFHVaU25ZzQNQcXdB2ozio1RrlIWFK3UfvMYB8UsvjiMXojflsZalyxSh31CIyHz2GZ-KuFpPsrTzBG0pO-CI3r-Zj3FYSfdTgw8RLRYM2qIqmalsO6cFj6fSb55RA0HKPcA92EdaJyNNkBp14AVu2u_0UdyEhk6f9BKZAarxm1OZbhyziBLFMsHdiE" class="mini-img" /><b>Graffiti | Ninja (Monarch Blue)</b><span class="item-type">Base Grade Graffiti</span></div></div></div></section>
+</div>
+
+<footer>
+  Report generated from <code>data/steam_inventory.json</code> by steam_inventory_report_html.py
+</footer>
+
+</body>
+</html>
