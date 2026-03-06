@@ -1009,6 +1009,14 @@ def generate_dashboard(data, price_data, input_file, portfolio_history=None):
   Report generated from <code>{input_file}</code> by steam_dashboard.py
 </footer>
 
+<div id="js-error-banner" style="display:none;background:#ff4444;color:#fff;padding:12px 20px;font-family:monospace;font-size:14px;position:fixed;bottom:0;left:0;right:0;z-index:9999"></div>
+<script>
+window.onerror = function(msg, url, line, col) {{
+  var el = document.getElementById('js-error-banner');
+  el.style.display = 'block';
+  el.textContent = 'JS Error: ' + msg + ' (line ' + line + ', col ' + col + ')';
+}};
+</script>
 <script>
 // ═══════════════════════════════════════════════════════════════════
 //  Tab navigation
@@ -1602,7 +1610,7 @@ function initPredictions() {{
 }}
 
 // ── Chart control event listeners ──
-document.getElementById('sortSelect')
+document.getElementById('sortSelect').addEventListener('change', e => {{
   renderDashboard(e.target.value, document.getElementById('searchInput').value);
 }});
 document.getElementById('searchInput').addEventListener('input', e => {{

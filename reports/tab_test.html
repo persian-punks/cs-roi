@@ -1,0 +1,1938 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><title>Tab Test</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3"></script>
+<style>
+  :root {
+    --bg: #1b2838;
+    --card-bg: #1e2a3a;
+    --text: #c6d4df;
+    --accent: #66c0f4;
+    --accent-green: #a4d007;
+    --border: #2a475e;
+    --header-bg: #171a21;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+  }
+
+  /* ── Header & Nav ── */
+  header {
+    background: var(--header-bg);
+    padding: 20px 32px 0;
+    border-bottom: 2px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  header h1 {
+    font-size: 1.8em;
+    color: #fff;
+  }
+  header .timestamp {
+    color: #8f98a0;
+    font-size: 0.85em;
+  }
+  .tab-nav {
+    display: flex;
+    gap: 0;
+  }
+  .tab-nav button {
+    background: transparent;
+    color: #8f98a0;
+    border: none;
+    padding: 10px 24px;
+    font-size: 0.95em;
+    font-weight: 600;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+  }
+  .tab-nav button:hover {
+    color: #fff;
+    background: rgba(102,192,244,0.08);
+  }
+  .tab-nav button.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+
+  /* ── Tab panels ── */
+  .tab-panel {
+    display: none;
+  }
+  .tab-panel.active {
+    display: block;
+  }
+  .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 24px;
+  }
+
+  /* ── Shared: Summary cards ── */
+  .summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .summary-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px;
+    text-align: center;
+  }
+  .summary-card .value {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #fff;
+  }
+  .summary-card .label {
+    color: #8f98a0;
+    font-size: 0.85em;
+    margin-top: 4px;
+  }
+  .accent-green { color: var(--accent-green); }
+
+  /* ── Controls (charts tab) ── */
+  .charts-controls {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .controls select, .controls input {
+    background: var(--card-bg);
+    color: var(--text);
+    border: 1px solid var(--border);
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 0.9em;
+  }
+  .controls label {
+    color: #8f98a0;
+    font-size: 0.85em;
+  }
+
+  /* ── Inventory tab styles ── */
+  .leaderboard {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 32px;
+  }
+  .leaderboard h3 { color: #fff; margin-bottom: 12px; }
+  .leaderboard-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .leaderboard-row:last-child { border-bottom: none; }
+  .medal { font-size: 1.4em; }
+  .lb-name { flex: 1; color: #fff; font-weight: 600; }
+  .lb-value { color: var(--accent-green); font-weight: bold; }
+  .lb-count { color: #8f98a0; font-size: 0.85em; }
+  .profile-section { margin-bottom: 40px; }
+  .profile-header {
+    background: var(--header-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  .profile-header h2 { color: #fff; font-size: 1.5em; margin-bottom: 8px; }
+  .profile-meta {
+    display: flex; gap: 20px; flex-wrap: wrap;
+    color: #8f98a0; font-size: 0.9em;
+  }
+  .profile-meta code {
+    background: rgba(0,0,0,0.3); padding: 2px 6px;
+    border-radius: 3px; font-size: 0.9em;
+  }
+  .alert {
+    background: rgba(255,200,0,0.1);
+    border: 1px solid rgba(255,200,0,0.3);
+    border-radius: 6px; padding: 12px 16px;
+    color: #ffd700; font-style: italic;
+  }
+  .rarity-breakdown {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px; padding: 20px; margin-bottom: 20px;
+  }
+  .rarity-breakdown h3 { color: #fff; margin-bottom: 14px; }
+  .rarity-row {
+    display: flex; align-items: center; gap: 12px; padding: 6px 0;
+  }
+  .rarity-label { min-width: 160px; font-weight: 600; font-size: 0.9em; }
+  .rarity-bar-track {
+    flex: 1; height: 8px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 4px; overflow: hidden;
+  }
+  .rarity-bar-fill { height: 100%; border-radius: 4px; }
+  .rarity-stat {
+    min-width: 200px; text-align: right;
+    font-size: 0.85em; color: #8f98a0;
+  }
+  .category { margin-bottom: 24px; }
+  .category h3 {
+    color: #fff; font-size: 1.2em;
+    margin-bottom: 14px; padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .item-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+    gap: 16px;
+  }
+  .item-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px; display: flex;
+    overflow: hidden;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .item-card:hover { transform: translateY(-2px); border-color: var(--accent); }
+  .item-image {
+    width: 160px; min-height: 120px;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(0,0,0,0.2); flex-shrink: 0;
+  }
+  .item-image img { max-width: 140px; max-height: 105px; object-fit: contain; }
+  .no-image { color: #555; font-size: 0.8em; }
+  .item-details { flex: 1; padding: 14px 16px; }
+  .item-name { color: #fff; font-size: 1em; margin-bottom: 4px; }
+  .rarity-badge {
+    display: inline-block; padding: 2px 8px;
+    border-radius: 3px; font-size: 0.72em;
+    font-weight: 600; color: #fff; margin-bottom: 8px;
+  }
+  .price-row { margin-bottom: 8px; }
+  .price-main {
+    font-size: 1.3em; font-weight: bold;
+    color: var(--accent-green); margin-right: 8px;
+  }
+  .price-sub { font-size: 0.8em; color: #8f98a0; }
+  .detail-row {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.85em; margin-bottom: 4px; flex-wrap: wrap;
+  }
+  .detail-label { color: #8f98a0; min-width: 55px; }
+  .detail-row code {
+    background: rgba(0,0,0,0.3); padding: 1px 6px;
+    border-radius: 3px; font-size: 0.9em;
+  }
+  .wear-bar-container {
+    width: 120px; height: 8px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 4px; overflow: hidden;
+  }
+  .wear-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #a4d007, #ffd700, #ff4444);
+    border-radius: 4px;
+  }
+  .wear-value { font-size: 0.8em; color: #8f98a0; font-family: monospace; }
+  .badge { font-size: 0.8em; padding: 2px 8px; border-radius: 3px; }
+  .badge.tradable { background: rgba(164,208,7,0.15); color: #a4d007; }
+  .badge.not-tradable { background: rgba(255,68,68,0.15); color: #ff6666; }
+  .asset-id { font-size: 0.8em; color: #555; }
+  .no-value-list { display: flex; flex-direction: column; gap: 6px; }
+  .no-value-item {
+    display: flex; align-items: center; gap: 8px;
+    padding: 8px 12px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px; font-size: 0.9em;
+  }
+  .no-value-item .mini-img { width: 48px; height: 36px; object-fit: contain; }
+  .item-type { color: #8f98a0; font-size: 0.85em; margin-left: auto; }
+
+  /* ── Price Charts tab styles ── */
+  .chart-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(600px, 1fr));
+    gap: 20px;
+  }
+  .chart-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px; overflow: hidden;
+    transition: transform 0.2s;
+  }
+  .chart-card:hover { transform: translateY(-2px); border-color: var(--accent); }
+  .chart-header {
+    display: flex; align-items: center; gap: 12px;
+    padding: 16px; border-bottom: 1px solid var(--border);
+  }
+  .chart-header img {
+    width: 80px; height: 60px; object-fit: contain;
+    background: rgba(0,0,0,0.2); border-radius: 4px;
+  }
+  .chart-header .info { flex: 1; }
+  .chart-header .info h3 { color: #fff; font-size: 1em; margin-bottom: 2px; }
+  .chart-header .info .meta { font-size: 0.8em; color: #8f98a0; }
+  .chart-header .price { font-size: 1.4em; font-weight: bold; color: #a4d007; }
+  .chart-header .rarity-badge { margin-top: 4px; font-size: 0.75em; }
+  .chart-body { padding: 12px 16px 16px; position: relative; }
+  .chart-body canvas { width: 100% !important; height: 250px !important; }
+  .chart-stats {
+    display: flex; gap: 16px; padding: 0 16px 12px;
+    font-size: 0.8em; color: #8f98a0; flex-wrap: wrap;
+  }
+  .chart-stats span { white-space: nowrap; }
+  .chart-stats .up { color: #a4d007; }
+  .chart-stats .down { color: #ff4444; }
+  .time-buttons { display: flex; gap: 4px; padding: 8px 16px; }
+  .time-buttons button {
+    background: transparent; color: #8f98a0;
+    border: 1px solid var(--border);
+    padding: 3px 10px; border-radius: 3px;
+    cursor: pointer; font-size: 0.75em; transition: all 0.2s;
+  }
+  .time-buttons button:hover,
+  .time-buttons button.active {
+    background: var(--accent); color: #fff; border-color: var(--accent);
+  }
+
+  /* ── Footer ── */
+  footer {
+    text-align: center; padding: 24px;
+    color: #555; font-size: 0.8em;
+    border-top: 1px solid var(--border); margin-top: 40px;
+  }
+
+  /* ── Sell Signals tab ── */
+  .signal-grid { display: flex; flex-direction: column; gap: 10px; }
+  .signal-card {
+    background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px;
+    display: flex; align-items: center; gap: 14px; padding: 14px 16px; transition: border-color 0.2s;
+  }
+  .signal-card:hover { border-color: var(--accent); }
+  .signal-card img { width: 72px; height: 54px; object-fit: contain; flex-shrink: 0; background: rgba(0,0,0,0.2); border-radius: 4px; }
+  .signal-info { flex: 1; min-width: 0; }
+  .signal-name { color: #fff; font-weight: 600; font-size: 0.95em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .signal-prices { font-size: 0.78em; color: #8f98a0; margin: 3px 0 6px; }
+  .year-bar-track { height: 8px; background: rgba(255,255,255,0.06); border-radius: 4px; overflow: hidden; }
+  .year-bar-fill { height: 100%; border-radius: 4px; }
+  .signal-meta { display: flex; gap: 12px; font-size: 0.78em; margin-top: 5px; align-items: center; flex-wrap: wrap; }
+  .signal-badge { padding: 2px 10px; border-radius: 12px; font-size: 0.76em; font-weight: 600; white-space: nowrap; }
+  .badge-hot     { background: rgba(255,100,0,0.2);  color: #ff6400; }
+  .badge-good    { background: rgba(164,208,7,0.2);  color: #a4d007; }
+  .badge-low     { background: rgba(255,68,68,0.2);  color: #ff4444; }
+  .badge-neutral { background: rgba(143,152,160,0.12); color: #8f98a0; }
+
+  /* ── Trade-Up Calculator ── */
+  .tu-rarity-tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
+  .tu-rarity-tabs button {
+    background: var(--card-bg); color: #8f98a0; border: 1px solid var(--border);
+    padding: 6px 16px; border-radius: 4px; cursor: pointer; font-size: 0.85em; transition: all 0.2s;
+  }
+  .tu-rarity-tabs button.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .tu-basket { background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 16px; margin-bottom: 20px; }
+  .tu-basket-header { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .tu-basket-header h3 { color: #fff; margin: 0; font-size: 1em; }
+  .basket-slots { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+  .basket-slot {
+    width: 72px; height: 58px; border: 1px dashed var(--border); border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.68em; color: #555; overflow: hidden; position: relative;
+  }
+  .basket-slot.filled { border-style: solid; border-color: var(--accent); cursor: pointer; }
+  .basket-slot img { width: 100%; height: 100%; object-fit: contain; }
+  .basket-slot .rm { position: absolute; top: 1px; right: 3px; color: #ff4444; font-size: 0.85em; font-weight: bold; line-height: 1; }
+  .tu-summary { display: flex; gap: 16px; flex-wrap: wrap; font-size: 0.88em; align-items: center; }
+  .tu-summary span { color: #8f98a0; }
+  .tu-summary b { color: #fff; }
+  .tu-profit-pos { color: #a4d007 !important; font-weight: bold; }
+  .tu-profit-neg { color: #ff4444 !important; font-weight: bold; }
+  .tu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 8px; margin-bottom: 20px; }
+  .tu-item {
+    background: var(--card-bg); border: 1px solid var(--border); border-radius: 6px;
+    padding: 8px 6px; cursor: pointer; transition: all 0.15s; text-align: center; user-select: none;
+  }
+  .tu-item:hover { border-color: var(--accent); transform: translateY(-1px); }
+  .tu-item.selected { border-color: #a4d007; background: rgba(164,208,7,0.07); }
+  .tu-item.maxed { opacity: 0.38; cursor: not-allowed; pointer-events: none; }
+  .tu-item img { width: 80px; height: 60px; object-fit: contain; }
+  .tu-item .ti-name { font-size: 0.7em; color: #c6d4df; margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .tu-item .ti-ext { font-size: 0.65em; color: #8f98a0; }
+  .tu-item .ti-price { font-size: 0.76em; color: #a4d007; font-weight: 600; }
+  .tu-next { background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 16px; }
+  .tu-next h3 { color: #8f98a0; font-size: 0.9em; margin-bottom: 10px; }
+  .btn-sm { background: rgba(255,68,68,0.12); color: #ff6666; border: 1px solid rgba(255,68,68,0.25); padding: 4px 12px; border-radius: 4px; cursor: pointer; font-size: 0.8em; }
+  .btn-sm:hover { background: rgba(255,68,68,0.22); }
+
+  /* ── Concentration Risk ── */
+  .conc-section { margin-bottom: 24px; }
+  .conc-section h3 { color: #c6d4df; margin-bottom: 10px; font-size: 0.95em; text-transform: uppercase; letter-spacing: 0.05em; }
+  .conc-row { display: flex; align-items: center; gap: 10px; padding: 4px 0; }
+  .conc-img { width: 48px; height: 36px; object-fit: contain; flex-shrink: 0; background: rgba(0,0,0,0.2); border-radius: 3px; }
+  .conc-name { min-width: 200px; max-width: 200px; font-size: 0.8em; color: #c6d4df; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .conc-bar-track { flex: 1; height: 8px; background: rgba(255,255,255,0.06); border-radius: 4px; overflow: hidden; }
+  .conc-bar-fill { height: 100%; border-radius: 4px; transition: width 0.5s ease; }
+  .conc-pct { min-width: 48px; text-align: right; font-size: 0.82em; font-weight: 600; }
+  .conc-val { min-width: 76px; text-align: right; font-size: 0.78em; color: #8f98a0; }
+  .risk-badge { display: inline-block; padding: 4px 14px; border-radius: 12px; font-size: 0.85em; font-weight: 700; }
+  .risk-high   { background: rgba(255,68,68,0.18); color: #ff4444; border: 1px solid rgba(255,68,68,0.3); }
+  .risk-medium { background: rgba(255,215,0,0.15); color: #ffd700; border: 1px solid rgba(255,215,0,0.3); }
+  .risk-low    { background: rgba(164,208,7,0.15); color: #a4d007; border: 1px solid rgba(164,208,7,0.3); }
+
+  /* ── Predictions tab ── */
+  .pred-disclaimer { background: rgba(255,215,0,0.07); border: 1px solid rgba(255,215,0,0.2); border-radius: 6px; padding: 10px 14px; font-size: 0.82em; color: #c8b400; margin-bottom: 20px; }
+  .pred-grid { display: flex; flex-direction: column; gap: 10px; }
+  .pred-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; display: flex; align-items: center; gap: 14px; padding: 12px 16px; transition: border-color 0.2s; }
+  .pred-card:hover { border-color: var(--accent); }
+  .pred-card img { width: 72px; height: 54px; object-fit: contain; flex-shrink: 0; background: rgba(0,0,0,0.2); border-radius: 4px; }
+  .pred-info { flex: 1; min-width: 0; }
+  .pred-name { color: #fff; font-weight: 600; font-size: 0.92em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .pred-prices { font-size: 0.78em; color: #8f98a0; margin-top: 4px; }
+  .pred-change { font-size: 1.2em; font-weight: bold; min-width: 90px; text-align: center; }
+  .pred-up   { color: #a4d007; }
+  .pred-down { color: #ff4444; }
+  .pred-r2 { font-size: 0.78em; color: #8f98a0; min-width: 70px; text-align: right; }
+
+  /* ── Portfolio tab styles ── */
+  .portfolio-chart-wrap {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+  }
+  .portfolio-chart-wrap canvas {
+    width: 100% !important;
+    height: 400px !important;
+  }
+
+  @media (max-width: 700px) {
+    .chart-grid { grid-template-columns: 1fr; }
+    .item-grid { grid-template-columns: 1fr; }
+    .item-card { flex-direction: column; }
+    .item-image { width: 100%; min-height: 80px; }
+    .rarity-label { min-width: 100px; }
+    .rarity-stat { min-width: auto; }
+    header h1 { font-size: 1.3em; }
+    .tab-nav button { padding: 10px 14px; font-size: 0.85em; }
+  }
+</style></head><body><header>
+  <div class="header-top">
+    <h1>🎮 remilio CS2 Dashboard</h1>
+    <span class="timestamp">Generated on March 06, 2026 at 08:16 UTC</span>
+  </div>
+  <nav class="tab-nav">
+    <button class="active" data-tab="inventory">📦 Inventory</button>
+    <button data-tab="charts">📈 Price Charts</button>
+    <button data-tab="portfolio">📊 Portfolio</button>
+    <button data-tab="signals">💡 Sell Signals</button>
+    <button data-tab="tradeup">🔄 Trade-Up</button>
+    <button data-tab="predictions">📉 Predictions</button>
+  </nav>
+</header>
+
+<!-- ── Inventory Tab ── -->
+<div class="tab-panel active" id="tab-inventory">
+  <div class="container">
+    
+    <div class="summary">
+        <div class="summary-card"><div class="value">1</div><div class="label">Profiles Scanned</div></div>
+        <div class="summary-card"><div class="value">46</div><div class="label">Total Items</div></div>
+        <div class="summary-card"><div class="value accent-green">$3,793.01</div><div class="label">Combined Value</div></div>
+    </div>
+    
+    <section class="profile-section">
+    <div class="profile-header">
+        <h2>👤 remilio</h2>
+        <div class="profile-meta">
+            <span>Steam ID: <code>76561199093084778</code></span>
+            <span>Items: <b>46</b></span>
+            <span>Estimated Value: <b class="accent-green">$3,793.01</b></span>
+        </div>
+    </div><div class="rarity-breakdown"><h3>Breakdown by Rarity</h3><div class="rarity-bars"><div class="rarity-row"><span class="rarity-label" style="color:#eb4b4b">🔴 Covert</span><div class="rarity-bar-track"><div class="rarity-bar-fill" style="width:100.0%;background:#eb4b4b"></div></div><span class="rarity-stat"><b>16</b> items — <b>$2,796.52</b></span></div><div class="rarity-row"><span class="rarity-label" style="color:#ffd700">🟡 Extraordinary</span><div class="rarity-bar-track"><div class="rarity-bar-fill" style="width:31.8%;background:#ffd700"></div></div><span class="rarity-stat"><b>4</b> items — <b>$890.16</b></span></div><div class="rarity-row"><span class="rarity-label" style="color:#d32ce6">🟣 Classified</span><div class="rarity-bar-track"><div class="rarity-bar-fill" style="width:3.0%;background:#d32ce6"></div></div><span class="rarity-stat"><b>6</b> items — <b>$84.80</b></span></div><div class="rarity-row"><span class="rarity-label" style="color:#4b69ff">🟢 High Grade</span><div class="rarity-bar-track"><div class="rarity-bar-fill" style="width:0.6%;background:#4b69ff"></div></div><span class="rarity-stat"><b>10</b> items — <b>$16.62</b></span></div><div class="rarity-row"><span class="rarity-label" style="color:#8847ff">🔵 Restricted</span><div class="rarity-bar-track"><div class="rarity-bar-fill" style="width:0.2%;background:#8847ff"></div></div><span class="rarity-stat"><b>2</b> items — <b>$4.57</b></span></div><div class="rarity-row"><span class="rarity-label" style="color:#b0c3d9">⬜ Consumer Grade</span><div class="rarity-bar-track"><div class="rarity-bar-fill" style="width:0.0%;background:#b0c3d9"></div></div><span class="rarity-stat"><b>4</b> items — <b>$0.20</b></span></div><div class="rarity-row"><span class="rarity-label" style="color:#5e98d9">⚪ Industrial Grade</span><div class="rarity-bar-track"><div class="rarity-bar-fill" style="width:0.0%;background:#5e98d9"></div></div><span class="rarity-stat"><b>1</b> item — <b>$0.09</b></span></div><div class="rarity-row"><span class="rarity-label" style="color:#b0c3d9">⚫ Base Grade</span><div class="rarity-bar-track"><div class="rarity-bar-fill" style="width:0.0%;background:#b0c3d9"></div></div><span class="rarity-stat"><b>3</b> items — <b>$0.05</b></span></div></div></div><div class="category"><h3>🗡️ Knives & Gloves</h3><div class="item-grid"><div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL6kJ_m-B1Z-ua6bbZrLOmsCXSvw_tipOR7SSWqqh8rsj6OpYP4LCLJP0J1Zc8lEb5P7w68m9PhZL7g5VHdjoNEny3_insavClq6-4BBaFw_6GBilrHNb1uspQGOr_5GtAKpkye" alt="★ Butterfly Knife | Black Laminate (Field-Tested)" /></div>
+    <div class="item-details">
+        <h3 class="item-name">★ Butterfly Knife | Black Laminate (Field-Tested)</h3>
+        <span class="rarity-badge" style="background:#eb4b4b">🔴 Covert</span>
+        <div class="price-row">
+            <span class="price-main">$999.47</span>
+            <span class="price-sub">Low: $999.47 / Med: $978.00</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Exterior</span><span>Field-Tested</span></div>
+        <div class="detail-row"><span class="detail-label">Wear</span><div class="wear-bar-container"><div class="wear-bar-fill" style="width:37.9%"></div></div><span class="wear-value">0.3792</span></div>
+        <div class="detail-row"><span class="detail-label">Pattern</span><code>990</code></div>
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49691573725</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Tk5UvzWCL2kpn2-DFk_OKherB0H_icG2mU0vp5v_VhcDu2kSIqtjmMj4K3JCiWa1QkC8QlF-ACsRPrloa0Ybm27gzYjY5NyHisjHwf6Ctq4-4DAL1lpPP_Sv3jBQ" alt="★ Sport Gloves | Scarlet Shamagh (Field-Tested)" /></div>
+    <div class="item-details">
+        <h3 class="item-name">★ Sport Gloves | Scarlet Shamagh (Field-Tested)</h3>
+        <span class="rarity-badge" style="background:#ffd700">🟡 Extraordinary</span>
+        <div class="price-row">
+            <span class="price-main">$402.19</span>
+            <span class="price-sub">Low: $402.19 / Med: $413.66</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Exterior</span><span>Field-Tested</span></div>
+        <div class="detail-row"><span class="detail-label">Wear</span><div class="wear-bar-container"><div class="wear-bar-fill" style="width:37.3%"></div></div><span class="wear-value">0.3732</span></div>
+        <div class="detail-row"><span class="detail-label">Pattern</span><code>606</code></div>
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49816450487</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL6kJ_m-B1P7vG6YadsLM-SA1iXwON7sd5tQDmjmRg1jC2Nm5z8cBTLN1F4Tox4R7JZs0bsldLnMurg5VfWg4wUyyn72yhIuiY6tu1UBaAlrKDT2Q3HL_Rjtkcw7QQm" alt="★ Huntsman Knife | Gamma Doppler (Factory New)" /></div>
+    <div class="item-details">
+        <h3 class="item-name">★ Huntsman Knife | Gamma Doppler (Factory New)</h3>
+        <span class="rarity-badge" style="background:#eb4b4b">🔴 Covert</span>
+        <div class="price-row">
+            <span class="price-main">$348.12</span>
+            <span class="price-sub">Low: $348.12 / Med: $332.51</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Exterior</span><span>Factory New</span></div>
+        <div class="detail-row"><span class="detail-label">Wear</span><div class="wear-bar-container"><div class="wear-bar-fill" style="width:1.9%"></div></div><span class="wear-value">0.0194</span></div>
+        <div class="detail-row"><span class="detail-label">Pattern</span><code>19</code></div>
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49817312344</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5T441rsfhr9kYDl7h1I4_utY5t-LvGYC3SbyOBJp-lgWyyMmBgjuiiI1Nv_d33BaQUjA8MmF-QCskbswdTvY7_q7leNiN0Rnyz-3y4f6HxvsL4cEf1yOUfFUFk" alt="★ Driver Gloves | King Snake (Field-Tested)" /></div>
+    <div class="item-details">
+        <h3 class="item-name">★ Driver Gloves | King Snake (Field-Tested)</h3>
+        <span class="rarity-badge" style="background:#ffd700">🟡 Extraordinary</span>
+        <div class="price-row">
+            <span class="price-main">$274.93</span>
+            <span class="price-sub">Low: $274.93 / Med: $258.35</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Exterior</span><span>Field-Tested</span></div>
+        <div class="detail-row"><span class="detail-label">Wear</span><div class="wear-bar-container"><div class="wear-bar-fill" style="width:30.6%"></div></div><span class="wear-value">0.3061</span></div>
+        <div class="detail-row"><span class="detail-label">Pattern</span><code>972</code></div>
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49948603305</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL6kJ_m-B1d7v6tYK1iLs-QG1iWwOJ1uOhmQRa_mg8ijDGMnYftby-SalJ1AsQiEecC4xiwlobjMLnjsQffjtkQzSj2iS9I63xj4OwDVqo7uvqAGhE4d3k" alt="★ Falchion Knife | Lore (Minimal Wear)" /></div>
+    <div class="item-details">
+        <h3 class="item-name">★ Falchion Knife | Lore (Minimal Wear)</h3>
+        <span class="rarity-badge" style="background:#eb4b4b">🔴 Covert</span>
+        <div class="price-row">
+            <span class="price-main">$195.50</span>
+            <span class="price-sub">Low: $195.50 / Med: $195.43</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Exterior</span><span>Minimal Wear</span></div>
+        <div class="detail-row"><span class="detail-label">Wear</span><div class="wear-bar-container"><div class="wear-bar-fill" style="width:13.8%"></div></div><span class="wear-value">0.1377</span></div>
+        <div class="detail-row"><span class="detail-label">Pattern</span><code>151</code></div>
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49666770421</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL6kJ_m-B1L-uGmV6VgH-qWDHWR_uNztOh8QmeywUwl6zvSw4yvcH3GPQAoCJt5ROZZ4Ra_kdGzNOy3tFfb3doRmSyrkGoXuVUgigBA" alt="★ Shadow Daggers | Slaughter (Field-Tested)" /></div>
+    <div class="item-details">
+        <h3 class="item-name">★ Shadow Daggers | Slaughter (Field-Tested)</h3>
+        <span class="rarity-badge" style="background:#eb4b4b">🔴 Covert</span>
+        <div class="price-row">
+            <span class="price-main">$161.93</span>
+            <span class="price-sub">Low: $161.93 / Med: —</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Exterior</span><span>Field-Tested</span></div>
+        <div class="detail-row"><span class="detail-label">Wear</span><div class="wear-bar-container"><div class="wear-bar-fill" style="width:16.8%"></div></div><span class="wear-value">0.1683</span></div>
+        <div class="detail-row"><span class="detail-label">Pattern</span><code>304</code></div>
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49650495997</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Tg_13jRBnOlo_k7yNk6P6hfqF-H_KfAWiUyeFjvuVWRzC3hxwYsDyWn7DxIDnDO1h1Xv0tELNT902mwNy1YePm5g2P39hFm36o33gdvytp6utQBatxrKzVi13ANeE45sYCIuHnE0oMgVC6Yg" alt="★ Hydra Gloves | Case Hardened (Well-Worn)" /></div>
+    <div class="item-details">
+        <h3 class="item-name">★ Hydra Gloves | Case Hardened (Well-Worn)</h3>
+        <span class="rarity-badge" style="background:#ffd700">🟡 Extraordinary</span>
+        <div class="price-row">
+            <span class="price-main">$130.64</span>
+            <span class="price-sub">Low: $130.64 / Med: $131.26</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Exterior</span><span>Well-Worn</span></div>
+        <div class="detail-row"><span class="detail-label">Wear</span><div class="wear-bar-container"><div class="wear-bar-fill" style="width:38.5%"></div></div><span class="wear-value">0.3854</span></div>
+        <div class="detail-row"><span class="detail-label">Pattern</span><code>759</code></div>
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>48979080900</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu4vx603vRA_Olpfu-TVJ7uK9V6xsLvSEHGaA_uJzsfVhSjuqqhsmsS-MmbD-KDnGOFB1ZcolFKFDrBC-kdOzZrnhswyPgo8QyHj42Hwc7C5q4esCBaQh86zUh13BZ7Q-4ZIdZKHwNIXWsds" alt="★ Hand Wraps | Giraffe (Battle-Scarred)" /></div>
+    <div class="item-details">
+        <h3 class="item-name">★ Hand Wraps | Giraffe (Battle-Scarred)</h3>
+        <span class="rarity-badge" style="background:#ffd700">🟡 Extraordinary</span>
+        <div class="price-row">
+            <span class="price-main">$82.40</span>
+            <span class="price-sub">Low: $82.40 / Med: $78.46</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Exterior</span><span>Battle-Scarred</span></div>
+        <div class="detail-row"><span class="detail-label">Wear</span><div class="wear-bar-container"><div class="wear-bar-fill" style="width:58.9%"></div></div><span class="wear-value">0.5894</span></div>
+        <div class="detail-row"><span class="detail-label">Pattern</span><code>986</code></div>
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49816413470</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL6kJ_m-B1L-uGmV6x0H_-QC2ae_uV4uedscHDjqhEutDWR1NapdiiWblJxCpdyROVftBS9lNa1Meng5wXd3oJEyy_7ji1J6ilu6-0cEf1yYi7ebTk" alt="★ Shadow Daggers | Bright Water (Factory New)" /></div>
+    <div class="item-details">
+        <h3 class="item-name">★ Shadow Daggers | Bright Water (Factory New)</h3>
+        <span class="rarity-badge" style="background:#eb4b4b">🔴 Covert</span>
+        <div class="price-row">
+            <span class="price-main">$74.49</span>
+            <span class="price-sub">Low: $74.49 / Med: $67.74</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Exterior</span><span>Factory New</span></div>
+        <div class="detail-row"><span class="detail-label">Wear</span><div class="wear-bar-container"><div class="wear-bar-fill" style="width:6.0%"></div></div><span class="wear-value">0.0599</span></div>
+        <div class="detail-row"><span class="detail-label">Pattern</span><code>12</code></div>
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49667098507</code></span>
+        </div>
+    </div>
+</div></div></div><div class="category"><h3>🔫 Weapon Skins</h3><div class="item-grid"><div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8ypexwjFS4_ega6F_H_eAMWrEwL9lj_JnTiK2lxQztgKClYP9HibCOl9lV4wiRuACuxfrkoXiNL_i4VDXjIgTxSr43X4f7ik457wAWfAjrKTRjgHGL_RjtqbVPGVJ" alt="StatTrak™ M4A1-S | Golden Coil (Well-Worn)" /></div>
+    <div class="item-details">
+        <h3 class="item-name">StatTrak™ M4A1-S | Golden Coil (Well-Worn)</h3>
+        <span class="rarity-badge" style="background:#eb4b4b">🔴 Covert</span>
+        <div class="price-row">
+            <span class="price-main">$183.28</span>
+            <span class="price-sub">Low: $183.28 / Med: —</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Exterior</span><span>Well-Worn</span></div>
+        <div class="detail-row"><span class="detail-label">Wear</span><div class="wear-bar-container"><div class="wear-bar-fill" style="width:40.2%"></div></div><span class="wear-value">0.4019</span></div>
+        <div class="detail-row"><span class="detail-label">Pattern</span><code>702</code></div>
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49647686266</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8ypexwjFS4_ega6F_H_3HDzaD_vh3oO57WCilkCIrujqNjsH_In7DZgYnWcAiR-MJshO6koDlN7vhsQyLi41HySX6iXlAvCZrsb0HT-N7rW-9qIHE" alt="M4A1-S | Vaporwave (Minimal Wear)" /></div>
+    <div class="item-details">
+        <h3 class="item-name">M4A1-S | Vaporwave (Minimal Wear)</h3>
+        <span class="rarity-badge" style="background:#eb4b4b">🔴 Covert</span>
+        <div class="price-row">
+            <span class="price-main">$169.42</span>
+            <span class="price-sub">Low: $169.42 / Med: $173.31</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Exterior</span><span>Minimal Wear</span></div>
+        <div class="detail-row"><span class="detail-label">Wear</span><div class="wear-bar-container"><div class="wear-bar-fill" style="width:11.2%"></div></div><span class="wear-value">0.1120</span></div>
+        <div class="detail-row"><span class="detail-label">Pattern</span><code>566</code></div>
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49685083162</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8jsHf-jFk4uL5V6ZhL_-XHXef0_pJvOhuRz39lxsk4W3Ry96pIHrFOgElDZN2Q-9etUSwk4LnYu3h5wLejYwWxSr43zQJsHiIGMoJQA" alt="MP7 | Bloodsport (Factory New)" /></div>
+    <div class="item-details">
+        <h3 class="item-name">MP7 | Bloodsport (Factory New)</h3>
+        <span class="rarity-badge" style="background:#eb4b4b">🔴 Covert</span>
+        <div class="price-row">
+            <span class="price-main">$144.81</span>
+            <span class="price-sub">Low: $144.81 / Med: $142.77</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Exterior</span><span>Factory New</span></div>
+        <div class="detail-row"><span class="detail-label">Wear</span><div class="wear-bar-container"><div class="wear-bar-fill" style="width:5.8%"></div></div><span class="wear-value">0.0581</span></div>
+        <div class="detail-row"><span class="detail-label">Pattern</span><code>197</code></div>
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49808943276</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLkjYbf7itX6vytbbZSI-WsG3SA_uV_vO1WTCa9kxQ1vjiBpYL8JSLSMxghCMEjEeNe5hHpw9zhYuOz5VfcitpBmyqt3X9O6itrsesFUfYmrKzTkUifZqPQtnZK" alt="USP-S | Kill Confirmed (Field-Tested)" /></div>
+    <div class="item-details">
+        <h3 class="item-name">USP-S | Kill Confirmed (Field-Tested)</h3>
+        <span class="rarity-badge" style="background:#eb4b4b">🔴 Covert</span>
+        <div class="price-row">
+            <span class="price-main">$107.31</span>
+            <span class="price-sub">Low: $107.31 / Med: $99.79</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Exterior</span><span>Field-Tested</span></div>
+        <div class="detail-row"><span class="detail-label">Wear</span><div class="wear-bar-container"><div class="wear-bar-fill" style="width:32.6%"></div></div><span class="wear-value">0.3260</span></div>
+        <div class="detail-row"><span class="detail-label">Pattern</span><code>678</code></div>
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49651370577</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwiYbf_DVL0OK8Yap5M-SBC2ad_uNztOh8QmexzUt1tj7UnN-vc3KWbw8nCpJzRrJY5xa8xNHuZOLr51bYjtkXyyj5kGoXuQMtNgKM" alt="AWP | Printstream (Field-Tested)" /></div>
+    <div class="item-details">
+        <h3 class="item-name">AWP | Printstream (Field-Tested)</h3>
+        <span class="rarity-badge" style="background:#eb4b4b">🔴 Covert</span>
+        <div class="price-row">
+            <span class="price-main">$80.38</span>
+            <span class="price-sub">Low: $80.38 / Med: $80.34</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Exterior</span><span>Field-Tested</span></div>
+        <div class="detail-row"><span class="detail-label">Wear</span><div class="wear-bar-container"><div class="wear-bar-fill" style="width:33.1%"></div></div><span class="wear-value">0.3309</span></div>
+        <div class="detail-row"><span class="detail-label">Pattern</span><code>812</code></div>
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49253993374</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwlcK3wiNQ0OKheqdoLPGaAFidxOp_pewnSn6wl0p-4D7Ryo34cSqeOwMlWZt5QbJfuhW9koKyMO3ksgWMiY8TzDK-0H009BnnIw" alt="AK-47 | Inheritance (Field-Tested)" /></div>
+    <div class="item-details">
+        <h3 class="item-name">AK-47 | Inheritance (Field-Tested)</h3>
+        <span class="rarity-badge" style="background:#eb4b4b">🔴 Covert</span>
+        <div class="price-row">
+            <span class="price-main">$76.75</span>
+            <span class="price-sub">Low: $76.75 / Med: $77.53</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Exterior</span><span>Field-Tested</span></div>
+        <div class="detail-row"><span class="detail-label">Wear</span><div class="wear-bar-container"><div class="wear-bar-fill" style="width:23.5%"></div></div><span class="wear-value">0.2351</span></div>
+        <div class="detail-row"><span class="detail-label">Pattern</span><code>524</code></div>
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49432935654</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL3n5vh7h1d7v-ve5tvIfSHHG6A_uNztOh8Qmewwxgm4jvVm9ytcHmValIjWZIjReZe5xHqkoLjN-vgtgPdj95BzSX7kGoXuRHyWhnd" alt="StatTrak™ FAMAS | Bad Trip (Well-Worn)" /></div>
+    <div class="item-details">
+        <h3 class="item-name">StatTrak™ FAMAS | Bad Trip (Well-Worn)</h3>
+        <span class="rarity-badge" style="background:#eb4b4b">🔴 Covert</span>
+        <div class="price-row">
+            <span class="price-main">$73.23</span>
+            <span class="price-sub">Low: $73.23 / Med: $60.71</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Exterior</span><span>Well-Worn</span></div>
+        <div class="detail-row"><span class="detail-label">Wear</span><div class="wear-bar-container"><div class="wear-bar-fill" style="width:40.9%"></div></div><span class="wear-value">0.4090</span></div>
+        <div class="detail-row"><span class="detail-label">Pattern</span><code>296</code></div>
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49815990975</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL2kpnj9h1c4_2tY5tuKP-eHmKC_uZzsfdwAXzmlhhz6j7RnNn_dX_FaQUhD8NzFOdYshO5x9e2Y7vktVDZ2tlGnirgznQetWdhWVs" alt="Glock-18 | Gold Toof (Battle-Scarred)" /></div>
+    <div class="item-details">
+        <h3 class="item-name">Glock-18 | Gold Toof (Battle-Scarred)</h3>
+        <span class="rarity-badge" style="background:#eb4b4b">🔴 Covert</span>
+        <div class="price-row">
+            <span class="price-main">$48.88</span>
+            <span class="price-sub">Low: $48.88 / Med: $41.55</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Exterior</span><span>Battle-Scarred</span></div>
+        <div class="detail-row"><span class="detail-label">Wear</span><div class="wear-bar-container"><div class="wear-bar-fill" style="width:58.8%"></div></div><span class="wear-value">0.5884</span></div>
+        <div class="detail-row"><span class="detail-label">Pattern</span><code>124</code></div>
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49506155163</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwlcK3wiFO0POlV6xoIfSsHW-f1dF-v-1mcCS2kRQyvnPWn9egI3mWbA4kCZJxRbFf5haxwYHuYezntg2Ljt1Mnnr8jngfuHo__a9cBiDIU36L" alt="StatTrak™ AK-47 | Head Shot (Well-Worn)" /></div>
+    <div class="item-details">
+        <h3 class="item-name">StatTrak™ AK-47 | Head Shot (Well-Worn)</h3>
+        <span class="rarity-badge" style="background:#eb4b4b">🔴 Covert</span>
+        <div class="price-row">
+            <span class="price-main">$45.40</span>
+            <span class="price-sub">Low: $45.40 / Med: $42.33</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Exterior</span><span>Well-Worn</span></div>
+        <div class="detail-row"><span class="detail-label">Wear</span><div class="wear-bar-container"><div class="wear-bar-fill" style="width:40.7%"></div></div><span class="wear-value">0.4074</span></div>
+        <div class="detail-row"><span class="detail-label">Pattern</span><code>534</code></div>
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>48979040750</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8ypexwiFO0P_6afBSLP-FC1idxOp_pewnTS2xl0gk5WjSztqreX3EOgYnCcN1EOQK5xK6k4HjPumz4VPW2dhAmzK-0H1CdgX2Fw" alt="StatTrak™ M4A4 | In Living Color (Field-Tested)" /></div>
+    <div class="item-details">
+        <h3 class="item-name">StatTrak™ M4A4 | In Living Color (Field-Tested)</h3>
+        <span class="rarity-badge" style="background:#eb4b4b">🔴 Covert</span>
+        <div class="price-row">
+            <span class="price-main">$44.96</span>
+            <span class="price-sub">Low: $44.96 / Med: $44.85</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Exterior</span><span>Field-Tested</span></div>
+        <div class="detail-row"><span class="detail-label">Wear</span><div class="wear-bar-container"><div class="wear-bar-fill" style="width:33.4%"></div></div><span class="wear-value">0.3339</span></div>
+        <div class="detail-row"><span class="detail-label">Pattern</span><code>249</code></div>
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49817208403</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8jsHf-jFk4uL5V6ZhL_-XHXef0_pJvOhuRz39lxsk4W3Ry96pIHrFOgElDZN2Q-9etUSwk4LnYu3h5wLejYwWxSr43zQJsHiIGMoJQA" alt="StatTrak™ MP7 | Bloodsport (Minimal Wear)" /></div>
+    <div class="item-details">
+        <h3 class="item-name">StatTrak™ MP7 | Bloodsport (Minimal Wear)</h3>
+        <span class="rarity-badge" style="background:#eb4b4b">🔴 Covert</span>
+        <div class="price-row">
+            <span class="price-main">$42.59</span>
+            <span class="price-sub">Low: $42.59 / Med: $46.41</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Exterior</span><span>Minimal Wear</span></div>
+        <div class="detail-row"><span class="detail-label">Wear</span><div class="wear-bar-container"><div class="wear-bar-fill" style="width:11.3%"></div></div><span class="wear-value">0.1133</span></div>
+        <div class="detail-row"><span class="detail-label">Pattern</span><code>827</code></div>
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49815557239</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8js_f_jdk4uL3V6JiL_SsDW-RyOBJvOhuRz39xB5-sGrTnt2tdymVOFApD8dxQLUCuxWxldLkNezjtVDd2t8Uyy_7izQJsHisCKzN8w" alt="StatTrak™ MP9 | Food Chain (Minimal Wear)" /></div>
+    <div class="item-details">
+        <h3 class="item-name">StatTrak™ MP9 | Food Chain (Minimal Wear)</h3>
+        <span class="rarity-badge" style="background:#d32ce6">🟣 Classified</span>
+        <div class="price-row">
+            <span class="price-main">$21.59</span>
+            <span class="price-sub">Low: $21.59 / Med: $19.52</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Exterior</span><span>Minimal Wear</span></div>
+        <div class="detail-row"><span class="detail-label">Wear</span><div class="wear-bar-container"><div class="wear-bar-fill" style="width:14.2%"></div></div><span class="wear-value">0.1422</span></div>
+        <div class="detail-row"><span class="detail-label">Pattern</span><code>727</code></div>
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49817185088</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwi5Hf-jFk7uepV7d5Of2DBmacyO94j-NgXS2gqhEutDWR1Iz6cnqXOA8mD5shTOEPuhm-moHlZLnj4gLWjdhEzimr2n8bvC5q4e8cEf1yYjdCpmM" alt="StatTrak™ AUG | Stymphalian (Factory New)" /></div>
+    <div class="item-details">
+        <h3 class="item-name">StatTrak™ AUG | Stymphalian (Factory New)</h3>
+        <span class="rarity-badge" style="background:#d32ce6">🟣 Classified</span>
+        <div class="price-row">
+            <span class="price-main">$20.58</span>
+            <span class="price-sub">Low: $20.58 / Med: $19.05</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Exterior</span><span>Factory New</span></div>
+        <div class="detail-row"><span class="detail-label">Wear</span><div class="wear-bar-container"><div class="wear-bar-fill" style="width:6.5%"></div></div><span class="wear-value">0.0650</span></div>
+        <div class="detail-row"><span class="detail-label">Pattern</span><code>146</code></div>
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49818846698</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwiYbf-jFk7uW-V6BoIeSbMWuZxuZi_rNtHiuwwRwismWEnNn8JymSZgUiDpd3Ru9ZsxG-xNy2NLzn41DWg41bjXKp5oOAt0A" alt="StatTrak™ AWP | Mortis (Minimal Wear)" /></div>
+    <div class="item-details">
+        <h3 class="item-name">StatTrak™ AWP | Mortis (Minimal Wear)</h3>
+        <span class="rarity-badge" style="background:#d32ce6">🟣 Classified</span>
+        <div class="price-row">
+            <span class="price-main">$17.52</span>
+            <span class="price-sub">Low: $17.52 / Med: $17.26</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Exterior</span><span>Minimal Wear</span></div>
+        <div class="detail-row"><span class="detail-label">Wear</span><div class="wear-bar-container"><div class="wear-bar-fill" style="width:7.4%"></div></div><span class="wear-value">0.0740</span></div>
+        <div class="detail-row"><span class="detail-label">Pattern</span><code>161</code></div>
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49839130008</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwi5Hf-jFk7uepV7d5Of2DBmacyO94j-NgXS2gqhEutDWR1Iz6cnqXOA8mD5shTOEPuhm-moHlZLnj4gLWjdhEzimr2n8bvC5q4e8cEf1yYjdCpmM" alt="StatTrak™ AUG | Stymphalian (Minimal Wear)" /></div>
+    <div class="item-details">
+        <h3 class="item-name">StatTrak™ AUG | Stymphalian (Minimal Wear)</h3>
+        <span class="rarity-badge" style="background:#d32ce6">🟣 Classified</span>
+        <div class="price-row">
+            <span class="price-main">$9.77</span>
+            <span class="price-sub">Low: $9.77 / Med: $9.75</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Exterior</span><span>Minimal Wear</span></div>
+        <div class="detail-row"><span class="detail-label">Wear</span><div class="wear-bar-container"><div class="wear-bar-fill" style="width:12.6%"></div></div><span class="wear-value">0.1257</span></div>
+        <div class="detail-row"><span class="detail-label">Pattern</span><code>418</code></div>
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49838051106</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL1m5fn8Sdk6OGRbKFsJ_yWMWqVwuZ3j-xsSyCmmFNxtzvUnouqdi_EZgB2X5d5ELUNuhDqxoazYu634QPX3oxAnyj_jnlP8G81tF-I545Z" alt="Desert Eagle | Mecha Industries (Field-Tested)" /></div>
+    <div class="item-details">
+        <h3 class="item-name">Desert Eagle | Mecha Industries (Field-Tested)</h3>
+        <span class="rarity-badge" style="background:#d32ce6">🟣 Classified</span>
+        <div class="price-row">
+            <span class="price-main">$9.11</span>
+            <span class="price-sub">Low: $9.11 / Med: $9.12</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Exterior</span><span>Field-Tested</span></div>
+        <div class="detail-row"><span class="detail-label">Wear</span><div class="wear-bar-container"><div class="wear-bar-fill" style="width:28.3%"></div></div><span class="wear-value">0.2832</span></div>
+        <div class="detail-row"><span class="detail-label">Pattern</span><code>258</code></div>
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49665037123</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwi5Hf-jFk7uepV7d5Of2DBmacyO94j-NgXS2gqhAitzSQl8GpInvFOAFyD5AmFuFesBO8loDkML_g4w3diY4UyXj9jCxO6ihu5-8DT-N7rWFcbgcq" alt="StatTrak™ AUG | Stymphalian (Field-Tested)" /></div>
+    <div class="item-details">
+        <h3 class="item-name">StatTrak™ AUG | Stymphalian (Field-Tested)</h3>
+        <span class="rarity-badge" style="background:#d32ce6">🟣 Classified</span>
+        <div class="price-row">
+            <span class="price-main">$6.23</span>
+            <span class="price-sub">Low: $6.23 / Med: $5.91</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Exterior</span><span>Field-Tested</span></div>
+        <div class="detail-row"><span class="detail-label">Wear</span><div class="wear-bar-container"><div class="wear-bar-fill" style="width:20.6%"></div></div><span class="wear-value">0.2063</span></div>
+        <div class="detail-row"><span class="detail-label">Pattern</span><code>737</code></div>
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49821161774</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8n5WxrR1W7vH_OJtiOvGYB1idxOp_pewnTnzqlksh4Dndw9r8ciiSaFUoXJAlF-UCtkO-ltKxNe_q4QTegt1GxDK-0H0O2S-Bcg" alt="StatTrak™ MAC-10 | Saibā Oni (Field-Tested)" /></div>
+    <div class="item-details">
+        <h3 class="item-name">StatTrak™ MAC-10 | Saibā Oni (Field-Tested)</h3>
+        <span class="rarity-badge" style="background:#8847ff">🔵 Restricted</span>
+        <div class="price-row">
+            <span class="price-main">$3.48</span>
+            <span class="price-sub">Low: $3.48 / Med: $3.72</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Exterior</span><span>Field-Tested</span></div>
+        <div class="detail-row"><span class="detail-label">Wear</span><div class="wear-bar-container"><div class="wear-bar-fill" style="width:16.1%"></div></div><span class="wear-value">0.1608</span></div>
+        <div class="detail-row"><span class="detail-label">Pattern</span><code>270</code></div>
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49507995020</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLkk4a0qB1Y-s27ZbQ5dc-EBm6ExNFwse9ucCS2kRQyvnPVm9-rJ3LBOgYoXpdwQe5YshWxwNyzP-Pq4VaL2YJHmXj2hy1N5ylu_a9cBgpEpCbH" alt="StatTrak™ UMP-45 | Arctic Wolf (Well-Worn)" /></div>
+    <div class="item-details">
+        <h3 class="item-name">StatTrak™ UMP-45 | Arctic Wolf (Well-Worn)</h3>
+        <span class="rarity-badge" style="background:#8847ff">🔵 Restricted</span>
+        <div class="price-row">
+            <span class="price-main">$1.09</span>
+            <span class="price-sub">Low: $1.09 / Med: $1.11</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Exterior</span><span>Well-Worn</span></div>
+        <div class="detail-row"><span class="detail-label">Wear</span><div class="wear-bar-container"><div class="wear-bar-fill" style="width:43.6%"></div></div><span class="wear-value">0.4364</span></div>
+        <div class="detail-row"><span class="detail-label">Pattern</span><code>232</code></div>
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49839157092</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLyhMG1_B1T9veReKVkM_yWF1iUxP13pN5lRi67gVN2tW3Sntuvd3OROFUoXsB2Q-9Zs0Hqlta0Pujr7waIiYJAxS-sjy0c8G81tBzzAWSY" alt="CZ75-Auto | Honey Paisley (Factory New)" /></div>
+    <div class="item-details">
+        <h3 class="item-name">CZ75-Auto | Honey Paisley (Factory New)</h3>
+        <span class="rarity-badge" style="background:#b0c3d9">⬜ Consumer Grade</span>
+        <div class="price-row">
+            <span class="price-main">$0.11</span>
+            <span class="price-sub">Low: $0.11 / Med: $0.11</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Exterior</span><span>Factory New</span></div>
+        <div class="detail-row"><span class="detail-label">Wear</span><div class="wear-bar-container"><div class="wear-bar-fill" style="width:6.2%"></div></div><span class="wear-value">0.0615</span></div>
+        <div class="detail-row"><span class="detail-label">Pattern</span><code>771</code></div>
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49811200533</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwlcK3wjFL0P-re6xSNPGdMWqVxedjva86HSrnxkx3tTjdz42ud36fbwVxD8RyQbICtBe8kdXgZe624gCK2YhB02yg2fLyHdkl" alt="AK-47 | Safari Mesh (Field-Tested)" /></div>
+    <div class="item-details">
+        <h3 class="item-name">AK-47 | Safari Mesh (Field-Tested)</h3>
+        <span class="rarity-badge" style="background:#5e98d9">⚪ Industrial Grade</span>
+        <div class="price-row">
+            <span class="price-main">$0.09</span>
+            <span class="price-sub">Low: $0.09 / Med: $0.10</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Exterior</span><span>Field-Tested</span></div>
+        <div class="detail-row"><span class="detail-label">Wear</span><div class="wear-bar-container"><div class="wear-bar-fill" style="width:20.1%"></div></div><span class="wear-value">0.2013</span></div>
+        <div class="detail-row"><span class="detail-label">Pattern</span><code>82</code></div>
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>48967265005</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8n5G3wjFU0PW8bb1vLOWWMWqVxedjva89THnmkxt_sGvWwt-hc3-QZgAkWZVyFOJZtBewlobnN-_l7lPdi4MR02yg2ZdaTT0b" alt="MAG-7 | Copper Oxide (Field-Tested)" /></div>
+    <div class="item-details">
+        <h3 class="item-name">MAG-7 | Copper Oxide (Field-Tested)</h3>
+        <span class="rarity-badge" style="background:#b0c3d9">⬜ Consumer Grade</span>
+        <div class="price-row">
+            <span class="price-main">$0.03</span>
+            <span class="price-sub">Low: $0.03 / Med: $0.07</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Exterior</span><span>Field-Tested</span></div>
+        <div class="detail-row"><span class="detail-label">Wear</span><div class="wear-bar-container"><div class="wear-bar-fill" style="width:15.4%"></div></div><span class="wear-value">0.1538</span></div>
+        <div class="detail-row"><span class="detail-label">Pattern</span><code>782</code></div>
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49645693762</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL3n5vh7h1I__2ReKVhLc-bC2aG2KBw4bk_Ti3gk0Qmtmrcntitc3_EblJ1D8YhQeQI4USwkNDlMb-35ADYlcsbmqxDnyx2" alt="FAMAS | Palm (Battle-Scarred)" /></div>
+    <div class="item-details">
+        <h3 class="item-name">FAMAS | Palm (Battle-Scarred)</h3>
+        <span class="rarity-badge" style="background:#b0c3d9">⬜ Consumer Grade</span>
+        <div class="price-row">
+            <span class="price-main">$0.03</span>
+            <span class="price-sub">Low: $0.03 / Med: $0.03</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Exterior</span><span>Battle-Scarred</span></div>
+        <div class="detail-row"><span class="detail-label">Wear</span><div class="wear-bar-container"><div class="wear-bar-fill" style="width:66.8%"></div></div><span class="wear-value">0.6679</span></div>
+        <div class="detail-row"><span class="detail-label">Pattern</span><code>122</code></div>
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49429492805</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLhx8bf7jJk_OK8ab1SM_GdClidxOp_pewnGy2xzEh0t2jRzNugci3FP1MiW8BzFrMDuxC-mt2yP-i3tVTeitgXzTK-0H0VdESbcw" alt="P90 | Sand Spray (Field-Tested)" /></div>
+    <div class="item-details">
+        <h3 class="item-name">P90 | Sand Spray (Field-Tested)</h3>
+        <span class="rarity-badge" style="background:#b0c3d9">⬜ Consumer Grade</span>
+        <div class="price-row">
+            <span class="price-main">$0.03</span>
+            <span class="price-sub">Low: $0.03 / Med: $0.04</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">Exterior</span><span>Field-Tested</span></div>
+        <div class="detail-row"><span class="detail-label">Wear</span><div class="wear-bar-container"><div class="wear-bar-fill" style="width:25.4%"></div></div><span class="wear-value">0.2539</span></div>
+        <div class="detail-row"><span class="detail-label">Pattern</span><code>736</code></div>
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49109016855</code></span>
+        </div>
+    </div>
+</div></div></div><div class="category"><h3>🎵 Music Kits, Stickers & Other</h3><div class="item-grid"><div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIijyEKzb_3d19nuPnKb6UV25o7k_ma3EFPym86wqSAKu_H7PKE4JKiWV2GVx71z57k6Sy3hzURwsWjXyouod3KfcEZ-XaDU2Jmf" alt="Music Kit | KILL SCRIPT, All Night" /></div>
+    <div class="item-details">
+        <h3 class="item-name">Music Kit | KILL SCRIPT, All Night</h3>
+        <span class="rarity-badge" style="background:#4b69ff">🟢 High Grade</span>
+        <div class="price-row">
+            <span class="price-main">$4.07</span>
+            <span class="price-sub">Low: $4.07 / Med: $4.33</span>
+        </div>
+        
+        
+        
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49690482633</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIijyEKzb_3d19nuMWmO4VN7y9elpAiyEUynyZSwrSMOu6v-MaI8cqjCDzXIluwmtLRtHy2wzB4mtzuDyNi3MSXAPV825k0" alt="Music Kit | DRYDEN, Feel The Power" /></div>
+    <div class="item-details">
+        <h3 class="item-name">Music Kit | DRYDEN, Feel The Power</h3>
+        <span class="rarity-badge" style="background:#4b69ff">🟢 High Grade</span>
+        <div class="price-row">
+            <span class="price-main">$2.61</span>
+            <span class="price-sub">Low: $2.61 / Med: $2.45</span>
+        </div>
+        
+        
+        
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49690453947</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIijyEKzb_3d19nuPnWY5l0ny9empA21F0ijnMS3rXoO6qv2Oac4cKfDXz-Uw7p0tLk9TXHllkVx5W2HzNa3MSXAGLCr2ac" alt="Music Kit | Knock2, Make U SWEAT!" /></div>
+    <div class="item-details">
+        <h3 class="item-name">Music Kit | Knock2, Make U SWEAT!</h3>
+        <span class="rarity-badge" style="background:#4b69ff">🟢 High Grade</span>
+        <div class="price-row">
+            <span class="price-main">$2.03</span>
+            <span class="price-sub">Low: $2.03 / Med: $2.03</span>
+        </div>
+        
+        
+        
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49690470138</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJai0ki7VeTHjMmuOHaC619h7dempVvrSAnrlYTp-CUVt6L8baI4caiSVmLClLsg6bE_HCviwkh_tTyDyYugcy3DaAcjCpVxQvlK7Efq531Jbw" alt="Sticker | Blitzkrieg" /></div>
+    <div class="item-details">
+        <h3 class="item-name">Sticker | Blitzkrieg</h3>
+        <span class="rarity-badge" style="background:#4b69ff">🟢 High Grade</span>
+        <div class="price-row">
+            <span class="price-main">$1.16</span>
+            <span class="price-sub">Low: $1.16 / Med: —</span>
+        </div>
+        
+        
+        
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49682169875</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJai0ki7VeTHjMmuOHaC619h7dempVvrSAnrlYTp-CUVt6L8baI4caiSVmLClLsg6bE_HCviwkh_tTyDyYugcy3DaAcjCpVxQvlK7Efq531Jbw" alt="Sticker | Blitzkrieg" /></div>
+    <div class="item-details">
+        <h3 class="item-name">Sticker | Blitzkrieg</h3>
+        <span class="rarity-badge" style="background:#4b69ff">🟢 High Grade</span>
+        <div class="price-row">
+            <span class="price-main">$1.16</span>
+            <span class="price-sub">Low: $1.16 / Med: —</span>
+        </div>
+        
+        
+        
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49682169873</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJai0ki7VeTHjMmuOHaC619h7dempVvrSAnrlYTp-CUVt6L8baI4caiSVmLClLsg6bE_HCviwkh_tTyDyYugcy3DaAcjCpVxQvlK7Efq531Jbw" alt="Sticker | Blitzkrieg" /></div>
+    <div class="item-details">
+        <h3 class="item-name">Sticker | Blitzkrieg</h3>
+        <span class="rarity-badge" style="background:#4b69ff">🟢 High Grade</span>
+        <div class="price-row">
+            <span class="price-main">$1.16</span>
+            <span class="price-sub">Low: $1.16 / Med: —</span>
+        </div>
+        
+        
+        
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49682169871</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJai0ki7VeTHjMmuOHaC619h7dempVvrSAnrlYTp-CUVt6L8baI4caiSVmLClLsg6bE_HCviwkh_tTyDyYugcy3DaAcjCpVxQvlK7Efq531Jbw" alt="Sticker | Blitzkrieg" /></div>
+    <div class="item-details">
+        <h3 class="item-name">Sticker | Blitzkrieg</h3>
+        <span class="rarity-badge" style="background:#4b69ff">🟢 High Grade</span>
+        <div class="price-row">
+            <span class="price-main">$1.16</span>
+            <span class="price-sub">Low: $1.16 / Med: —</span>
+        </div>
+        
+        
+        
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49682169869</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJai0ki7VeTHjMmuOHaC619h7dempU3oTx7witjj-HsCv6P2avVrI_SXVmSWxeoj6bFtTnznl0RwtTyHw9moeSmTOlQlFNIuEofCjY9p" alt="Sticker | T On Cat" /></div>
+    <div class="item-details">
+        <h3 class="item-name">Sticker | T On Cat</h3>
+        <span class="rarity-badge" style="background:#4b69ff">🟢 High Grade</span>
+        <div class="price-row">
+            <span class="price-main">$1.09</span>
+            <span class="price-sub">Low: $1.09 / Med: $1.09</span>
+        </div>
+        
+        
+        
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49682289943</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJai0ki7VeTHjMmuOHaC619h7dempU3oTx7witjj-HsCv6P2avVrI_SXVmSWxeoj6bFtTnznl0RwtTyHw9moeSmTOlQlFNIuEofCjY9p" alt="Sticker | T On Cat" /></div>
+    <div class="item-details">
+        <h3 class="item-name">Sticker | T On Cat</h3>
+        <span class="rarity-badge" style="background:#4b69ff">🟢 High Grade</span>
+        <div class="price-row">
+            <span class="price-main">$1.09</span>
+            <span class="price-sub">Low: $1.09 / Med: $1.09</span>
+        </div>
+        
+        
+        
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49682289941</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJai0ki7VeTHjMmuOHaC619h7dempU3oTx7witjj-HsCv6P2avVrI_SXVmSWxeoj6bFtTnznl0RwtTyHw9moeSmTOlQlFNIuEofCjY9p" alt="Sticker | T On Cat" /></div>
+    <div class="item-details">
+        <h3 class="item-name">Sticker | T On Cat</h3>
+        <span class="rarity-badge" style="background:#4b69ff">🟢 High Grade</span>
+        <div class="price-row">
+            <span class="price-main">$1.09</span>
+            <span class="price-sub">Low: $1.09 / Med: $1.09</span>
+        </div>
+        
+        
+        
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49682289939</code></span>
+        </div>
+    </div>
+</div>
+<div class="item-card">
+    <div class="item-image"><img src="https://community.akamai.steamstatic.com/economy/image/IzMF03bi9WpSBq-S-ekoE33L-iLqGFHVaU25ZzQNQcXdB2ozio1RrlIWFK3UfvMYB8UsvjiMXojflsZalyxSh31CIyHz2GZ-KuFpPsrTzBG0qe6yD3n-ZDLdYSXcTVg9ROEKZ2HYqGHzsevASzHPSb0tEV8Cf6YN9W0fbJjbPEFo3Y8Vu2u_0UdyEhk6f9BKZAarxm1ONekmkXQQYJqelPQ" alt="Sealed Graffiti | Still Happy (Tracer Yellow)" /></div>
+    <div class="item-details">
+        <h3 class="item-name">Sealed Graffiti | Still Happy (Tracer Yellow)</h3>
+        <span class="rarity-badge" style="background:#b0c3d9">⚫ Base Grade</span>
+        <div class="price-row">
+            <span class="price-main">$0.05</span>
+            <span class="price-sub">Low: $0.05 / Med: $0.06</span>
+        </div>
+        
+        
+        
+        <div class="detail-row">
+            <span class="badge tradable">✅ Tradable</span>
+            <span class="asset-id">Asset: <code>49948597499</code></span>
+        </div>
+    </div>
+</div></div></div><div class="category"><h3>📦 Other Items (No Market Value)</h3><div class="no-value-list"><div class="no-value-item">🔒 <img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJG51EejH_3R2smpNHKZ2kRw-Yji72bzThL9oYbh_ikVv6qqPPQ0JaOXCmWRl7shtbhsFnHlkxl16miGy477dnmQb1R2DpBzF_lK7EckGgI0TA" class="mini-img" /><b>Charm Detachment Pack</b><span class="item-type">Base Grade Tool</span></div><div class="no-value-item">🔒 <img src="https://community.akamai.steamstatic.com/economy/image/IzMF03bi9WpSBq-S-ekoE33L-iLqGFHVaU25ZzQNQcXdB2ozio1RrlIWFK3UfvMYB8UsvjiMXojflsZalyxSh31CIyHz2GZ-KuFpPsrTzBG0pO-CI3r-Zj3FYSfdTgw8RLRYM2qIqmalsO6cFj6fSb55RA0HKPcA92EdaJyNNkBp14AVu2u_0UdyEhk6f9BKZAarxm1OZbhyziBLFMsHdiE" class="mini-img" /><b>Graffiti | Ninja (Monarch Blue)</b><span class="item-type">Base Grade Graffiti</span></div></div></div></section>
+  </div>
+</div>
+
+<!-- ── Price Charts Tab ── -->
+<div class="tab-panel" id="tab-charts">
+  <div class="container">
+    
+    <div class="charts-controls controls">
+        <label>Sort by:
+            <select id="sortSelect">
+                <option value="price-desc">Price (High → Low)</option>
+                <option value="price-asc">Price (Low → High)</option>
+                <option value="name-asc">Name (A → Z)</option>
+                <option value="change-desc">Change % (Best → Worst)</option>
+                <option value="change-asc">Change % (Worst → Best)</option>
+            </select>
+        </label>
+        <label>Search:
+            <input type="text" id="searchInput" placeholder="Filter items..." />
+        </label>
+        <label>Time Range:
+            <select id="globalTimeRange">
+                <option value="all">All Time</option>
+                <option value="1y">1 Year</option>
+                <option value="6m">6 Months</option>
+                <option value="3m">3 Months</option>
+                <option value="1m">1 Month</option>
+                <option value="1w">1 Week</option>
+            </select>
+        </label>
+    </div>
+    <div class="summary" id="summarySection"></div>
+    <div class="chart-grid" id="chartGrid"></div>
+  </div>
+</div>
+
+<!-- ── Sell Signals Tab ── -->
+<div class="tab-panel" id="tab-signals">
+  <div class="container">
+    <div id="signalsContent"></div>
+  </div>
+</div>
+
+<!-- ── Trade-Up Tab ── -->
+<div class="tab-panel" id="tab-tradeup">
+  <div class="container">
+    <div id="tradeupContent"></div>
+  </div>
+</div>
+
+<!-- ── Portfolio Tab ── -->
+<div class="tab-panel" id="tab-portfolio">
+  <div class="container">
+    <div class="summary" id="portfolioSummary"></div>
+    <div class="portfolio-chart-wrap">
+      <canvas id="portfolioChart"></canvas>
+    </div>
+    <div id="concentrationSection" style="margin-top:32px"></div>
+  </div>
+</div>
+
+<!-- ── Predictions Tab ── -->
+<div class="tab-panel" id="tab-predictions">
+  <div class="container">
+    <div id="predictionsContent"></div>
+  </div>
+</div>
+
+<footer>
+  Report generated from <code>data/steam_inventory.json</code> by steam_dashboard.py
+</footer>
+
+<script>
+console.log("SCRIPT START");
+try {
+
+// ═══════════════════════════════════════════════════════════════════
+//  Tab navigation
+// ═══════════════════════════════════════════════════════════════════
+let chartsInitialized      = false;
+let portfolioInitialized   = false;
+let signalsInitialized     = false;
+let tradeupInitialized     = false;
+let predictionsInitialized = false;
+
+document.querySelectorAll('.tab-nav button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    // Update active button
+    document.querySelectorAll('.tab-nav button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    // Update active panel
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+
+    // Lazy-init on first visit (Chart.js needs visible containers)
+    if (btn.dataset.tab === 'charts' && !chartsInitialized) {
+      chartsInitialized = true;
+      renderDashboard('price-desc', '');
+    }
+    if (btn.dataset.tab === 'portfolio' && !portfolioInitialized) {
+      portfolioInitialized = true;
+      initPortfolioChart();
+    }
+    if (btn.dataset.tab === 'signals' && !signalsInitialized) {
+      signalsInitialized = true;
+      initSellSignals();
+    }
+    if (btn.dataset.tab === 'tradeup' && !tradeupInitialized) {
+      tradeupInitialized = true;
+      initTradeUp();
+    }
+    if (btn.dataset.tab === 'predictions' && !predictionsInitialized) {
+      predictionsInitialized = true;
+      initPredictions();
+    }
+  });
+});
+
+// ═══════════════════════════════════════════════════════════════════
+//  Price Charts logic
+// ═══════════════════════════════════════════════════════════════════
+const ITEMS = [];
+
+function filterByTime(history, range) {
+  if (range === 'all') return history;
+  const now = Date.now();
+  const ms = {
+    '1w': 7*86400000, '1m': 30*86400000, '3m': 90*86400000,
+    '6m': 180*86400000, '1y': 365*86400000
+  }[range] || 0;
+  return history.filter(d => d[0] >= now - ms);
+}
+
+function computeStats(history) {
+  if (!history.length) return {};
+  const prices = history.map(d => d[1]);
+  const allTimeHigh = Math.max(...prices);
+  const allTimeLow = Math.min(...prices);
+  const first = prices[0], last = prices[prices.length - 1];
+  const changePct = first > 0 ? ((last - first) / first * 100) : 0;
+  const avgVol = history.reduce((s, d) => s + d[2], 0) / history.length;
+  return { allTimeHigh, allTimeLow, first, last, changePct, avgVol };
+}
+
+const charts = {};
+
+function createChart(canvasId, history, rarityColor) {
+  const ctx = document.getElementById(canvasId);
+  if (!ctx) return null;
+  const data = history.map(d => ({ x: d[0], y: d[1] }));
+  const volData = history.map(d => ({ x: d[0], y: d[2] }));
+  const color = '#' + (rarityColor || '66c0f4');
+
+  return new Chart(ctx, {
+    type: 'line',
+    data: {
+      datasets: [
+        {
+          label: 'Price (USD)', data: data,
+          borderColor: color, backgroundColor: color + '20',
+          fill: true, tension: 0.3, pointRadius: 0,
+          pointHitRadius: 8, borderWidth: 2, yAxisID: 'y',
+        },
+        {
+          label: 'Volume', data: volData, type: 'bar',
+          backgroundColor: 'rgba(102,192,244,0.15)',
+          borderColor: 'transparent', yAxisID: 'y1',
+          barPercentage: 1, categoryPercentage: 1,
+        }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#1e2a3a', titleColor: '#fff',
+          bodyColor: '#c6d4df', borderColor: '#2a475e', borderWidth: 1,
+          callbacks: {
+            title(items) {
+              return new Date(items[0].parsed.x).toLocaleDateString('en-US', {
+                year: 'numeric', month: 'short', day: 'numeric'
+              });
+            },
+            label(ctx) {
+              if (ctx.datasetIndex === 0) return ' $' + ctx.parsed.y.toFixed(2);
+              return ' Vol: ' + ctx.parsed.y;
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          type: 'time',
+          time: {
+            tooltipFormat: 'MMM d, yyyy',
+            displayFormats: { day: 'MMM d', week: 'MMM d', month: 'MMM yyyy', year: 'yyyy' }
+          },
+          grid: { color: 'rgba(42,71,94,0.4)' },
+          ticks: { color: '#8f98a0', maxTicksLimit: 8 },
+        },
+        y: {
+          position: 'left',
+          grid: { color: 'rgba(42,71,94,0.4)' },
+          ticks: { color: '#8f98a0', callback: v => '$' + v.toFixed(2) },
+        },
+        y1: {
+          position: 'right',
+          grid: { drawOnChartArea: false },
+          ticks: { color: '#555', maxTicksLimit: 4 },
+        }
+      }
+    }
+  });
+}
+
+function updateChart(name, range) {
+  const item = ITEMS.find(it => it.name === name);
+  if (!item || !charts[name]) return;
+  const filtered = filterByTime(item.history, range);
+  charts[name].data.datasets[0].data = filtered.map(d => ({ x: d[0], y: d[1] }));
+  charts[name].data.datasets[1].data = filtered.map(d => ({ x: d[0], y: d[2] }));
+  charts[name].update('none');
+  const statsEl = document.getElementById('stats-' + CSS.escape(name));
+  if (statsEl) renderStats(statsEl, computeStats(filtered));
+}
+
+function renderStats(el, stats) {
+  if (!stats.allTimeHigh) { el.innerHTML = ''; return; }
+  const cls = stats.changePct >= 0 ? 'up' : 'down';
+  const arrow = stats.changePct >= 0 ? '▲' : '▼';
+  el.innerHTML = `
+    <span>High: <b>$${stats.allTimeHigh.toFixed(2)}</b></span>
+    <span>Low: <b>$${stats.allTimeLow.toFixed(2)}</b></span>
+    <span class="${cls}">${arrow} ${stats.changePct.toFixed(1)}%</span>
+    <span>Avg Vol: <b>${Math.round(stats.avgVol)}</b></span>
+  `;
+}
+
+let currentRange = 'all';
+
+function renderDashboard(sortKey, searchTerm) {
+  Object.values(charts).forEach(c => c.destroy());
+  for (const k in charts) delete charts[k];
+
+  let items = [...ITEMS];
+  if (searchTerm) {
+    const q = searchTerm.toLowerCase();
+    items = items.filter(it => it.name.toLowerCase().includes(q) || it.type.toLowerCase().includes(q));
+  }
+  items.forEach(it => { it._stats = computeStats(filterByTime(it.history, currentRange)); });
+
+  switch (sortKey) {
+    case 'price-desc': items.sort((a, b) => (b.current_price||0) - (a.current_price||0)); break;
+    case 'price-asc':  items.sort((a, b) => (a.current_price||0) - (b.current_price||0)); break;
+    case 'name-asc':   items.sort((a, b) => a.name.localeCompare(b.name)); break;
+    case 'change-desc': items.sort((a, b) => (b._stats.changePct||0) - (a._stats.changePct||0)); break;
+    case 'change-asc':  items.sort((a, b) => (a._stats.changePct||0) - (b._stats.changePct||0)); break;
+  }
+
+  const summaryEl = document.getElementById('summarySection');
+  const totalItems = items.length;
+  const totalValue = items.reduce((s, it) => s + (it.current_price || 0), 0);
+  const avgChange = items.length ? items.reduce((s, it) => s + (it._stats.changePct||0), 0) / items.length : 0;
+
+  summaryEl.innerHTML = `
+    <div class="summary-card"><div class="value">${totalItems}</div><div class="label">Items Tracked</div></div>
+    <div class="summary-card"><div class="value">$${totalValue.toFixed(2)}</div><div class="label">Total Current Value</div></div>
+    <div class="summary-card"><div class="value" style="color:${avgChange>=0?'#a4d007':'#ff4444'}">${avgChange>=0?'+':''}${avgChange.toFixed(1)}%</div><div class="label">Avg Price Change (${currentRange==='all'?'All Time':currentRange})</div></div>
+  `;
+
+  const grid = document.getElementById('chartGrid');
+  grid.innerHTML = '';
+
+  items.forEach((item, idx) => {
+    const canvasId = 'chart-' + idx;
+    const filtered = filterByTime(item.history, currentRange);
+    const priceStr = item.current_price ? '$' + item.current_price.toFixed(2) : '—';
+
+    const card = document.createElement('div');
+    card.className = 'chart-card';
+    card.innerHTML = `
+      <div class="chart-header">
+        ${item.image_url ? `<img src="${item.image_url}" alt="${item.name}" />` : ''}
+        <div class="info">
+          <h3>${item.name}</h3>
+          <div class="meta">${item.type}${item.exterior ? ' • ' + item.exterior : ''}</div>
+          ${item.rarity ? `<span class="rarity-badge" style="background:#${item.rarity_color}">${item.rarity}</span>` : ''}
+        </div>
+        <div class="price">${priceStr}</div>
+      </div>
+      <div class="time-buttons" data-item="${item.name.replace(/"/g, '&quot;')}">
+        <button data-range="1w">1W</button>
+        <button data-range="1m">1M</button>
+        <button data-range="3m">3M</button>
+        <button data-range="6m">6M</button>
+        <button data-range="1y">1Y</button>
+        <button data-range="all" class="active">ALL</button>
+      </div>
+      <div class="chart-stats" id="stats-${CSS.escape(item.name)}"></div>
+      <div class="chart-body"><canvas id="${canvasId}"></canvas></div>
+    `;
+    grid.appendChild(card);
+
+    charts[item.name] = createChart(canvasId, filtered, item.rarity_color);
+    renderStats(card.querySelector('.chart-stats'), item._stats);
+
+    card.querySelectorAll('.time-buttons button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        card.querySelectorAll('.time-buttons button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        updateChart(item.name, btn.dataset.range);
+      });
+    });
+  });
+}
+
+// ═══════════════════════════════════════════════════════════════════
+//  Portfolio chart
+// ═══════════════════════════════════════════════════════════════════
+const PORTFOLIO_HISTORY = [];
+let portfolioChartInst = null;
+
+function initPortfolioChart() {
+  const summaryEl = document.getElementById('portfolioSummary');
+  if (!PORTFOLIO_HISTORY.length) {
+    summaryEl.innerHTML = '<p style="color:#8f98a0;padding:20px 0">No portfolio history yet — run the scraper to record snapshots.</p>';
+    return;
+  }
+
+  const first     = PORTFOLIO_HISTORY[0].total_value;
+  const last      = PORTFOLIO_HISTORY[PORTFOLIO_HISTORY.length - 1].total_value;
+  const ath       = Math.max(...PORTFOLIO_HISTORY.map(e => e.total_value));
+  const changePct = first > 0 ? ((last - first) / first * 100) : 0;
+  const cls       = changePct >= 0 ? '#a4d007' : '#ff4444';
+  const arrow     = changePct >= 0 ? '▲' : '▼';
+
+  summaryEl.innerHTML = `
+    <div class="summary-card"><div class="value accent-green">$${last.toFixed(2)}</div><div class="label">Current Value</div></div>
+    <div class="summary-card"><div class="value" style="color:#ffd700">$${ath.toFixed(2)}</div><div class="label">All-Time High</div></div>
+    <div class="summary-card"><div class="value" style="color:${cls}">${arrow} ${Math.abs(changePct).toFixed(1)}%</div><div class="label">Change (All Time)</div></div>
+    <div class="summary-card"><div class="value">${PORTFOLIO_HISTORY.length}</div><div class="label">Snapshots</div></div>
+  `;
+
+  const data = PORTFOLIO_HISTORY.map(e => ({ x: new Date(e.date + 'T12:00:00').getTime(), y: e.total_value }));
+  if (portfolioChartInst) portfolioChartInst.destroy();
+  portfolioChartInst = new Chart(document.getElementById('portfolioChart'), {
+    type: 'line',
+    data: {
+      datasets: [{
+        label: 'Portfolio Value (USD)',
+        data,
+        borderColor: '#66c0f4',
+        backgroundColor: 'rgba(102,192,244,0.1)',
+        fill: true, tension: 0.3,
+        pointRadius: PORTFOLIO_HISTORY.length < 30 ? 4 : 0,
+        pointHoverRadius: 6,
+        borderWidth: 2,
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#1e2a3a', titleColor: '#fff',
+          bodyColor: '#c6d4df', borderColor: '#2a475e', borderWidth: 1,
+          callbacks: {
+            title: items => new Date(items[0].parsed.x).toLocaleDateString('en-US', {
+              year: 'numeric', month: 'short', day: 'numeric'
+            }),
+            label: ctx => ' $' + ctx.parsed.y.toLocaleString('en-US', {
+              minimumFractionDigits: 2, maximumFractionDigits: 2
+            }),
+          }
+        }
+      },
+      scales: {
+        x: {
+          type: 'time',
+          time: {
+            tooltipFormat: 'MMM d, yyyy',
+            displayFormats: { day: 'MMM d', week: 'MMM d', month: 'MMM yyyy', year: 'yyyy' }
+          },
+          grid: { color: 'rgba(42,71,94,0.4)' },
+          ticks: { color: '#8f98a0', maxTicksLimit: 10 },
+        },
+        y: {
+          grid: { color: 'rgba(42,71,94,0.4)' },
+          ticks: { color: '#8f98a0', callback: v => '$' + v.toLocaleString() },
+        }
+      }
+    }
+  });
+  renderConcentration();
+}
+
+// ═══════════════════════════════════════════════════════════════════
+//  Sell Signals
+// ═══════════════════════════════════════════════════════════════════
+const SELL_SIGNALS = [];
+
+function initSellSignals() {
+  const el = document.getElementById('signalsContent');
+  if (!SELL_SIGNALS.length) {
+    el.innerHTML = '<p style="color:#8f98a0;padding:20px 0">No price history — run steam_price_charts.py first.</p>';
+    return;
+  }
+  const rows = SELL_SIGNALS.map(s => {
+    const barW  = Math.min(100, s.pct_of_high);
+    const barC  = s.pct_of_high >= 80 ? '#ff6400' : s.pct_of_high >= 60 ? '#a4d007' : s.pct_of_high <= 30 ? '#ff4444' : '#66c0f4';
+    const badge = s.pct_of_high >= 90 ? '<span class="signal-badge badge-hot">🔥 Near Year High</span>'
+                : s.pct_of_high >= 75 ? '<span class="signal-badge badge-good">🟢 Good to Sell</span>'
+                : s.pct_of_high <= 30 ? '<span class="signal-badge badge-low">🔴 Near Year Low — Hold</span>'
+                : '<span class="signal-badge badge-neutral">⚪ Neutral</span>';
+    const trend = s.trend_30d !== 0
+      ? `<span style="color:${s.trend_30d >= 0 ? '#a4d007' : '#ff4444'}">${s.trend_30d >= 0 ? '▲' : '▼'} ${Math.abs(s.trend_30d).toFixed(1)}% (30d)</span>`
+      : '';
+    return `<div class="signal-card">
+      ${s.image_url ? `<img src="${s.image_url}" alt="" />` : ''}
+      <div class="signal-info">
+        <div class="signal-name">${s.name}</div>
+        <div class="signal-prices">Current: <b style="color:#a4d007">$${s.current_price.toFixed(2)}</b> &nbsp;·&nbsp; 52w High: <b>$${s.year_high.toFixed(2)}</b> &nbsp;·&nbsp; 52w Low: <b>$${s.year_low.toFixed(2)}</b></div>
+        <div class="year-bar-track"><div class="year-bar-fill" style="width:${barW}%;background:${barC}"></div></div>
+        <div class="signal-meta">
+          <span style="color:${barC};font-weight:600">${s.pct_of_high}% of 52w high</span>
+          ${trend}
+          ${badge}
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+  el.innerHTML = `<div class="signal-grid">${rows}</div>`;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+//  Trade-Up Calculator
+// ═══════════════════════════════════════════════════════════════════
+const TRADEUP_DATA = {};
+const RARITY_SEQUENCE = ["Consumer Grade","Industrial Grade","Mil-Spec Grade","Restricted","Classified","Covert"];
+
+let tuRarity = '';
+let tuBasket = [];
+
+function initTradeUp() {
+  const el = document.getElementById('tradeupContent');
+  const avail = RARITY_SEQUENCE.filter(r => TRADEUP_DATA[r]?.length);
+  if (!avail.length) {
+    el.innerHTML = '<p style="color:#8f98a0;padding:20px 0">No marketable items with prices in inventory.</p>';
+    return;
+  }
+  tuRarity = avail[0];
+  el.innerHTML = `
+    <div class="tu-rarity-tabs" id="tuTabs"></div>
+    <div class="tu-basket">
+      <div class="tu-basket-header">
+        <h3 id="tuTitle">Selected (0/10)</h3>
+        <button class="btn-sm" onclick="clearBasket()">Clear</button>
+      </div>
+      <div class="basket-slots" id="tuSlots"></div>
+      <div class="tu-summary" id="tuSummary"><span>Click items below to build your trade-up.</span></div>
+    </div>
+    <h3 style="color:#fff;margin-bottom:12px" id="tuAvailTitle"></h3>
+    <div class="tu-grid" id="tuAvailGrid"></div>
+    <div id="tuNextWrap" style="display:none">
+      <div class="tu-next"><h3 id="tuNextTitle"></h3><div class="tu-grid" id="tuNextGrid"></div></div>
+    </div>
+  `;
+  const tabsEl = document.getElementById('tuTabs');
+  avail.forEach(r => {
+    const btn = document.createElement('button');
+    btn.textContent = r;
+    if (r === tuRarity) btn.classList.add('active');
+    btn.onclick = () => {
+      tabsEl.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      tuRarity = r; tuBasket = [];
+      renderTradeUp();
+    };
+    tabsEl.appendChild(btn);
+  });
+  renderTradeUp();
+}
+
+function clearBasket() { tuBasket = []; renderTradeUp(); }
+
+function toggleBasket(assetid) {
+  const items = TRADEUP_DATA[tuRarity] || [];
+  const item  = items.find(it => it.assetid === assetid);
+  if (!item) return;
+  const idx = tuBasket.findIndex(it => it.assetid === assetid);
+  if (idx >= 0) tuBasket.splice(idx, 1);
+  else if (tuBasket.length < 10) tuBasket.push(item);
+  renderTradeUp();
+}
+
+function renderTradeUp() {
+  const items     = TRADEUP_DATA[tuRarity] || [];
+  const nextIdx   = RARITY_SEQUENCE.indexOf(tuRarity) + 1;
+  const nextRar   = nextIdx < RARITY_SEQUENCE.length ? RARITY_SEQUENCE[nextIdx] : null;
+  const nextItems = nextRar ? (TRADEUP_DATA[nextRar] || []) : [];
+  const basketIds = new Set(tuBasket.map(it => it.assetid));
+
+  document.getElementById('tuTitle').textContent = `Selected (${tuBasket.length}/10)`;
+
+  // Basket slots
+  document.getElementById('tuSlots').innerHTML = Array.from({length: 10}, (_, i) => {
+    const it = tuBasket[i];
+    if (it) return `<div class="basket-slot filled" onclick="toggleBasket('${it.assetid}')" title="${it.name}"><img src="${it.image_url}" /><span class="rm">×</span></div>`;
+    return '<div class="basket-slot">empty</div>';
+  }).join('');
+
+  // Summary
+  const sumEl = document.getElementById('tuSummary');
+  if (tuBasket.length > 0) {
+    const totalIn = tuBasket.reduce((s, it) => s + it.price, 0);
+    const wears   = tuBasket.filter(it => it.wear_rating != null);
+    const avgWear = wears.length ? wears.reduce((s, it) => s + it.wear_rating, 0) / wears.length : null;
+    const avgNext = nextItems.length ? nextItems.reduce((s, it) => s + it.price, 0) / nextItems.length : null;
+    const parts   = [`<span>Input total: <b style="color:#a4d007">$${totalIn.toFixed(2)}</b></span>`];
+    if (avgWear != null) parts.push(`<span>Avg wear: <b>${avgWear.toFixed(4)}</b></span>`);
+    if (avgNext != null) {
+      const diff = avgNext - totalIn;
+      parts.push(`<span>Avg next-grade: <b>$${avgNext.toFixed(2)}</b></span>`);
+      parts.push(`<span class="${diff >= 0 ? 'tu-profit-pos' : 'tu-profit-neg'}">${diff >= 0 ? '▲' : '▼'} $${Math.abs(diff).toFixed(2)} (${diff >= 0 ? '+' : ''}${(diff / totalIn * 100).toFixed(1)}%)</span>`);
+    }
+    sumEl.innerHTML = parts.join(' ');
+  } else {
+    sumEl.innerHTML = '<span>Click items below to build your trade-up.</span>';
+  }
+
+  // Available grid
+  document.getElementById('tuAvailTitle').textContent = `${tuRarity} — ${items.length} item${items.length !== 1 ? 's' : ''} available`;
+  document.getElementById('tuAvailGrid').innerHTML = items.map(it => {
+    const sel   = basketIds.has(it.assetid);
+    const maxed = !sel && tuBasket.length >= 10;
+    let h = `<div class="tu-item${sel ? ' selected' : ''}${maxed ? ' maxed' : ''}" onclick="toggleBasket('${it.assetid}')" title="${it.name}">`;
+    if (it.image_url) h += `<img src="${it.image_url}" />`;
+    h += `<div class="ti-name">${it.name.replace(/\s*\([^)]*\)\s*$/, '')}</div>`;
+    if (it.exterior) h += `<div class="ti-ext">${it.exterior}</div>`;
+    h += `<div class="ti-price">$${it.price.toFixed(2)}</div></div>`;
+    return h;
+  }).join('');
+
+  // Next-grade reference
+  const wrap = document.getElementById('tuNextWrap');
+  if (nextItems.length && nextRar) {
+    wrap.style.display = 'block';
+    const avg = nextItems.reduce((s, it) => s + it.price, 0) / nextItems.length;
+    document.getElementById('tuNextTitle').textContent = `${nextRar} in your inventory (${nextItems.length} item${nextItems.length !== 1 ? 's' : ''}, avg $${avg.toFixed(2)})`;
+    document.getElementById('tuNextGrid').innerHTML = nextItems.map(it => {
+      let h = `<div class="tu-item" style="cursor:default" title="${it.name}">`;
+      if (it.image_url) h += `<img src="${it.image_url}" />`;
+      h += `<div class="ti-name">${it.name.replace(/\s*\([^)]*\)\s*$/, '')}</div>`;
+      if (it.exterior) h += `<div class="ti-ext">${it.exterior}</div>`;
+      h += `<div class="ti-price">$${it.price.toFixed(2)}</div></div>`;
+      return h;
+    }).join('');
+  } else {
+    wrap.style.display = 'none';
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════
+//  Portfolio: Concentration Risk
+// ═══════════════════════════════════════════════════════════════════
+const CONCENTRATION = {};
+
+function renderConcentration() {
+  const el = document.getElementById('concentrationSection');
+  if (!el || !CONCENTRATION.total) return;
+  const riskColor = CONCENTRATION.risk_level === 'High' ? '#ff4444'
+                  : CONCENTRATION.risk_level === 'Medium' ? '#ffd700' : '#a4d007';
+  const riskClass = 'risk-' + CONCENTRATION.risk_level.toLowerCase();
+  let html = `
+    <h2 style="color:#fff;margin:0 0 16px">Portfolio Concentration Risk</h2>
+    <div class="summary" style="margin-bottom:24px">
+      <div class="summary-card">
+        <div class="value"><span class="risk-badge ${riskClass}">${CONCENTRATION.risk_level}</span></div>
+        <div class="label">Risk Level</div>
+      </div>
+      <div class="summary-card">
+        <div class="value">${CONCENTRATION.hhi.toFixed(0)}</div>
+        <div class="label">HHI Score <span style="font-size:0.6em;color:#8f98a0">(0–10000)</span></div>
+      </div>
+      <div class="summary-card">
+        <div class="value" style="color:${riskColor}">${CONCENTRATION.top1_pct}%</div>
+        <div class="label">Top Item Concentration</div>
+      </div>
+      <div class="summary-card">
+        <div class="value">${CONCENTRATION.top3_pct}%</div>
+        <div class="label">Top 3 Items</div>
+      </div>
+    </div>`;
+  const maxPct = Math.max(...CONCENTRATION.items.map(it => it.pct));
+  html += '<div class="conc-section"><h3>Top Items by Portfolio Weight</h3><div class="conc-bars">';
+  CONCENTRATION.items.forEach(it => {
+    const c = it.pct >= 20 ? '#ff4444' : it.pct >= 10 ? '#ffd700' : '#66c0f4';
+    const w = (it.pct / maxPct * 100).toFixed(1);
+    html += `<div class="conc-row">
+      ${it.image_url ? `<img src="${it.image_url}" class="conc-img" alt="" />` : '<div class="conc-img"></div>'}
+      <span class="conc-name" title="${it.name}">${it.name}</span>
+      <div class="conc-bar-track"><div class="conc-bar-fill" style="width:${w}%;background:${c}"></div></div>
+      <span class="conc-pct" style="color:${c}">${it.pct}%</span>
+      <span class="conc-val">$${it.value.toFixed(2)}</span>
+    </div>`;
+  });
+  html += '</div></div>';
+  html += '<div class="conc-section" style="margin-top:20px"><h3>By Rarity</h3><div class="conc-bars">';
+  CONCENTRATION.by_rarity.forEach(r => {
+    html += `<div class="conc-row">
+      <span class="conc-name">${r.rarity}</span>
+      <div class="conc-bar-track"><div class="conc-bar-fill" style="width:${r.pct}%;background:${r.color}"></div></div>
+      <span class="conc-pct">${r.pct}%</span>
+      <span class="conc-val">$${r.value.toFixed(2)}</span>
+    </div>`;
+  });
+  html += '</div></div>';
+  el.innerHTML = html;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+//  Price Predictions
+// ═══════════════════════════════════════════════════════════════════
+const PREDICTIONS = [];
+
+function initPredictions() {
+  const el = document.getElementById('predictionsContent');
+  if (!PREDICTIONS.length) {
+    el.innerHTML = '<p style="color:#8f98a0;padding:20px 0">No price history — run steam_price_charts.py first.</p>';
+    return;
+  }
+  const bullish = PREDICTIONS.filter(p => p.change_pct > 0).length;
+  const bearish = PREDICTIONS.filter(p => p.change_pct < 0).length;
+  const avgChg  = PREDICTIONS.reduce((s, p) => s + p.change_pct, 0) / PREDICTIONS.length;
+  const avgClr  = avgChg >= 0 ? '#a4d007' : '#ff4444';
+  const avgArr  = avgChg >= 0 ? '▲' : '▼';
+  let html = `
+    <div class="summary" style="margin-bottom:20px">
+      <div class="summary-card"><div class="value" style="color:#a4d007">${bullish}</div><div class="label">📈 Bullish (30d)</div></div>
+      <div class="summary-card"><div class="value" style="color:#ff4444">${bearish}</div><div class="label">📉 Bearish (30d)</div></div>
+      <div class="summary-card"><div class="value" style="color:${avgClr}">${avgArr} ${Math.abs(avgChg).toFixed(1)}%</div><div class="label">Avg Predicted Change</div></div>
+      <div class="summary-card"><div class="value">${PREDICTIONS.length}</div><div class="label">Items Analysed</div></div>
+    </div>
+    <div class="pred-disclaimer">⚠️ Predictions use linear regression on 90-day history. Higher R² = more reliable. Not financial advice.</div>
+    <div class="pred-grid">`;
+  PREDICTIONS.forEach(p => {
+    const cls   = p.change_pct >= 0 ? 'pred-up' : 'pred-down';
+    const arrow = p.change_pct >= 0 ? '▲' : '▼';
+    const r2c   = p.r2 >= 0.7 ? '#a4d007' : p.r2 >= 0.4 ? '#ffd700' : '#8f98a0';
+    html += `<div class="pred-card">
+      ${p.image_url ? `<img src="${p.image_url}" alt="" />` : ''}
+      <div class="pred-info">
+        <div class="pred-name">${p.name}</div>
+        <div class="pred-prices">Current: <b style="color:#a4d007">$${p.current_price.toFixed(2)}</b> → 30d Pred: <b>$${p.predicted_price.toFixed(2)}</b></div>
+      </div>
+      <div class="pred-change ${cls}">${arrow} ${Math.abs(p.change_pct).toFixed(1)}%</div>
+      <div class="pred-r2" title="R² (0–1, higher = more reliable)">R² <span style="color:${r2c}">${p.r2.toFixed(2)}</span></div>
+    </div>`;
+  });
+  html += '</div>';
+  el.innerHTML = html;
+}
+
+// ── Chart control event listeners ──
+document.getElementById('sortSelect')
+  renderDashboard(e.target.value, document.getElementById('searchInput').value);
+});
+document.getElementById('searchInput').addEventListener('input', e => {
+  renderDashboard(document.getElementById('sortSelect').value, e.target.value);
+});
+document.getElementById('globalTimeRange').addEventListener('change', e => {
+  currentRange = e.target.value;
+  renderDashboard(document.getElementById('sortSelect').value, document.getElementById('searchInput').value);
+});
+
+console.log("SCRIPT END - ALL OK");
+} catch(e) { document.title="ERROR: "+e.message; console.error("ERROR:",e); }
+</script></body></html>
