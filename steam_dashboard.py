@@ -16,6 +16,8 @@ INPUT_FILE = "data/steam_inventory.json"
 PRICE_DATA_FILE = "data/steam_price_history.json"
 OUTPUT_FILE = "reports/steam_dashboard.html"
 PORTFOLIO_HISTORY_FILE = "data/portfolio_history.json"
+CASE_DATA_FILE = "data/case_price_history.json"
+CASE_META_FILE = "data/case_price_history_meta.json"
 
 RARITY_EMOJI = {
     "Covert":           "🔴",
@@ -181,6 +183,52 @@ def build_price_predictions(items, price_data):
     return predictions
 
 
+def build_case_investment_data(case_history, case_meta):
+    """Build case investment data with appreciation stats."""
+    if not case_history:
+        return []
+    now_ms      = datetime.now(timezone.utc).timestamp() * 1000
+    year_ms     = 365 * 86_400_000
+    month_ms_90 = 90  * 86_400_000
+    cases = []
+    for name, history in case_history.items():
+        if not history or len(history) < 2:
+            continue
+        meta   = case_meta.get(name, {})
+        status = meta.get("status", "active")
+        prices = [d[1] for d in history]
+        first_price = history[0][1]
+        last_price  = history[-1][1]
+        ath = max(prices)
+        atl = min(prices)
+        all_time_chg = round((last_price - first_price) / first_price * 100, 1) if first_price > 0 else 0
+        # 1-year change
+        year_hist = [d for d in history if d[0] >= now_ms - year_ms]
+        yr_chg = 0.0
+        if year_hist and year_hist[0][1] > 0:
+            yr_chg = round((last_price - year_hist[0][1]) / year_hist[0][1] * 100, 1)
+        # 90-day change
+        q_hist = [d for d in history if d[0] >= now_ms - month_ms_90]
+        q_chg = 0.0
+        if q_hist and q_hist[0][1] > 0:
+            q_chg = round((last_price - q_hist[0][1]) / q_hist[0][1] * 100, 1)
+        avg_vol = round(sum(d[2] for d in history[-30:]) / max(len(history[-30:]), 1))
+        cases.append({
+            "name":         name,
+            "status":       status,
+            "current":      round(last_price, 2),
+            "ath":          round(ath, 2),
+            "atl":          round(atl, 2),
+            "all_time_chg": all_time_chg,
+            "yr_chg":       yr_chg,
+            "q_chg":        q_chg,
+            "avg_vol":      avg_vol,
+            "history":      history,
+        })
+    cases.sort(key=lambda c: c["all_time_chg"], reverse=True)
+    return cases
+
+
 def build_concentration_data(data):
     """Compute portfolio concentration metrics (HHI, per-item %, by-rarity %)."""
     items_flat = []
@@ -301,7 +349,7 @@ def generate_profile_section(steam_id, profile, rank):
     total_value = profile.get("estimated_value", 0)
     error = profile.get("error")
 
-    section = f"""<section class="profile-section">
+    section = f"""<section class="profile-section" data-steam-id="{steam_id}">
     <div class="profile-header">
         <h2>{'⚠️' if error else '👤'} {username}</h2>
         <div class="profile-meta">
@@ -405,12 +453,14 @@ def build_inventory_content(data):
         profiles_html += generate_profile_section(steam_id, profile, rank)
 
     return f"""
-    <div class="summary">
+    <div class="inventory-summary" id="inventorySummary">
+      <div class="summary">
         <div class="summary-card"><div class="value">{total_profiles}</div><div class="label">Profiles Scanned</div></div>
         <div class="summary-card"><div class="value">{total_items}</div><div class="label">Total Items</div></div>
         <div class="summary-card"><div class="value accent-green">{format_price(grand_total)}</div><div class="label">Combined Value</div></div>
+      </div>
+      {leaderboard}
     </div>
-    {leaderboard}
     {profiles_html}"""
 
 
@@ -490,18 +540,39 @@ def build_charts_content():
 #  Combined HTML generation
 # ═══════════════════════════════════════════════════════════════════════════
 
-def generate_dashboard(data, price_data, input_file, portfolio_history=None):
+def generate_dashboard(data, price_data, input_file, portfolio_history=None,
+                       case_history=None, case_meta=None):
     now = datetime.now(timezone.utc).strftime("%B %d, %Y at %H:%M UTC")
 
-    items = get_unique_marketable_items(data)
-    charts_json = json.dumps(build_charts_data(items, price_data))
+    # ── Build per-account + combined data for the account switcher ──
+    profiles_meta = {sid: prof.get("username") or sid for sid, prof in data.items()}
+
+    def _build_account_data(d):
+        """Build all tab data dicts for a given data subset."""
+        itms = get_unique_marketable_items(d)
+        return {
+            "charts":        build_charts_data(itms, price_data),
+            "signals":       build_sell_signals(itms, price_data),
+            "tradeup":       build_tradeup_data(d),
+            "concentration": build_concentration_data(d),
+            "predictions":   build_price_predictions(itms, price_data),
+        }
+
+    account_data = {"all": _build_account_data(data)}
+    for steam_id in data:
+        account_data[steam_id] = _build_account_data({steam_id: data[steam_id]})
+
+    account_data_json = json.dumps(account_data)
+    profiles_meta_json = json.dumps(profiles_meta)
     portfolio_json = json.dumps(portfolio_history or [])
-    sell_signals_json  = json.dumps(build_sell_signals(items, price_data))
-    tradeup_json       = json.dumps(build_tradeup_data(data))
-    concentration_json = json.dumps(build_concentration_data(data))
-    predictions_json   = json.dumps(build_price_predictions(items, price_data))
+    cases_json     = json.dumps(build_case_investment_data(case_history or {}, case_meta or {}))
     inventory_content = build_inventory_content(data)
     charts_content = build_charts_content()
+
+    # Build account selector options HTML
+    account_options = '<option value="all">All Accounts</option>'
+    for sid, uname in profiles_meta.items():
+        account_options += f'<option value="{sid}">{uname}</option>'
 
     html = f"""<!DOCTYPE html>
 <html lang="en">
@@ -551,6 +622,25 @@ def generate_dashboard(data, price_data, input_file, portfolio_history=None):
   header .timestamp {{
     color: #8f98a0;
     font-size: 0.85em;
+  }}
+  .header-right {{
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }}
+  #accountSelect {{
+    background: var(--card-bg);
+    color: #fff;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 0.85em;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.2s;
+  }}
+  #accountSelect:hover, #accountSelect:focus {{
+    border-color: var(--accent);
   }}
   .tab-nav {{
     display: flex;
@@ -918,6 +1008,31 @@ def generate_dashboard(data, price_data, input_file, portfolio_history=None):
   .pred-down {{ color: #ff4444; }}
   .pred-r2 {{ font-size: 0.78em; color: #8f98a0; min-width: 70px; text-align: right; }}
 
+  /* ── Cases tab ── */
+  .case-filters {{ display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }}
+  .case-filters button {{
+    background: rgba(102,192,244,0.08); color: #8f98a0; border: 1px solid var(--border);
+    padding: 6px 16px; border-radius: 16px; cursor: pointer; font-size: 0.82em; font-weight: 600; transition: all 0.2s;
+  }}
+  .case-filters button:hover {{ color: #fff; border-color: var(--accent); }}
+  .case-filters button.active {{ background: var(--accent); color: #fff; border-color: var(--accent); }}
+  .case-card {{
+    background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px;
+    padding: 16px; transition: border-color 0.2s; margin-bottom: 12px;
+  }}
+  .case-card:hover {{ border-color: var(--accent); }}
+  .case-top {{ display: flex; align-items: center; gap: 14px; margin-bottom: 10px; }}
+  .case-top .case-name {{ flex: 1; color: #fff; font-weight: 600; font-size: 0.95em; }}
+  .case-top .case-price {{ color: #a4d007; font-weight: bold; font-size: 1.1em; }}
+  .status-pill {{ display: inline-block; padding: 2px 10px; border-radius: 10px; font-size: 0.72em; font-weight: 600; margin-left: 8px; }}
+  .status-discontinued {{ background: rgba(255,68,68,0.15); color: #ff6666; }}
+  .status-rare {{ background: rgba(255,215,0,0.15); color: #ffd700; }}
+  .status-active {{ background: rgba(164,208,7,0.12); color: #a4d007; }}
+  .case-stats {{ display: flex; gap: 16px; flex-wrap: wrap; font-size: 0.8em; color: #8f98a0; margin-bottom: 10px; }}
+  .case-stats b {{ color: #fff; }}
+  .case-chart-wrap {{ height: 180px; }}
+  .case-chart-wrap canvas {{ width: 100% !important; height: 100% !important; }}
+
   /* ── Portfolio tab styles ── */
   .portfolio-chart-wrap {{
     background: var(--card-bg);
@@ -946,8 +1061,11 @@ def generate_dashboard(data, price_data, input_file, portfolio_history=None):
 
 <header>
   <div class="header-top">
-    <h1>🎮 remilio CS2 Dashboard</h1>
-    <span class="timestamp">Generated on {now}</span>
+    <h1>🎮 CS2 Dashboard</h1>
+    <div class="header-right">
+      <select id="accountSelect">{account_options}</select>
+      <span class="timestamp">Generated on {now}</span>
+    </div>
   </div>
   <nav class="tab-nav">
     <button class="active" data-tab="inventory">📦 Inventory</button>
@@ -956,6 +1074,7 @@ def generate_dashboard(data, price_data, input_file, portfolio_history=None):
     <button data-tab="signals">💡 Sell Signals</button>
     <button data-tab="tradeup">🔄 Trade-Up</button>
     <button data-tab="predictions">📉 Predictions</button>
+    <button data-tab="cases">📦 Cases</button>
   </nav>
 </header>
 
@@ -1005,6 +1124,13 @@ def generate_dashboard(data, price_data, input_file, portfolio_history=None):
   </div>
 </div>
 
+<!-- ── Cases Tab ── -->
+<div class="tab-panel" id="tab-cases">
+  <div class="container">
+    <div id="casesContent"></div>
+  </div>
+</div>
+
 <footer>
   Report generated from <code>{input_file}</code> by steam_dashboard.py
 </footer>
@@ -1019,6 +1145,15 @@ window.onerror = function(msg, url, line, col) {{
 </script>
 <script>
 // ═══════════════════════════════════════════════════════════════════
+//  Account data & switcher
+// ═══════════════════════════════════════════════════════════════════
+const ACCOUNT_DATA    = {account_data_json};
+const PROFILES_META   = {profiles_meta_json};
+let currentAccount    = 'all';
+
+function getAccountData(key) {{ return ACCOUNT_DATA[key || currentAccount] || ACCOUNT_DATA['all']; }}
+
+// ═══════════════════════════════════════════════════════════════════
 //  Tab navigation
 // ═══════════════════════════════════════════════════════════════════
 let chartsInitialized      = false;
@@ -1026,6 +1161,7 @@ let portfolioInitialized   = false;
 let signalsInitialized     = false;
 let tradeupInitialized     = false;
 let predictionsInitialized = false;
+let casesInitialized       = false;
 
 document.querySelectorAll('.tab-nav button').forEach(btn => {{
   btn.addEventListener('click', () => {{
@@ -1058,13 +1194,88 @@ document.querySelectorAll('.tab-nav button').forEach(btn => {{
       predictionsInitialized = true;
       initPredictions();
     }}
+    if (btn.dataset.tab === 'cases' && !casesInitialized) {{
+      casesInitialized = true;
+      initCases();
+    }}
   }});
+}});
+
+// ═══════════════════════════════════════════════════════════════════
+//  Account switcher
+// ═══════════════════════════════════════════════════════════════════
+document.getElementById('accountSelect').addEventListener('change', e => {{
+  currentAccount = e.target.value;
+  const ad = getAccountData();
+
+  // Update active data references
+  ITEMS         = ad.charts;
+  SELL_SIGNALS  = ad.signals;
+  TRADEUP_DATA  = ad.tradeup;
+  CONCENTRATION = ad.concentration;
+  PREDICTIONS   = ad.predictions;
+
+  // ── Inventory tab: show/hide profile sections ──
+  document.querySelectorAll('.profile-section').forEach(sec => {{
+    if (currentAccount === 'all') {{
+      sec.style.display = '';
+    }} else {{
+      sec.style.display = sec.dataset.steamId === currentAccount ? '' : 'none';
+    }}
+  }});
+  // Update inventory summary
+  const sumEl = document.getElementById('inventorySummary');
+  if (sumEl) {{
+    const sections = document.querySelectorAll('.profile-section' +
+      (currentAccount !== 'all' ? '[data-steam-id="' + currentAccount + '"]' : ''));
+    let totalItems = 0, totalValue = 0;
+    sections.forEach(sec => {{
+      if (sec.style.display !== 'none') {{
+        const meta = sec.querySelector('.profile-meta');
+        if (meta) {{
+          const itemsMatch = meta.textContent.match(/Items:\s*(\d+)/);
+          const valueMatch = meta.textContent.match(/\$([\d,.]+)/);
+          if (itemsMatch) totalItems += parseInt(itemsMatch[1]);
+          if (valueMatch) totalValue += parseFloat(valueMatch[1].replace(/,/g, ''));
+        }}
+      }}
+    }});
+    const profileCount = currentAccount === 'all' ? Object.keys(PROFILES_META).length : 1;
+    const lbEl = sumEl.querySelector('.leaderboard');
+    sumEl.querySelector('.summary').innerHTML = `
+      <div class="summary-card"><div class="value">${{profileCount}}</div><div class="label">Profiles Shown</div></div>
+      <div class="summary-card"><div class="value">${{totalItems}}</div><div class="label">Total Items</div></div>
+      <div class="summary-card"><div class="value accent-green">$${{totalValue.toLocaleString('en-US', {{minimumFractionDigits:2, maximumFractionDigits:2}})}}</div><div class="label">Combined Value</div></div>
+    `;
+    if (lbEl) lbEl.style.display = currentAccount === 'all' ? '' : 'none';
+  }}
+
+  // ── Re-render already-initialized tabs ──
+  if (chartsInitialized) {{
+    renderDashboard(document.getElementById('sortSelect').value, document.getElementById('searchInput').value);
+  }}
+  if (signalsInitialized) {{
+    signalsInitialized = false;
+    initSellSignals();
+  }}
+  if (tradeupInitialized) {{
+    tuBasket = [];
+    tradeupInitialized = false;
+    initTradeUp();
+  }}
+  if (portfolioInitialized) {{
+    renderConcentration();
+  }}
+  if (predictionsInitialized) {{
+    predictionsInitialized = false;
+    initPredictions();
+  }}
 }});
 
 // ═══════════════════════════════════════════════════════════════════
 //  Price Charts logic
 // ═══════════════════════════════════════════════════════════════════
-const ITEMS = {charts_json};
+let ITEMS = getAccountData().charts;
 
 function filterByTime(history, range) {{
   if (range === 'all') return history;
@@ -1345,7 +1556,7 @@ function initPortfolioChart() {{
 // ═══════════════════════════════════════════════════════════════════
 //  Sell Signals
 // ═══════════════════════════════════════════════════════════════════
-const SELL_SIGNALS = {sell_signals_json};
+let SELL_SIGNALS = getAccountData().signals;
 
 function initSellSignals() {{
   const el = document.getElementById('signalsContent');
@@ -1383,7 +1594,7 @@ function initSellSignals() {{
 // ═══════════════════════════════════════════════════════════════════
 //  Trade-Up Calculator
 // ═══════════════════════════════════════════════════════════════════
-const TRADEUP_DATA    = {tradeup_json};
+let TRADEUP_DATA    = getAccountData().tradeup;
 const RARITY_SEQUENCE = ["Consumer Grade","Industrial Grade","Mil-Spec Grade","Restricted","Classified","Covert"];
 
 let tuRarity = '';
@@ -1511,7 +1722,7 @@ function renderTradeUp() {{
 // ═══════════════════════════════════════════════════════════════════
 //  Portfolio: Concentration Risk
 // ═══════════════════════════════════════════════════════════════════
-const CONCENTRATION = {concentration_json};
+let CONCENTRATION = getAccountData().concentration;
 
 function renderConcentration() {{
   const el = document.getElementById('concentrationSection');
@@ -1569,7 +1780,7 @@ function renderConcentration() {{
 // ═══════════════════════════════════════════════════════════════════
 //  Price Predictions
 // ═══════════════════════════════════════════════════════════════════
-const PREDICTIONS = {predictions_json};
+let PREDICTIONS = getAccountData().predictions;
 
 function initPredictions() {{
   const el = document.getElementById('predictionsContent');
@@ -1609,6 +1820,109 @@ function initPredictions() {{
   el.innerHTML = html;
 }}
 
+// ═══════════════════════════════════════════════════════════════════
+//  Case Investment Tracker
+// ═══════════════════════════════════════════════════════════════════
+const CASE_DATA = {cases_json};
+const caseCharts = {{}};
+let caseFilter = 'all';
+
+function initCases() {{
+  const el = document.getElementById('casesContent');
+  if (!CASE_DATA.length) {{
+    el.innerHTML = '<p style="color:#8f98a0;padding:20px 0">No case data yet — run <code>python steam_case_tracker.py</code> first.</p>';
+    return;
+  }}
+  const disc  = CASE_DATA.filter(c => c.status === 'discontinued').length;
+  const rare  = CASE_DATA.filter(c => c.status === 'rare').length;
+  const actv  = CASE_DATA.filter(c => c.status === 'active').length;
+  const best  = CASE_DATA[0];
+  el.innerHTML = `
+    <div class="summary" style="margin-bottom:16px">
+      <div class="summary-card"><div class="value">${{CASE_DATA.length}}</div><div class="label">Cases Tracked</div></div>
+      <div class="summary-card"><div class="value" style="color:#ff6666">${{disc}}</div><div class="label">Discontinued</div></div>
+      <div class="summary-card"><div class="value" style="color:#ffd700">${{rare}}</div><div class="label">Rare Drop</div></div>
+      <div class="summary-card"><div class="value" style="color:#a4d007">${{actv}}</div><div class="label">Active Drop</div></div>
+    </div>
+    <div class="case-filters" id="caseFilters">
+      <button class="active" data-f="all">All</button>
+      <button data-f="discontinued">🔴 Discontinued</button>
+      <button data-f="rare">🟡 Rare</button>
+      <button data-f="active">🟢 Active</button>
+    </div>
+    <div id="caseGrid"></div>
+  `;
+  document.querySelectorAll('#caseFilters button').forEach(btn => {{
+    btn.addEventListener('click', () => {{
+      document.querySelectorAll('#caseFilters button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      caseFilter = btn.dataset.f;
+      renderCaseCards();
+    }});
+  }});
+  renderCaseCards();
+}}
+
+function renderCaseCards() {{
+  Object.values(caseCharts).forEach(c => c.destroy());
+  for (const k in caseCharts) delete caseCharts[k];
+  const grid = document.getElementById('caseGrid');
+  const items = caseFilter === 'all' ? CASE_DATA : CASE_DATA.filter(c => c.status === caseFilter);
+  grid.innerHTML = '';
+  items.forEach((c, idx) => {{
+    const id = 'case-chart-' + idx;
+    const statusCls = 'status-' + c.status;
+    const atChg = c.all_time_chg >= 0 ? '#a4d007' : '#ff4444';
+    const yrChg = c.yr_chg >= 0 ? '#a4d007' : '#ff4444';
+    const qChg  = c.q_chg >= 0 ? '#a4d007' : '#ff4444';
+    const card = document.createElement('div');
+    card.className = 'case-card';
+    card.innerHTML = `
+      <div class="case-top">
+        <span class="case-name">${{c.name}}<span class="status-pill ${{statusCls}}">${{c.status}}</span></span>
+        <span class="case-price">$${{c.current.toFixed(2)}}</span>
+      </div>
+      <div class="case-stats">
+        <span>All-time: <b style="color:${{atChg}}">${{c.all_time_chg >= 0 ? '+' : ''}}${{c.all_time_chg}}%</b></span>
+        <span>1Y: <b style="color:${{yrChg}}">${{c.yr_chg >= 0 ? '+' : ''}}${{c.yr_chg}}%</b></span>
+        <span>90d: <b style="color:${{qChg}}">${{c.q_chg >= 0 ? '+' : ''}}${{c.q_chg}}%</b></span>
+        <span>ATH: <b>$${{c.ath.toFixed(2)}}</b></span>
+        <span>ATL: <b>$${{c.atl.toFixed(2)}}</b></span>
+        <span>Vol (30d avg): <b>${{c.avg_vol}}</b></span>
+      </div>
+      <div class="case-chart-wrap"><canvas id="${{id}}"></canvas></div>
+    `;
+    grid.appendChild(card);
+    const data = c.history.map(d => ({{ x: d[0], y: d[1] }}));
+    const color = c.status === 'discontinued' ? '#ff6666' : c.status === 'rare' ? '#ffd700' : '#a4d007';
+    caseCharts[c.name] = new Chart(document.getElementById(id), {{
+      type: 'line',
+      data: {{ datasets: [{{
+        label: 'Price', data,
+        borderColor: color, backgroundColor: color + '15',
+        fill: true, tension: 0.3, pointRadius: 0, borderWidth: 2,
+      }}] }},
+      options: {{
+        responsive: true, maintainAspectRatio: false,
+        plugins: {{ legend: {{ display: false }},
+          tooltip: {{
+            backgroundColor: '#1e2a3a', titleColor: '#fff', bodyColor: '#c6d4df',
+            borderColor: '#2a475e', borderWidth: 1,
+            callbacks: {{
+              title: items => new Date(items[0].parsed.x).toLocaleDateString('en-US', {{ year:'numeric', month:'short', day:'numeric' }}),
+              label: ctx => ' $' + ctx.parsed.y.toFixed(2),
+            }}
+          }}
+        }},
+        scales: {{
+          x: {{ type: 'time', grid: {{ color: 'rgba(42,71,94,0.3)' }}, ticks: {{ color: '#8f98a0', maxTicksLimit: 6 }} }},
+          y: {{ grid: {{ color: 'rgba(42,71,94,0.3)' }}, ticks: {{ color: '#8f98a0', callback: v => '$' + v.toFixed(2) }} }}
+        }}
+      }}
+    }});
+  }});
+}}
+
 // ── Chart control event listeners ──
 document.getElementById('sortSelect').addEventListener('change', e => {{
   renderDashboard(e.target.value, document.getElementById('searchInput').value);
@@ -1644,7 +1958,18 @@ def main():
         with open(PORTFOLIO_HISTORY_FILE) as f:
             portfolio_history = json.load(f)
 
-    html = generate_dashboard(data, price_data, input_file, portfolio_history)
+    case_history = {}
+    if os.path.exists(CASE_DATA_FILE):
+        with open(CASE_DATA_FILE) as f:
+            case_history = json.load(f)
+
+    case_meta = {}
+    if os.path.exists(CASE_META_FILE):
+        with open(CASE_META_FILE) as f:
+            case_meta = json.load(f)
+
+    html = generate_dashboard(data, price_data, input_file, portfolio_history,
+                              case_history, case_meta)
     with open(output_file, "w", encoding="utf-8") as f:
         f.write(html)
 
