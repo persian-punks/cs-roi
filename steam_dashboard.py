@@ -938,13 +938,11 @@ def main():
             price_data = json.load(f)
 
     html = generate_dashboard(data, price_data, input_file)
-    with open(output_file, "w") as f:
+    with open(output_file, "w", encoding="utf-8") as f:
         f.write(html)
-        f.close()
 
-    with open('docs/index.html', "w") as f:
+    with open('docs/index.html', "w", encoding="utf-8") as f:
         f.write(html)
-        f.close()    
 
     size_kb = len(html) / 1024
     print(f"✅ Dashboard written to {output_file} ({size_kb:.0f} KB)")

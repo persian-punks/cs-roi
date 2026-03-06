@@ -300,6 +300,11 @@ def main():
     with open(output_file, "w") as f:
         json.dump(all_profiles, f, indent=2)
     print(f"Full data saved to {output_file}")
+    print()
+    print("=" * 60)
+    print("  💰 ETH Donation: 0x89705f4d632E93F8a466683Dc520577Ec08D37e0")
+    print("  🐙 GitHub:       https://github.com/persian-punks")
+    print("=" * 60)
 
 
 if __name__ == "__main__":

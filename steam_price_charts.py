@@ -748,13 +748,18 @@ def main():
     print(f"\n🎨 Generating dashboard...")
     html = generate_html(items, price_data)
 
-    with open(output_file, "w") as f:
+    with open(output_file, "w", encoding="utf-8") as f:
         f.write(html)
 
     size_kb = len(html) / 1024
     chart_count = sum(1 for name in items if name in price_data and price_data[name])
     print(f"✅ Dashboard written to {output_file} ({size_kb:.0f} KB)")
     print(f"   {chart_count} item chart(s) with lifetime price data.")
+    print()
+    print("=" * 60)
+    print("  💰 ETH Donation: 0x89705f4d632E93F8a466683Dc520577Ec08D37e0")
+    print("  🐙 GitHub:       https://github.com/persian-punks")
+    print("=" * 60)
 
 
 if __name__ == "__main__":
