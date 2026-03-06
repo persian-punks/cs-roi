@@ -18,8 +18,8 @@
         "wear_rating": 0.37917032837867737,
         "pattern_template": 990,
         "market_price": {
-          "lowest_price": 998.0,
-          "median_price": 975.13,
+          "lowest_price": 999.47,
+          "median_price": 978.0,
           "volume": "2"
         }
       },
@@ -38,7 +38,7 @@
         "wear_rating": 0.3731813430786133,
         "pattern_template": 606,
         "market_price": {
-          "lowest_price": 413.16,
+          "lowest_price": 402.19,
           "median_price": 413.66,
           "volume": "5"
         }
@@ -59,7 +59,7 @@
         "wear_rating": 0.019391456618905067,
         "pattern_template": 19,
         "market_price": {
-          "lowest_price": 348.37,
+          "lowest_price": 348.12,
           "median_price": 332.51,
           "volume": "15"
         }
@@ -81,7 +81,7 @@
         "market_price": {
           "lowest_price": 274.93,
           "median_price": 258.35,
-          "volume": "9"
+          "volume": "5"
         }
       },
       {
@@ -142,7 +142,7 @@
         "wear_rating": 0.11202782392501831,
         "pattern_template": 566,
         "market_price": {
-          "lowest_price": 170.86,
+          "lowest_price": 169.42,
           "median_price": 173.31,
           "volume": "10"
         }
@@ -164,8 +164,8 @@
         "pattern_template": 304,
         "market_price": {
           "lowest_price": 161.93,
-          "median_price": 139.12,
-          "volume": "1"
+          "median_price": null,
+          "volume": null
         }
       },
       {
@@ -184,9 +184,9 @@
         "wear_rating": 0.05813810974359512,
         "pattern_template": 197,
         "market_price": {
-          "lowest_price": 147.98,
+          "lowest_price": 144.81,
           "median_price": 142.77,
-          "volume": "16"
+          "volume": "12"
         }
       },
       {
@@ -206,7 +206,7 @@
         "market_price": {
           "lowest_price": 130.64,
           "median_price": 131.26,
-          "volume": "4"
+          "volume": "3"
         }
       },
       {
@@ -266,9 +266,9 @@
         "wear_rating": 0.3308850824832916,
         "pattern_template": 812,
         "market_price": {
-          "lowest_price": 78.45,
-          "median_price": 77.09,
-          "volume": "84"
+          "lowest_price": 80.38,
+          "median_price": 80.34,
+          "volume": "89"
         }
       },
       {
@@ -287,9 +287,9 @@
         "wear_rating": 0.23507753014564514,
         "pattern_template": 524,
         "market_price": {
-          "lowest_price": 75.98,
-          "median_price": 75.13,
-          "volume": "126"
+          "lowest_price": 76.75,
+          "median_price": 77.53,
+          "volume": "125"
         }
       },
       {
@@ -310,7 +310,7 @@
         "market_price": {
           "lowest_price": 74.49,
           "median_price": 67.74,
-          "volume": "14"
+          "volume": "13"
         }
       },
       {
@@ -373,7 +373,7 @@
         "market_price": {
           "lowest_price": 45.4,
           "median_price": 42.33,
-          "volume": "23"
+          "volume": "18"
         }
       },
       {
@@ -434,9 +434,9 @@
         "wear_rating": 0.14215019345283508,
         "pattern_template": 727,
         "market_price": {
-          "lowest_price": 21.8,
-          "median_price": 19.5,
-          "volume": "5"
+          "lowest_price": 21.59,
+          "median_price": 19.52,
+          "volume": "6"
         }
       },
       {
@@ -455,7 +455,7 @@
         "wear_rating": 0.06495282799005508,
         "pattern_template": 146,
         "market_price": {
-          "lowest_price": 20.73,
+          "lowest_price": 20.58,
           "median_price": 19.05,
           "volume": "6"
         }
@@ -476,9 +476,9 @@
         "wear_rating": 0.07399731129407883,
         "pattern_template": 161,
         "market_price": {
-          "lowest_price": 17.25,
-          "median_price": 17.5,
-          "volume": "29"
+          "lowest_price": 17.52,
+          "median_price": 17.26,
+          "volume": "30"
         }
       },
       {
@@ -499,7 +499,7 @@
         "market_price": {
           "lowest_price": 9.77,
           "median_price": 9.75,
-          "volume": "6"
+          "volume": "3"
         }
       },
       {
@@ -518,9 +518,9 @@
         "wear_rating": 0.28319424390792847,
         "pattern_template": 258,
         "market_price": {
-          "lowest_price": 9.12,
-          "median_price": 9.11,
-          "volume": "236"
+          "lowest_price": 9.11,
+          "median_price": 9.12,
+          "volume": "241"
         }
       },
       {
@@ -541,7 +541,7 @@
         "market_price": {
           "lowest_price": 6.23,
           "median_price": 5.91,
-          "volume": "13"
+          "volume": "10"
         }
       },
       {
@@ -556,9 +556,9 @@
         "rarity": "High Grade",
         "rarity_color": "4b69ff",
         "market_price": {
-          "lowest_price": 4.49,
-          "median_price": 4.3,
-          "volume": "101"
+          "lowest_price": 4.07,
+          "median_price": 4.33,
+          "volume": "97"
         }
       },
       {
@@ -577,72 +577,9 @@
         "wear_rating": 0.16079546511173248,
         "pattern_template": 270,
         "market_price": {
-          "lowest_price": 3.68,
+          "lowest_price": 3.48,
           "median_price": 3.72,
-          "volume": "33"
-        }
-      },
-      {
-        "assetid": "49839721898",
-        "name": "StatTrak\u2122 MAG-7 | SWAG-7 (Minimal Wear)",
-        "type": "StatTrak\u2122 Restricted Shotgun",
-        "tradable": true,
-        "marketable": true,
-        "amount": "1",
-        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8n5G3wiNK0P-vb_NSM-eSCTCvzedxuPUnHirhkxhxtzvRzI38dnLEOlQnW5N1F-FZtRG6kYLvPu205ADaj40RnDK-0H0F4y2tgg",
-        "weapon": "MAG-7",
-        "quality": "StatTrak\u2122",
-        "rarity": "Restricted",
-        "rarity_color": "8847ff",
-        "exterior": "Minimal Wear",
-        "wear_rating": 0.08309784531593323,
-        "pattern_template": 239,
-        "market_price": {
-          "lowest_price": 3.17,
-          "median_price": 3.14,
-          "volume": "16"
-        }
-      },
-      {
-        "assetid": "49838043520",
-        "name": "StatTrak\u2122 Glock-18 | Moonrise (Field-Tested)",
-        "type": "StatTrak\u2122 Restricted Pistol",
-        "tradable": true,
-        "marketable": true,
-        "amount": "1",
-        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL2kpnj9h1a7s2pZKtuK8_CVliF0-x3vt5kQCa9qhsipTiXpYL8JSLSMxgnApJwF-ALsxXpm4W1N7zr4lCK2Y1FzXmoiS5PvCpvsbwFAKBwrKfVkUifZu_LJHFP",
-        "weapon": "Glock-18",
-        "quality": "StatTrak\u2122",
-        "rarity": "Restricted",
-        "rarity_color": "8847ff",
-        "exterior": "Field-Tested",
-        "wear_rating": 0.2182304561138153,
-        "pattern_template": 14,
-        "market_price": {
-          "lowest_price": 2.76,
-          "median_price": 2.72,
-          "volume": "155"
-        }
-      },
-      {
-        "assetid": "49837458796",
-        "name": "StatTrak\u2122 Glock-18 | Moonrise (Field-Tested)",
-        "type": "StatTrak\u2122 Restricted Pistol",
-        "tradable": true,
-        "marketable": true,
-        "amount": "1",
-        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL2kpnj9h1a7s2pZKtuK8_CVliF0-x3vt5kQCa9qhsipTiXpYL8JSLSMxgnApJwF-ALsxXpm4W1N7zr4lCK2Y1FzXmoiS5PvCpvsbwFAKBwrKfVkUifZu_LJHFP",
-        "weapon": "Glock-18",
-        "quality": "StatTrak\u2122",
-        "rarity": "Restricted",
-        "rarity_color": "8847ff",
-        "exterior": "Field-Tested",
-        "wear_rating": 0.18817465007305145,
-        "pattern_template": 590,
-        "market_price": {
-          "lowest_price": 2.76,
-          "median_price": 2.72,
-          "volume": "155"
+          "volume": "31"
         }
       },
       {
@@ -657,9 +594,9 @@
         "rarity": "High Grade",
         "rarity_color": "4b69ff",
         "market_price": {
-          "lowest_price": 2.6,
-          "median_price": 1.83,
-          "volume": "126"
+          "lowest_price": 2.61,
+          "median_price": 2.45,
+          "volume": "122"
         }
       },
       {
@@ -674,30 +611,9 @@
         "rarity": "High Grade",
         "rarity_color": "4b69ff",
         "market_price": {
-          "lowest_price": 2.04,
-          "median_price": 1.94,
-          "volume": "163"
-        }
-      },
-      {
-        "assetid": "49954792655",
-        "name": "StatTrak\u2122 Negev | Lionfish (Minimal Wear)",
-        "type": "StatTrak\u2122 Restricted Machinegun",
-        "tradable": true,
-        "marketable": true,
-        "amount": "1",
-        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL_m5Hl6x1I_82gbaNoNs-fB2iex-dluN5lRi67gVNx62XXzI74InPGbQMpDpMiRLMOsRG4lNXvPuritFeN3YpMzSSo2yhN8G81tOHyHega",
-        "weapon": "Negev",
-        "quality": "StatTrak\u2122",
-        "rarity": "Restricted",
-        "rarity_color": "8847ff",
-        "exterior": "Minimal Wear",
-        "wear_rating": 0.13042984902858734,
-        "pattern_template": 636,
-        "market_price": {
-          "lowest_price": 1.98,
-          "median_price": 1.74,
-          "volume": "8"
+          "lowest_price": 2.03,
+          "median_price": 2.03,
+          "volume": "162"
         }
       },
       {
@@ -784,9 +700,9 @@
         "wear_rating": 0.43642425537109375,
         "pattern_template": 232,
         "market_price": {
-          "lowest_price": 1.1,
-          "median_price": 0.89,
-          "volume": "4"
+          "lowest_price": 1.09,
+          "median_price": 1.11,
+          "volume": "5"
         }
       },
       {
@@ -841,27 +757,6 @@
         }
       },
       {
-        "assetid": "49837522679",
-        "name": "StatTrak\u2122 Nova | Wild Six (Field-Tested)",
-        "type": "StatTrak\u2122 Restricted Shotgun",
-        "tradable": true,
-        "marketable": true,
-        "amount": "1",
-        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL_kYDhwiVI0PyhfqVSIf6QBmiCyPpzj-xsSyCmmFNx4DzSyN-ueSqWaQ9yWJZ3FuAOtUSxmoKyN7637lDciY8UyS3-2n5I8G81tI6dnAuV",
-        "weapon": "Nova",
-        "quality": "StatTrak\u2122",
-        "rarity": "Restricted",
-        "rarity_color": "8847ff",
-        "exterior": "Field-Tested",
-        "wear_rating": 0.3230324685573578,
-        "pattern_template": 309,
-        "market_price": {
-          "lowest_price": 1.05,
-          "median_price": 1.17,
-          "volume": "17"
-        }
-      },
-      {
         "assetid": "49811200533",
         "name": "CZ75-Auto | Honey Paisley (Factory New)",
         "type": "Consumer Grade Pistol",
@@ -879,7 +774,7 @@
         "market_price": {
           "lowest_price": 0.11,
           "median_price": 0.11,
-          "volume": "930"
+          "volume": "924"
         }
       },
       {
@@ -899,8 +794,8 @@
         "pattern_template": 82,
         "market_price": {
           "lowest_price": 0.09,
-          "median_price": 0.12,
-          "volume": "1,185"
+          "median_price": 0.1,
+          "volume": "1,182"
         }
       },
       {
@@ -915,9 +810,9 @@
         "rarity": "Base Grade",
         "rarity_color": "b0c3d9",
         "market_price": {
-          "lowest_price": 0.06,
+          "lowest_price": 0.05,
           "median_price": 0.06,
-          "volume": "143"
+          "volume": "144"
         }
       },
       {
@@ -937,8 +832,8 @@
         "pattern_template": 782,
         "market_price": {
           "lowest_price": 0.03,
-          "median_price": 0.04,
-          "volume": "141"
+          "median_price": 0.07,
+          "volume": "255"
         }
       },
       {
@@ -959,7 +854,7 @@
         "market_price": {
           "lowest_price": 0.03,
           "median_price": 0.03,
-          "volume": "118"
+          "volume": "119"
         }
       },
       {
@@ -980,7 +875,7 @@
         "market_price": {
           "lowest_price": 0.03,
           "median_price": 0.04,
-          "volume": "405"
+          "volume": "329"
         }
       },
       {
@@ -1008,7 +903,7 @@
         "rarity_color": "b0c3d9"
       }
     ],
-    "total_items": 51,
-    "estimated_value": 3817.13
+    "total_items": 46,
+    "estimated_value": 3793.01
   }
 }

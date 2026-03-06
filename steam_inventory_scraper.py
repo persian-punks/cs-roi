@@ -16,6 +16,7 @@ DEFAULT_STEAM_IDS = [STEAM_ID]
 APP_ID = 730      # CS2
 CONTEXT_ID = 2
 BATCH_SIZE = 75   # max items per request
+PORTFOLIO_HISTORY_FILE = "data/portfolio_history.json"
 
 INVENTORY_BASE_URL = "https://steamcommunity.com/inventory"
 PROFILE_BASE_URL = "https://steamcommunity.com/profiles"
@@ -240,6 +241,41 @@ def print_profile_summary(steam_id, items):
     return total_value
 
 
+def save_portfolio_snapshot(all_profiles, grand_total):
+    """Append today's portfolio value snapshot to the history file."""
+    history = []
+    if os.path.exists(PORTFOLIO_HISTORY_FILE):
+        try:
+            with open(PORTFOLIO_HISTORY_FILE) as f:
+                history = json.load(f)
+        except Exception:
+            history = []
+
+    today = time.strftime("%Y-%m-%d")
+    snapshot = {
+        "date": today,
+        "total_value": round(grand_total, 2),
+        "item_count": sum(p.get("total_items", len(p.get("items", []))) for p in all_profiles.values()),
+        "profiles": {
+            sid: {
+                "username": p.get("username"),
+                "value": p.get("estimated_value", 0),
+                "item_count": p.get("total_items", len(p.get("items", []))),
+            }
+            for sid, p in all_profiles.items()
+        },
+    }
+
+    # Replace today's entry if it exists, then keep sorted chronologically
+    history = [e for e in history if e.get("date") != today]
+    history.append(snapshot)
+    history.sort(key=lambda e: e["date"])
+
+    with open(PORTFOLIO_HISTORY_FILE, "w") as f:
+        json.dump(history, f, indent=2)
+    print(f"  Portfolio snapshot saved ({today}: ${grand_total:.2f})")
+
+
 def main():
     steam_ids = sys.argv[1:] if len(sys.argv) > 1 else DEFAULT_STEAM_IDS
 
@@ -299,6 +335,7 @@ def main():
     output_file = "data/steam_inventory.json"
     with open(output_file, "w") as f:
         json.dump(all_profiles, f, indent=2)
+    save_portfolio_snapshot(all_profiles, grand_total)
     print(f"Full data saved to {output_file}")
     print()
     print("=" * 60)
