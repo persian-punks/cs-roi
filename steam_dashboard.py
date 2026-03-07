@@ -793,7 +793,11 @@ def generate_dashboard(data, price_data, input_file, portfolio_history=None,
   .tab-nav {{
     display: flex;
     gap: 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
   }}
+  .tab-nav::-webkit-scrollbar {{ display: none; }}
   .tab-nav button {{
     background: transparent;
     color: #8f98a0;
@@ -804,6 +808,8 @@ def generate_dashboard(data, price_data, input_file, portfolio_history=None,
     cursor: pointer;
     border-bottom: 3px solid transparent;
     transition: all 0.2s;
+    white-space: nowrap;
+    flex-shrink: 0;
   }}
   .tab-nav button:hover {{
     color: #fff;
@@ -1194,14 +1200,21 @@ def generate_dashboard(data, price_data, input_file, portfolio_history=None,
   }}
 
   @media (max-width: 700px) {{
+    header {{ padding: 12px 12px 0; }}
+    .header-top {{ flex-direction: column; align-items: flex-start; gap: 8px; margin-bottom: 10px; }}
+    .header-right {{ width: 100%; justify-content: space-between; }}
+    header h1 {{ font-size: 1.3em; }}
+    .tab-nav button {{ padding: 8px 12px; font-size: 0.8em; }}
     .chart-grid {{ grid-template-columns: 1fr; }}
     .item-grid {{ grid-template-columns: 1fr; }}
     .item-card {{ flex-direction: column; }}
     .item-image {{ width: 100%; min-height: 80px; }}
     .rarity-label {{ min-width: 100px; }}
     .rarity-stat {{ min-width: auto; }}
-    header h1 {{ font-size: 1.3em; }}
-    .tab-nav button {{ padding: 10px 14px; font-size: 0.85em; }}
+    .container {{ padding: 12px; }}
+    .acct-btn {{ width: 32px; height: 32px; }}
+    .profile-avatar {{ width: 48px; height: 48px; }}
+    .conc-name {{ min-width: 120px; max-width: 120px; }}
   }}
 </style>
 </head>
