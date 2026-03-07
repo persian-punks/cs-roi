@@ -1,12 +1,12 @@
 [
   {
     "date": "2026-03-06",
-    "total_value": 6614.89,
+    "total_value": 6622.03,
     "item_count": 217,
     "profiles": {
       "76561199093084778": {
         "username": "remilio",
-        "value": 3794.91,
+        "value": 3802.05,
         "item_count": 46
       },
       "76561199199624887": {
@@ -22,6 +22,33 @@
       "76561198813259767": {
         "username": "Dalt",
         "value": 1561.08,
+        "item_count": 53
+      }
+    }
+  },
+  {
+    "date": "2026-03-07",
+    "total_value": 6586.63,
+    "item_count": 217,
+    "profiles": {
+      "76561199093084778": {
+        "username": "remilio",
+        "value": 3780.64,
+        "item_count": 46
+      },
+      "76561199199624887": {
+        "username": "Ringo",
+        "value": 127.97,
+        "item_count": 74
+      },
+      "76561199090094051": {
+        "username": "JIGGLES",
+        "value": 1104.87,
+        "item_count": 44
+      },
+      "76561198813259767": {
+        "username": "Dalt",
+        "value": 1573.15,
         "item_count": 53
       }
     }

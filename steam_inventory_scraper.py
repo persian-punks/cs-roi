@@ -217,11 +217,15 @@ def fetch_market_price(market_hash_name):
 
 
 def enrich_with_prices(items, price_cache):
-    """Fetch Steam Market prices for all marketable items, reusing cached prices."""
-    marketable = [it for it in items if it["marketable"]]
+    """Fetch Steam Market prices for all items, reusing cached prices.
+    
+    Non-marketable items (e.g. trade-locked) still have market prices
+    based on their market_hash_name — they just can't be listed yet.
+    """
     # Only query names we haven't cached yet
     unique_names = list(dict.fromkeys(
-        it["name"] for it in marketable if it["name"] not in price_cache
+        it["name"] for it in items
+        if it["name"] not in price_cache and it["name"] != "Unknown"
     ))
     total = len(unique_names)
 

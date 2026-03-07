@@ -513,20 +513,28 @@ def build_inventory_content(data):
 #  Price Charts tab helpers  (from steam_price_charts.py)
 # ═══════════════════════════════════════════════════════════════════════════
 
-def get_unique_marketable_items(data):
+def get_unique_items(data):
+    """Get unique items across all profiles, including non-marketable (trade-locked).
+    
+    Non-marketable items still have market prices looked up by name,
+    so they can appear in charts, sell signals, and predictions.
+    """
     items = {}
     for profile in data.values():
         for item in profile.get("items", []):
-            if item.get("marketable") and item["name"] not in items:
-                items[item["name"]] = {
-                    "name": item["name"],
-                    "type": item.get("type", ""),
-                    "rarity": item.get("rarity", ""),
-                    "rarity_color": item.get("rarity_color", "ffffff"),
-                    "image_url": item.get("image_url", ""),
-                    "exterior": item.get("exterior", ""),
-                    "market_price": item.get("market_price", {}),
-                }
+            name = item.get("name", "Unknown")
+            if name == "Unknown" or name in items:
+                continue
+            items[name] = {
+                "name": name,
+                "type": item.get("type", ""),
+                "rarity": item.get("rarity", ""),
+                "rarity_color": item.get("rarity_color", "ffffff"),
+                "image_url": item.get("image_url", ""),
+                "exterior": item.get("exterior", ""),
+                "market_price": item.get("market_price", {}),
+                "marketable": item.get("marketable", False),
+            }
     return items
 
 
@@ -535,12 +543,13 @@ def build_charts_data(items, price_data):
     
     History arrays are NOT embedded here — they live in a single global
     PRICE_HISTORIES dict to avoid duplicating them per-account.
+    Includes non-marketable (trade-locked) items with a locked flag.
     """
     chart_items = []
     for name, meta in items.items():
         if name not in price_data or not price_data[name]:
             continue
-        chart_items.append({
+        entry = {
             "name": name,
             "type": meta.get("type", ""),
             "rarity": meta.get("rarity", ""),
@@ -548,7 +557,10 @@ def build_charts_data(items, price_data):
             "image_url": meta.get("image_url", ""),
             "exterior": meta.get("exterior", ""),
             "current_price": (meta.get("market_price") or {}).get("lowest_price"),
-        })
+        }
+        if not meta.get("marketable"):
+            entry["locked"] = True
+        chart_items.append(entry)
     chart_items.sort(key=lambda x: x.get("current_price") or 0, reverse=True)
     return chart_items
 
@@ -630,7 +642,7 @@ def generate_dashboard(data, price_data, input_file, portfolio_history=None,
 
     def _build_account_data(d):
         """Build all tab data dicts for a given data subset."""
-        itms = get_unique_marketable_items(d)
+        itms = get_unique_items(d)
         return {
             "charts":        build_charts_data(itms, price_data),
             "signals":       build_sell_signals(itms, price_data),
@@ -1119,6 +1131,13 @@ def generate_dashboard(data, price_data, input_file, portfolio_history=None,
   .time-buttons button:hover,
   .time-buttons button.active {{
     background: var(--accent); color: #fff; border-color: var(--accent);
+  }}
+  .chart-card.trade-locked {{ border-color: rgba(255,150,0,0.3); }}
+  .lock-badge {{
+    display: inline-block; padding: 2px 8px; border-radius: 3px;
+    font-size: 0.72em; font-weight: 600;
+    background: rgba(255,150,0,0.15); color: #ff9600;
+    margin-top: 4px;
   }}
 
   /* ── Footer ── */
@@ -1686,7 +1705,7 @@ function renderDashboard(sortKey, searchTerm) {{
     const priceStr = item.current_price ? '$' + item.current_price.toFixed(2) : '—';
 
     const card = document.createElement('div');
-    card.className = 'chart-card';
+    card.className = 'chart-card' + (item.locked ? ' trade-locked' : '');
     card.innerHTML = `
       <div class="chart-header">
         ${{item.image_url ? `<img src="${{item.image_url}}" alt="${{item.name}}" />` : ''}}
@@ -1694,6 +1713,7 @@ function renderDashboard(sortKey, searchTerm) {{
           <h3>${{item.name}}</h3>
           <div class="meta">${{item.type}}${{item.exterior ? ' • ' + item.exterior : ''}}</div>
           ${{item.rarity ? `<span class="rarity-badge" style="background:#${{item.rarity_color}}">${{item.rarity}}</span>` : ''}}
+          ${{item.locked ? '<span class="lock-badge">🔒 Trade Locked</span>' : ''}}
         </div>
         <div class="price">${{priceStr}}</div>
       </div>
