@@ -531,7 +531,11 @@ def get_unique_marketable_items(data):
 
 
 def build_charts_data(items, price_data):
-    """Build the JSON-serializable chart data for the Price Charts tab."""
+    """Build the JSON-serializable chart data for the Price Charts tab.
+    
+    History arrays are NOT embedded here — they live in a single global
+    PRICE_HISTORIES dict to avoid duplicating them per-account.
+    """
     chart_items = []
     for name, meta in items.items():
         if name not in price_data or not price_data[name]:
@@ -544,7 +548,6 @@ def build_charts_data(items, price_data):
             "image_url": meta.get("image_url", ""),
             "exterior": meta.get("exterior", ""),
             "current_price": (meta.get("market_price") or {}).get("lowest_price"),
-            "history": price_data[name],
         })
     chart_items.sort(key=lambda x: x.get("current_price") or 0, reverse=True)
     return chart_items
@@ -581,6 +584,39 @@ def build_charts_content():
     <div class="chart-grid" id="chartGrid"></div>"""
 
 
+def downsample_history(history, recent_days=90, max_old_points_per_week=1):
+    """Downsample price history for dashboard embedding.
+    
+    Keeps full resolution for the last `recent_days` days.
+    For older data, keeps one point per week (the last point in each week).
+    This typically reduces 5000-point histories to ~500 while preserving
+    all detail in short time-range views (1W, 1M, 3M).
+    """
+    if not history or len(history) <= 500:
+        return history
+    now_ms = datetime.now(timezone.utc).timestamp() * 1000
+    cutoff_ms = now_ms - recent_days * 86_400_000
+
+    old_points = [d for d in history if d[0] < cutoff_ms]
+    recent_points = [d for d in history if d[0] >= cutoff_ms]
+
+    # Downsample old data: one point per week
+    sampled = []
+    if old_points:
+        week_ms = 7 * 86_400_000
+        current_week = old_points[0][0] // week_ms
+        week_last = old_points[0]
+        for pt in old_points:
+            w = pt[0] // week_ms
+            if w != current_week:
+                sampled.append(week_last)
+                current_week = w
+            week_last = pt
+        sampled.append(week_last)  # last point of final week
+
+    return sampled + recent_points
+
+
 # ═══════════════════════════════════════════════════════════════════════════
 #  Combined HTML generation
 # ═══════════════════════════════════════════════════════════════════════════
@@ -610,7 +646,20 @@ def generate_dashboard(data, price_data, input_file, portfolio_history=None,
     account_data_json = json.dumps(account_data)
     profiles_meta_json = json.dumps(profiles_meta)
     portfolio_json = json.dumps(portfolio_history or [])
-    cases_json     = json.dumps(build_case_investment_data(case_history or {}, case_meta or {}))
+
+    # Price histories stored ONCE globally (not duplicated per-account)
+    # Downsample to reduce HTML size while preserving recent detail
+    price_histories = {name: downsample_history(hist)
+                       for name, hist in price_data.items() if hist}
+    price_histories_json = json.dumps(price_histories)
+
+    case_invest_data = build_case_investment_data(case_history or {}, case_meta or {})
+    # Separate case histories from case metadata to avoid large inline arrays
+    case_histories = {}
+    for c in case_invest_data:
+        case_histories[c["name"]] = downsample_history(c.pop("history", []))
+    cases_json = json.dumps(case_invest_data)
+    case_histories_json = json.dumps(case_histories)
     inventory_content = build_inventory_content(data)
     charts_content = build_charts_content()
 
@@ -1314,6 +1363,8 @@ window.onerror = function(msg, url, line, col) {{
 // ═══════════════════════════════════════════════════════════════════
 const ACCOUNT_DATA    = {account_data_json};
 const PROFILES_META   = {profiles_meta_json};
+const PRICE_HISTORIES = {price_histories_json};
+const CASE_HISTORIES  = {case_histories_json};
 let currentAccount    = 'all';
 
 function getAccountData(key) {{ return ACCOUNT_DATA[key || currentAccount] || ACCOUNT_DATA['all']; }}
@@ -1342,6 +1393,20 @@ document.querySelectorAll('.tab-nav button').forEach(btn => {{
     if (btn.dataset.tab === 'charts' && !chartsInitialized) {{
       chartsInitialized = true;
       renderDashboard('price-desc', '');
+      // Bind chart control listeners once the tab is first shown
+      const sortEl = document.getElementById('sortSelect');
+      const searchEl = document.getElementById('searchInput');
+      const timeEl = document.getElementById('globalTimeRange');
+      if (sortEl) sortEl.addEventListener('change', e => {{
+        renderDashboard(e.target.value, searchEl ? searchEl.value : '');
+      }});
+      if (searchEl) searchEl.addEventListener('input', e => {{
+        renderDashboard(sortEl ? sortEl.value : 'price-desc', e.target.value);
+      }});
+      if (timeEl) timeEl.addEventListener('change', e => {{
+        currentRange = e.target.value;
+        renderDashboard(sortEl ? sortEl.value : 'price-desc', searchEl ? searchEl.value : '');
+      }});
     }}
     if (btn.dataset.tab === 'portfolio' && !portfolioInitialized) {{
       portfolioInitialized = true;
@@ -1544,10 +1609,12 @@ function createChart(canvasId, history, rarityColor) {{
   }});
 }}
 
+function getHistory(name) {{ return PRICE_HISTORIES[name] || []; }}
+
 function updateChart(name, range) {{
   const item = ITEMS.find(it => it.name === name);
   if (!item || !charts[name]) return;
-  const filtered = filterByTime(item.history, range);
+  const filtered = filterByTime(getHistory(name), range);
   charts[name].data.datasets[0].data = filtered.map(d => ({{ x: d[0], y: d[1] }}));
   charts[name].data.datasets[1].data = filtered.map(d => ({{ x: d[0], y: d[2] }}));
   charts[name].update('none');
@@ -1578,7 +1645,7 @@ function renderDashboard(sortKey, searchTerm) {{
     const q = searchTerm.toLowerCase();
     items = items.filter(it => it.name.toLowerCase().includes(q) || it.type.toLowerCase().includes(q));
   }}
-  items.forEach(it => {{ it._stats = computeStats(filterByTime(it.history, currentRange)); }});
+  items.forEach(it => {{ it._stats = computeStats(filterByTime(getHistory(it.name), currentRange)); }});
 
   switch (sortKey) {{
     case 'price-desc': items.sort((a, b) => (b.current_price||0) - (a.current_price||0)); break;
@@ -1604,7 +1671,7 @@ function renderDashboard(sortKey, searchTerm) {{
 
   items.forEach((item, idx) => {{
     const canvasId = 'chart-' + idx;
-    const filtered = filterByTime(item.history, currentRange);
+    const filtered = filterByTime(getHistory(item.name), currentRange);
     const priceStr = item.current_price ? '$' + item.current_price.toFixed(2) : '—';
 
     const card = document.createElement('div');
@@ -2066,7 +2133,8 @@ function renderCaseCards() {{
       <div class="case-chart-wrap"><canvas id="${{id}}"></canvas></div>
     `;
     grid.appendChild(card);
-    const data = c.history.map(d => ({{ x: d[0], y: d[1] }}));
+    const hist = CASE_HISTORIES[c.name] || [];
+    const data = hist.map(d => ({{ x: d[0], y: d[1] }}));
     const color = c.status === 'discontinued' ? '#ff6666' : c.status === 'rare' ? '#ffd700' : '#a4d007';
     caseCharts[c.name] = new Chart(document.getElementById(id), {{
       type: 'line',
@@ -2096,17 +2164,6 @@ function renderCaseCards() {{
   }});
 }}
 
-// ── Chart control event listeners ──
-document.getElementById('sortSelect').addEventListener('change', e => {{
-  renderDashboard(e.target.value, document.getElementById('searchInput').value);
-}});
-document.getElementById('searchInput').addEventListener('input', e => {{
-  renderDashboard(document.getElementById('sortSelect').value, e.target.value);
-}});
-document.getElementById('globalTimeRange').addEventListener('change', e => {{
-  currentRange = e.target.value;
-  renderDashboard(document.getElementById('sortSelect').value, document.getElementById('searchInput').value);
-}});
 </script>
 </body>
 </html>"""
