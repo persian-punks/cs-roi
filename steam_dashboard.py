@@ -731,6 +731,13 @@ def generate_dashboard(data, price_data, input_file, portfolio_history=None,
   header h1 {{
     font-size: 1.8em;
     color: #fff;
+    line-height: 1;
+    margin-bottom: 6px;
+  }}
+  .brand-title {{
+    font-size: 1.05em;
+    color: #c6d4df;
+    font-weight: 700;
   }}
   header .timestamp {{
     color: #8f98a0;
@@ -1253,6 +1260,7 @@ def generate_dashboard(data, price_data, input_file, portfolio_history=None,
     .header-top {{ flex-direction: column; align-items: flex-start; gap: 8px; margin-bottom: 10px; }}
     .header-right {{ width: 100%; justify-content: space-between; }}
     header h1 {{ font-size: 1.3em; }}
+    .brand-title {{ font-size: 0.95em; }}
     .tab-nav button {{ padding: 8px 12px; font-size: 0.8em; }}
     .chart-grid {{ grid-template-columns: 1fr; }}
     .item-grid {{ grid-template-columns: 1fr; }}
@@ -1271,8 +1279,11 @@ def generate_dashboard(data, price_data, input_file, portfolio_history=None,
 
 <header>
   <div class="header-top">
-    <h1>▄︻テ══━一💥CS2 Capital Management LLC</h1>
-    <p>You call it gambling. We call it asymmetric payoff structures.</p>
+    <div class="header-left">
+      <h1>▄︻テ══━一💥</h1>
+      <div class="brand-title">CS2 Capital Management LLC</div>
+      <p>You call it gambling. We call it asymmetric payoff structures.</p>
+    </div>
     <div class="header-right">
       <div class="acct-switcher" id="accountSwitcher">
         <button class="acct-btn acct-all active" data-account="all" title="All Accounts">ALL</button>
