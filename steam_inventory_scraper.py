@@ -384,10 +384,23 @@ def main():
         print(f"{'='*60}\n")
 
     # Save to JSON organized by Steam ID
+    # Merge into existing data so partial runs don't erase other accounts
     output_file = "data/steam_inventory.json"
+    existing = {}
+    if os.path.exists(output_file):
+        try:
+            with open(output_file) as f:
+                existing = json.load(f)
+        except Exception:
+            existing = {}
+    existing.update(all_profiles)
+
     with open(output_file, "w") as f:
-        json.dump(all_profiles, f, indent=2)
-    save_portfolio_snapshot(all_profiles, grand_total)
+        json.dump(existing, f, indent=2)
+
+    # Portfolio snapshot uses the full merged data
+    merged_total = sum(p.get("estimated_value", 0) for p in existing.values())
+    save_portfolio_snapshot(existing, merged_total)
     print(f"Full data saved to {output_file}")
     print()
     print("=" * 60)

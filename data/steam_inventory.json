@@ -3152,5 +3152,1061 @@
       "real_name": "",
       "game_name": ""
     }
+  },
+  "76561198813259767": {
+    "username": "Dalt",
+    "items": [
+      {
+        "assetid": "34543615139",
+        "name": "\u2605 M9 Bayonet | Urban Masked (Field-Tested)",
+        "type": "\u2605 Covert Knife",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL6kJ_m-B1Wts2sab1iLvWHMXSA_vp3oORWWjuxlBMYvjiBk5r0b3-SOwUnCZJyQ-IKskbuk9C1ZuPq5FfZ3tkXzCj7ingc7S5q675TWfc7uvqATeVc680",
+        "weapon": "M9 Bayonet",
+        "quality": "\u2605",
+        "rarity": "Covert",
+        "rarity_color": "eb4b4b",
+        "exterior": "Field-Tested",
+        "wear_rating": 0.16111524403095245,
+        "pattern_template": 209,
+        "market_price": {
+          "lowest_price": 469.93,
+          "median_price": null,
+          "volume": null
+        }
+      },
+      {
+        "assetid": "38347461007",
+        "name": "M4A4 | Neo-Noir (Factory New)",
+        "type": "Covert Rifle",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8ypexwiFO0P_6afBSLvWcMWmfyPxJvOhuRz39wE1142vSztmvInvBOgV0W5R1FLYNuxW4wIbgNrmx4g2Kj4tMmCX93zQJsHgJr0dqFw",
+        "weapon": "M4A4",
+        "quality": "Normal",
+        "rarity": "Covert",
+        "rarity_color": "eb4b4b",
+        "exterior": "Factory New",
+        "wear_rating": 0.008453494869172573,
+        "pattern_template": 672,
+        "market_price": {
+          "lowest_price": 238.51,
+          "median_price": 232.08,
+          "volume": "7"
+        }
+      },
+      {
+        "assetid": "34565743248",
+        "name": "M4A1-S | Mecha Industries (Minimal Wear)",
+        "type": "Covert Rifle",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8ypexwjFS4_ega6F_H_eAMWrEwL9JveRqRyiMnBMjpi6RiIb8MhTLN1F4TowiE7EMtRW7ltzlMbvi5wPej4pDmCT2i3tKuHo4sOoEWKFz8qPS3F7BL_Rjtn0I4s52",
+        "weapon": "M4A1-S",
+        "quality": "Normal",
+        "rarity": "Covert",
+        "rarity_color": "eb4b4b",
+        "exterior": "Minimal Wear",
+        "wear_rating": 0.11638184636831284,
+        "pattern_template": 930,
+        "market_price": {
+          "lowest_price": 166.48,
+          "median_price": 168.2,
+          "volume": "6"
+        }
+      },
+      {
+        "assetid": "34542986639",
+        "name": "\u2605 Moto Gloves | Smoke Out (Battle-Scarred)",
+        "type": "\u2605 Extraordinary Gloves",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu4r7_lb1QgTykpPf-i5U-fe9V6liNP-BDX6TzetJo-xmRCyMnRgmpSTLyt-pdC_FagIlD8B2RLEM5xW5lYC1Mb7ntALc2Y5FmHn42ywav31p5_FCD_T1dmWAuQ",
+        "quality": "\u2605",
+        "rarity": "Extraordinary",
+        "rarity_color": "eb4b4b",
+        "exterior": "Battle-Scarred",
+        "wear_rating": 0.5551052689552307,
+        "pattern_template": 771,
+        "market_price": {
+          "lowest_price": 153.75,
+          "median_price": 146.91,
+          "volume": "5"
+        }
+      },
+      {
+        "assetid": "38263083362",
+        "name": "AK-47 | Inheritance (Minimal Wear)",
+        "type": "Covert Rifle",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwlcK3wiNQ0OKheqdoLPGaAFicyOl-pK8xGH_nwUt1sGrSz9ivcHKQOAcjXMYkRu5Yuxe4lYCyZOq25VSM2oMT02yg2UxBSEgA",
+        "weapon": "AK-47",
+        "quality": "Normal",
+        "rarity": "Covert",
+        "rarity_color": "eb4b4b",
+        "exterior": "Minimal Wear",
+        "wear_rating": 0.07113298028707504,
+        "pattern_template": 657,
+        "market_price": {
+          "lowest_price": 116.09,
+          "median_price": 113.71,
+          "volume": "49"
+        }
+      },
+      {
+        "assetid": "34567249645",
+        "name": "MP9 | Starlight Protector (Field-Tested)",
+        "type": "Covert SMG",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8js_f-jFk4uL3V7d5IeKfB2CY1dF7teVgWiT9wU0htTjWnI2qcHvEZgQlW5VyROAD50W6lYDnN-zi5QyM2YtGzir43zQJsHh8IziyOQ",
+        "weapon": "MP9",
+        "quality": "Normal",
+        "rarity": "Covert",
+        "rarity_color": "eb4b4b",
+        "exterior": "Field-Tested",
+        "wear_rating": 0.15979525446891785,
+        "pattern_template": 851,
+        "market_price": {
+          "lowest_price": 100.0,
+          "median_price": 104.0,
+          "volume": "177"
+        }
+      },
+      {
+        "assetid": "34542990129",
+        "name": "Number K | The Professionals",
+        "type": "Superior Agent",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIa-2lmxU-LR0dnuNm6E8Vl45Iv181z1fgn8oYby8iRe_OGnZ6psLM-FD3WZj7wuseM-GnG2lh4h5m2EmderdX7DaA9zW8N2QuBbtBG-mty2N-i0tADAy9USaSI87As",
+        "quality": "Normal",
+        "rarity": "Superior",
+        "rarity_color": "d32ce6",
+        "market_price": {
+          "lowest_price": 87.0,
+          "median_price": 89.67,
+          "volume": "38"
+        }
+      },
+      {
+        "assetid": "38155479054",
+        "name": "Lt. Commander Ricksaw | NSWC SEAL",
+        "type": "Master Agent",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIa-2lmxU-LR0dnuNm6E8Vl45Iv181z1fh7lk6nz6XRk-fO8YaVjNPndVz-Ul74hsbNoHi21kUly6mrQzNagcijBPQEnCsciTOdY4Rm6m4XvN_SiuVLIl2LQXw",
+        "quality": "Normal",
+        "rarity": "Master",
+        "rarity_color": "eb4b4b",
+        "market_price": {
+          "lowest_price": 63.94,
+          "median_price": 63.36,
+          "volume": "127"
+        }
+      },
+      {
+        "assetid": "34562084301",
+        "name": "FAMAS | Mecha Industries (Minimal Wear)",
+        "type": "Classified Rifle",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL3n5vh7h1c_M2oaalsM8-eC2SYwNF6ueZhW2ewwx4hsm3dz46heSjCPVUjC8chEOYMtxOwkNHiYb63swXY3Y9Nn32skGoXuc3DGOrc",
+        "weapon": "FAMAS",
+        "quality": "Normal",
+        "rarity": "Classified",
+        "rarity_color": "d32ce6",
+        "exterior": "Minimal Wear",
+        "wear_rating": 0.08771047741174698,
+        "pattern_template": 716,
+        "market_price": {
+          "lowest_price": 59.77,
+          "median_price": 59.73,
+          "volume": "22"
+        }
+      },
+      {
+        "assetid": "34560028298",
+        "name": "Glock-18 | Ironwork (Factory New)",
+        "type": "Mil-Spec Grade Pistol",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL2kpnj9h1a_s2pZKtuK8-XD3WbjOh3vO1WQyC0nQlp5jmEmNaodH6VbwMnApshEOcPskOww4e0N-qz5lPZ2YlGyCSviika6zErvbhhWFzqpw",
+        "weapon": "Glock-18",
+        "quality": "Normal",
+        "rarity": "Mil-Spec Grade",
+        "rarity_color": "4b69ff",
+        "exterior": "Factory New",
+        "wear_rating": 0.002704900922253728,
+        "pattern_template": 538,
+        "market_price": {
+          "lowest_price": 19.5,
+          "median_price": 15.9,
+          "volume": "14"
+        }
+      },
+      {
+        "assetid": "34576961993",
+        "name": "MAC-10 | Malachite (Factory New)",
+        "type": "Restricted SMG",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8n5WxrR1a4s2jaac8cM-eD2uRwuZ_pORWQyC0nQlpt27Uw4yrJy_FOlQpCJp2Te5Y5hPqw9HuYePksVaKjt0TmS_2hihJuDErvbgNFzWT1Q",
+        "weapon": "MAC-10",
+        "quality": "Normal",
+        "rarity": "Restricted",
+        "rarity_color": "8847ff",
+        "exterior": "Factory New",
+        "wear_rating": 0.0608961284160614,
+        "pattern_template": 92,
+        "market_price": {
+          "lowest_price": 19.4,
+          "median_price": 18.94,
+          "volume": "19"
+        }
+      },
+      {
+        "assetid": "34290468444",
+        "name": "USP-S | Cortex (Minimal Wear)",
+        "type": "Classified Pistol",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLkjYbf7itX6vytbbZSI-WsG3SA_u1jpN5lRi67gVNz4G7Qm938cS_Da1AhXpB1EeVb4xm4mtDjN7vj4A3b2NpGyCr52i4Y8G81tMzdoYZ7",
+        "weapon": "USP-S",
+        "quality": "Normal",
+        "rarity": "Classified",
+        "rarity_color": "d32ce6",
+        "exterior": "Minimal Wear",
+        "wear_rating": 0.12320733070373535,
+        "pattern_template": 581,
+        "market_price": {
+          "lowest_price": 12.02,
+          "median_price": 11.0,
+          "volume": "83"
+        }
+      },
+      {
+        "assetid": "34439519251",
+        "name": "AWP | Black Nile (Minimal Wear)",
+        "type": "Mil-Spec Grade Sniper Rifle",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwiYbf-jFk7uW-V7d5Mv-dC1icyOl-pK89Gyvhlhsit2-BwoyrICmWPQcmDpEkQOdeskOxwNKzN7vm4VeP2oMR02yg2Z2CmmVC",
+        "weapon": "AWP",
+        "quality": "Normal",
+        "rarity": "Mil-Spec Grade",
+        "rarity_color": "4b69ff",
+        "exterior": "Minimal Wear",
+        "wear_rating": 0.0807664692401886,
+        "pattern_template": 435,
+        "market_price": {
+          "lowest_price": 9.0,
+          "median_price": 8.92,
+          "volume": "97"
+        }
+      },
+      {
+        "assetid": "34566317665",
+        "name": "Five-SeveN | Boost Protocol (Minimal Wear)",
+        "type": "Restricted Pistol",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL3l4Dl7idN6vyRb7dSJvmFC1iDxPhzvt5sSTygnBIpjDGMnYftby7FalV1D5QhE-EDthW8xtCyPu63tFPciYhBynn_jykfuCttte4CA6E7uvqAn_5lxU8",
+        "weapon": "Five-SeveN",
+        "quality": "Normal",
+        "rarity": "Restricted",
+        "rarity_color": "8847ff",
+        "exterior": "Minimal Wear",
+        "wear_rating": 0.09565532207489014,
+        "pattern_template": 412,
+        "market_price": {
+          "lowest_price": 7.2,
+          "median_price": 7.07,
+          "volume": "34"
+        }
+      },
+      {
+        "assetid": "34275877705",
+        "name": "StatTrak\u2122 Desert Eagle | Corinthian (Factory New)",
+        "type": "StatTrak\u2122 Mil-Spec Grade Pistol",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL1m5fn8Sdk7uORbKFsJ_yWMWSf0-d4pOlgTieMmRQguynLzNz4Iy2ebgUmDZB4QeEDskO5ktWzMrjm7wPd2IlGmCr_3XxBuClr4PFCD_To4zX47g",
+        "weapon": "Desert Eagle",
+        "quality": "StatTrak\u2122",
+        "rarity": "Mil-Spec Grade",
+        "rarity_color": "4b69ff",
+        "exterior": "Factory New",
+        "wear_rating": 0.05861359462141991,
+        "pattern_template": 888,
+        "market_price": {
+          "lowest_price": 5.82,
+          "median_price": 5.75,
+          "volume": "23"
+        }
+      },
+      {
+        "assetid": "36124732886",
+        "name": "AK-47 | Elite Build (Minimal Wear)",
+        "type": "Mil-Spec Grade Rifle",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwlcK3wiFO0POlPPNSLfGAGmKC2NF6ueZhW2e2wh9y5GjTztirdSqfP1dyCpclR7FZ5xe9wNbhZei25FGPjokXxC2vkGoXuQLr5jvs",
+        "weapon": "AK-47",
+        "quality": "Normal",
+        "rarity": "Mil-Spec Grade",
+        "rarity_color": "4b69ff",
+        "exterior": "Minimal Wear",
+        "wear_rating": 0.13712726533412933,
+        "pattern_template": 366,
+        "market_price": {
+          "lowest_price": 4.8,
+          "median_price": 4.95,
+          "volume": "307"
+        }
+      },
+      {
+        "assetid": "38263086544",
+        "name": "Sticker | Unicorn (Holo)",
+        "type": "Remarkable Sticker",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJai0ki7VeTHjM-vM26o5ldl55L47xbyTxTykYTuwipU4_3gbqI6ePPFXz7El7oktLc_TX-1xkt-6myAyo39eXueaQZ0CMZyFOZb5g74zIPJVgoj6Q",
+        "quality": "Normal",
+        "rarity": "Remarkable",
+        "rarity_color": "8847ff",
+        "market_price": {
+          "lowest_price": 3.52,
+          "median_price": 3.5,
+          "volume": "30"
+        }
+      },
+      {
+        "assetid": "38263086534",
+        "name": "Sticker | Unicorn (Holo)",
+        "type": "Remarkable Sticker",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJai0ki7VeTHjM-vM26o5ldl55L47xbyTxTykYTuwipU4_3gbqI6ePPFXz7El7oktLc_TX-1xkt-6myAyo39eXueaQZ0CMZyFOZb5g74zIPJVgoj6Q",
+        "quality": "Normal",
+        "rarity": "Remarkable",
+        "rarity_color": "8847ff",
+        "market_price": {
+          "lowest_price": 3.52,
+          "median_price": 3.5,
+          "volume": "30"
+        }
+      },
+      {
+        "assetid": "34317625107",
+        "name": "MP7 | Cirrus (Minimal Wear)",
+        "type": "Mil-Spec Grade SMG",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8jsHf-jFk6fugaahSMP-cAmOVwOpg4t5lRi67gVMj5j6Dwtaocy6UOAIgApNyQrQOshS7lIXlMbvqslHfi41Eyi7823xK8G81tHGGql6L",
+        "weapon": "MP7",
+        "quality": "Normal",
+        "rarity": "Mil-Spec Grade",
+        "rarity_color": "4b69ff",
+        "exterior": "Minimal Wear",
+        "wear_rating": 0.09296537935733795,
+        "pattern_template": 852,
+        "market_price": {
+          "lowest_price": 2.55,
+          "median_price": 2.48,
+          "volume": "94"
+        }
+      },
+      {
+        "assetid": "34317557899",
+        "name": "Galil AR | Tuxedo (Minimal Wear)",
+        "type": "Mil-Spec Grade Rifle",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL2n5rp8SNJ0OGhV6t_I_GsAm6Xyfo45ONqGHC2kE1y42jWz9uscXmfbQQlCsZzFOACuxawl4GxMevj4QPfg5UFk3uvmVba9Q",
+        "weapon": "Galil AR",
+        "quality": "Normal",
+        "rarity": "Mil-Spec Grade",
+        "rarity_color": "4b69ff",
+        "exterior": "Minimal Wear",
+        "wear_rating": 0.10083663463592529,
+        "pattern_template": 703,
+        "market_price": {
+          "lowest_price": 2.35,
+          "median_price": 2.21,
+          "volume": "97"
+        }
+      },
+      {
+        "assetid": "38132394929",
+        "name": "Dreams & Nightmares Case",
+        "type": "Base Grade Container",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJKz2lu_XsnXwtmkJjSU91dh8bj35VTqVBP4io_frnIV7Kb5OaU-JqfHDzXFle0u4LY8Gy_kkRgisGzcm4v4J3vDOAQmDMdyRvlK7EcmeCU3yw",
+        "quality": "Normal",
+        "rarity": "Base Grade",
+        "rarity_color": "b0c3d9",
+        "market_price": {
+          "lowest_price": 1.87,
+          "median_price": 1.88,
+          "volume": "156,932"
+        }
+      },
+      {
+        "assetid": "34546257246",
+        "name": "Dreams & Nightmares Case",
+        "type": "Base Grade Container",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJKz2lu_XsnXwtmkJjSU91dh8bj35VTqVBP4io_frnIV7Kb5OaU-JqfHDzXFle0u4LY8Gy_kkRgisGzcm4v4J3vDOAQmDMdyRvlK7EcmeCU3yw",
+        "quality": "Normal",
+        "rarity": "Base Grade",
+        "rarity_color": "b0c3d9",
+        "market_price": {
+          "lowest_price": 1.87,
+          "median_price": 1.88,
+          "volume": "156,932"
+        }
+      },
+      {
+        "assetid": "34509382003",
+        "name": "Dreams & Nightmares Case",
+        "type": "Base Grade Container",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJKz2lu_XsnXwtmkJjSU91dh8bj35VTqVBP4io_frnIV7Kb5OaU-JqfHDzXFle0u4LY8Gy_kkRgisGzcm4v4J3vDOAQmDMdyRvlK7EcmeCU3yw",
+        "quality": "Normal",
+        "rarity": "Base Grade",
+        "rarity_color": "b0c3d9",
+        "market_price": {
+          "lowest_price": 1.87,
+          "median_price": 1.88,
+          "volume": "156,932"
+        }
+      },
+      {
+        "assetid": "35467249313",
+        "name": "M4A4 | Magnesium (Minimal Wear)",
+        "type": "Mil-Spec Grade Rifle",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8ypexwiVI0P_6afBSI_icHneV09FxuO56Wxa_nBovp3OAzo2vdHPFPFUmCJRxRbNZ4xewx9W1Nb7j4gzXg99Ayy73iC1Aun1q_a9cBiEfMG3G",
+        "weapon": "M4A4",
+        "quality": "Normal",
+        "rarity": "Mil-Spec Grade",
+        "rarity_color": "4b69ff",
+        "exterior": "Minimal Wear",
+        "wear_rating": 0.11022631078958511,
+        "pattern_template": 631,
+        "market_price": {
+          "lowest_price": 1.5,
+          "median_price": 1.44,
+          "volume": "201"
+        }
+      },
+      {
+        "assetid": "34317672217",
+        "name": "UMP-45 | Arctic Wolf (Minimal Wear)",
+        "type": "Restricted SMG",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLkk4a0qB1Y-s27ZbQ5dc-EBm6ExNFwse9ucCW6khUz_WiGzY6pJyjCZwN1A5p5Q-MCuxa7ldW0Ne3ntQHW2YpFmSv63S1B73t1o7FVFkKgM50",
+        "weapon": "UMP-45",
+        "quality": "Normal",
+        "rarity": "Restricted",
+        "rarity_color": "8847ff",
+        "exterior": "Minimal Wear",
+        "wear_rating": 0.13351182639598846,
+        "pattern_template": 373,
+        "market_price": {
+          "lowest_price": 1.4,
+          "median_price": 1.36,
+          "volume": "46"
+        }
+      },
+      {
+        "assetid": "34564815779",
+        "name": "Dual Berettas | Ventilators (Factory New)",
+        "type": "Mil-Spec Grade Pistol",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL0kp_0-B1c_M2qfaVhIvWBC3OEwP1JpuRnWyC_lAkooS66lob-KT-JblNxDcMiQe8M5hDtxtfnNrvrswyLjdgWzCyvhytP7ilqt7pXBfdz-rqX0V-MxKZG7g",
+        "weapon": "Dual Berettas",
+        "quality": "Normal",
+        "rarity": "Mil-Spec Grade",
+        "rarity_color": "4b69ff",
+        "exterior": "Factory New",
+        "wear_rating": 0.0028975768946111202,
+        "pattern_template": 398,
+        "market_price": {
+          "lowest_price": 1.05,
+          "median_price": 1.05,
+          "volume": "59"
+        }
+      },
+      {
+        "assetid": "34317596509",
+        "name": "XM1014 | Blue Spruce (Factory New)",
+        "type": "Consumer Grade Shotgun",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLpk8ewrHZk_P2RZat-M8-fB2CY1aAg4OU7S3rkkE115WqEyN2rcnqXOwNyAsMhFuUP4UO4l920M-O0s1GNlcsbmkmuSLNg",
+        "weapon": "XM1014",
+        "quality": "Normal",
+        "rarity": "Consumer Grade",
+        "rarity_color": "b0c3d9",
+        "exterior": "Factory New",
+        "wear_rating": 0.06577502191066742,
+        "pattern_template": 602,
+        "market_price": {
+          "lowest_price": 0.94,
+          "median_price": 0.94,
+          "volume": "10"
+        }
+      },
+      {
+        "assetid": "36987199038",
+        "name": "Fracture Case",
+        "type": "Base Grade Container",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJKz2lu_XsnXwtmkJjSU91dh8bj35VTqVBP4io_fr3QV7aD7OP01IfbGDzPCmbsm4LU5GnvkzUsi4WvUmIqtci_CPQNyApsjE_lK7EfrhW545A",
+        "quality": "Normal",
+        "rarity": "Base Grade",
+        "rarity_color": "b0c3d9",
+        "market_price": {
+          "lowest_price": 0.81,
+          "median_price": 0.81,
+          "volume": "58,594"
+        }
+      },
+      {
+        "assetid": "34317638821",
+        "name": "P90 | Traction (Minimal Wear)",
+        "type": "Mil-Spec Grade SMG",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLhx8bf-jFk_6v-V7B_JfGXMWuZxuZi_udvTHDjzUVxsm-Aw9auIniRPQJ2XJVyEONetxDuk4HiNeu24VSP391bjXKpopWoUos",
+        "weapon": "P90",
+        "quality": "Normal",
+        "rarity": "Mil-Spec Grade",
+        "rarity_color": "4b69ff",
+        "exterior": "Minimal Wear",
+        "wear_rating": 0.10313650965690613,
+        "pattern_template": 881,
+        "market_price": {
+          "lowest_price": 0.69,
+          "median_price": 0.67,
+          "volume": "36"
+        }
+      },
+      {
+        "assetid": "36017809881",
+        "name": "Recoil Case",
+        "type": "Base Grade Container",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJKz2lu_XsnXwtmkJjSU91dh8bj35VTqVBP4io_frnMVu6b-avA-JqSSCjSWwuhz47U9TCzlxh9yt2WGnNqgIi-fbgUkWMNxFPlK7EdIJF6a2Q",
+        "quality": "Normal",
+        "rarity": "Base Grade",
+        "rarity_color": "b0c3d9",
+        "market_price": {
+          "lowest_price": 0.36,
+          "median_price": 0.36,
+          "volume": "113,130"
+        }
+      },
+      {
+        "assetid": "35430804709",
+        "name": "Recoil Case",
+        "type": "Base Grade Container",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJKz2lu_XsnXwtmkJjSU91dh8bj35VTqVBP4io_frnMVu6b-avA-JqSSCjSWwuhz47U9TCzlxh9yt2WGnNqgIi-fbgUkWMNxFPlK7EdIJF6a2Q",
+        "quality": "Normal",
+        "rarity": "Base Grade",
+        "rarity_color": "b0c3d9",
+        "market_price": {
+          "lowest_price": 0.36,
+          "median_price": 0.36,
+          "volume": "113,130"
+        }
+      },
+      {
+        "assetid": "34758077626",
+        "name": "Recoil Case",
+        "type": "Base Grade Container",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJKz2lu_XsnXwtmkJjSU91dh8bj35VTqVBP4io_frnMVu6b-avA-JqSSCjSWwuhz47U9TCzlxh9yt2WGnNqgIi-fbgUkWMNxFPlK7EdIJF6a2Q",
+        "quality": "Normal",
+        "rarity": "Base Grade",
+        "rarity_color": "b0c3d9",
+        "market_price": {
+          "lowest_price": 0.36,
+          "median_price": 0.36,
+          "volume": "113,130"
+        }
+      },
+      {
+        "assetid": "34509391132",
+        "name": "Recoil Case",
+        "type": "Base Grade Container",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJKz2lu_XsnXwtmkJjSU91dh8bj35VTqVBP4io_frnMVu6b-avA-JqSSCjSWwuhz47U9TCzlxh9yt2WGnNqgIi-fbgUkWMNxFPlK7EdIJF6a2Q",
+        "quality": "Normal",
+        "rarity": "Base Grade",
+        "rarity_color": "b0c3d9",
+        "market_price": {
+          "lowest_price": 0.36,
+          "median_price": 0.36,
+          "volume": "113,130"
+        }
+      },
+      {
+        "assetid": "38162379533",
+        "name": "Revolution Case",
+        "type": "Base Grade Container",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJKz2lu_XsnXwtmkJjSU91dh8bj35VTqVBP4io_frnAVvfb6aqduc_TFVjTCxbx05OU4S3jilE9w4DzRnImtIy2Sa1JzDJEhRPlK7EcO4U8gfA",
+        "quality": "Normal",
+        "rarity": "Base Grade",
+        "rarity_color": "b0c3d9",
+        "market_price": {
+          "lowest_price": 0.35,
+          "median_price": 0.36,
+          "volume": "124,494"
+        }
+      },
+      {
+        "assetid": "34718073471",
+        "name": "Revolution Case",
+        "type": "Base Grade Container",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJKz2lu_XsnXwtmkJjSU91dh8bj35VTqVBP4io_frnAVvfb6aqduc_TFVjTCxbx05OU4S3jilE9w4DzRnImtIy2Sa1JzDJEhRPlK7EcO4U8gfA",
+        "quality": "Normal",
+        "rarity": "Base Grade",
+        "rarity_color": "b0c3d9",
+        "market_price": {
+          "lowest_price": 0.35,
+          "median_price": 0.36,
+          "volume": "124,494"
+        }
+      },
+      {
+        "assetid": "34287254942",
+        "name": "SSG 08 | Mainframe 001 (Minimal Wear)",
+        "type": "Mil-Spec Grade Sniper Rifle",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLijZGwpR1Y-s29e6M9eM-eD26ex_x3veRWQyC0nQlptzjSntqgJS6Wbg5xDZVwTbUN5EO5ldWxYem04waP2IsUyX_5in4c6zErvbh54g-58w",
+        "weapon": "SSG 08",
+        "quality": "Normal",
+        "rarity": "Mil-Spec Grade",
+        "rarity_color": "4b69ff",
+        "exterior": "Minimal Wear",
+        "wear_rating": 0.08414169400930405,
+        "pattern_template": 733,
+        "market_price": {
+          "lowest_price": 0.32,
+          "median_price": 0.31,
+          "volume": "250"
+        }
+      },
+      {
+        "assetid": "34320275862",
+        "name": "SG 553 | Aloha (Minimal Wear)",
+        "type": "Mil-Spec Grade Rifle",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLimcO1qx1I_829b_E-c8-SAmiYwNF6ueZhW2fjxE5x5W_SnNz8eXmQaVN2WJUmF7RZuhS8wYbiZeO04VPa3YlCmHr7kGoXuWs6bs2V",
+        "weapon": "SG 553",
+        "quality": "Normal",
+        "rarity": "Mil-Spec Grade",
+        "rarity_color": "4b69ff",
+        "exterior": "Minimal Wear",
+        "wear_rating": 0.07268118113279343,
+        "pattern_template": 93,
+        "market_price": {
+          "lowest_price": 0.31,
+          "median_price": 0.32,
+          "volume": "117"
+        }
+      },
+      {
+        "assetid": "36125696788",
+        "name": "UMP-45 | Motorized (Minimal Wear)",
+        "type": "Mil-Spec Grade SMG",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLkk4a0qB1O4uL6PZtsM-OWA2WcxOpJte9uRie2qhEutDWR1N2gcy7DalAhCMd3QucO5EPukN2yN-iw5QyN2IkRzSr6iXtO6StrsL0cEf1y62CUsqE",
+        "weapon": "UMP-45",
+        "quality": "Normal",
+        "rarity": "Mil-Spec Grade",
+        "rarity_color": "4b69ff",
+        "exterior": "Minimal Wear",
+        "wear_rating": 0.08400165289640427,
+        "pattern_template": 743,
+        "market_price": {
+          "lowest_price": 0.27,
+          "median_price": 0.26,
+          "volume": "520"
+        }
+      },
+      {
+        "assetid": "35602487424",
+        "name": "Negev | Ultralight (Minimal Wear)",
+        "type": "Mil-Spec Grade Machinegun",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL_m5Hl6x1Y-s2gbaNoNs-GAnOCwOJ_t-l9cCW6khUz_WSAnNj_cX6VZlQlX8Z0TeVc4RG5w4ayM-2w5wzYidhGyXr-iC0f6Cl1o7FVuI8WfEM",
+        "weapon": "Negev",
+        "quality": "Normal",
+        "rarity": "Mil-Spec Grade",
+        "rarity_color": "4b69ff",
+        "exterior": "Minimal Wear",
+        "wear_rating": 0.09542451798915863,
+        "pattern_template": 689,
+        "market_price": {
+          "lowest_price": 0.25,
+          "median_price": 0.28,
+          "volume": "189"
+        }
+      },
+      {
+        "assetid": "34287248836",
+        "name": "P250 | Cassette (Field-Tested)",
+        "type": "Mil-Spec Grade Pistol",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLhzMOwwiFO0OL8PfRSI_GAHWKE1etJveRtRjy-20h14GnRzY2gcS-UPABxWcB0FOcM5hS8kYKxZOLl5gze34NDzyv_23lXrnE8AHot8o8",
+        "weapon": "P250",
+        "quality": "Normal",
+        "rarity": "Mil-Spec Grade",
+        "rarity_color": "4b69ff",
+        "exterior": "Field-Tested",
+        "wear_rating": 0.2604818046092987,
+        "pattern_template": 244,
+        "market_price": {
+          "lowest_price": 0.13,
+          "median_price": 0.12,
+          "volume": "670"
+        }
+      },
+      {
+        "assetid": "34560837273",
+        "name": "Tec-9 | Urban DDPAT (Minimal Wear)",
+        "type": "Consumer Grade Pistol",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLlm5W5wipC0PaqeKV5H-WBDFicyOl-pK89HC3iwkwh522Dm9qqIijEbQN1XJt1TOZb5kbtkIbkZr7l4QTeiYIQ02yg2SkrOr2J",
+        "weapon": "Tec-9",
+        "quality": "Normal",
+        "rarity": "Consumer Grade",
+        "rarity_color": "b0c3d9",
+        "exterior": "Minimal Wear",
+        "wear_rating": 0.07538480311632156,
+        "pattern_template": 278,
+        "market_price": {
+          "lowest_price": 0.08,
+          "median_price": 0.07,
+          "volume": "117"
+        }
+      },
+      {
+        "assetid": "34443310641",
+        "name": "Sealed Graffiti | NaCl (Shark White)",
+        "type": "Base Grade Graffiti",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/IzMF03bi9WpSBq-S-ekoE33L-iLqGFHVaU25ZzQNQcXdB2ozio1RrlIWFK3UfvMYB8UsvjiMXojflsZalyxSh31CIyHz2GZ-KuFpPsrTzBG0suOBCG25PjKdLnPaHV07GbRZM2GPrDf25eTCQ2mfRekoSwpXeKdR9GQfOpiIbQx9itAdqGq0mFZwCxo8e9VKaVK4m3dCMuyN8qykzg",
+        "quality": "Normal",
+        "rarity": "Base Grade",
+        "rarity_color": "b0c3d9",
+        "market_price": {
+          "lowest_price": 0.06,
+          "median_price": 0.06,
+          "volume": "1,046"
+        }
+      },
+      {
+        "assetid": "36125655816",
+        "name": "XM1014 | Blue Spruce (Minimal Wear)",
+        "type": "Consumer Grade Shotgun",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLpk8ewrHZk_P2RZat-M8-fB2CY1aAg4OU7S3rkkE115WqEyN2rcnqXOwNyAsMhFuUP4UO4l920M-O0s1GNlcsbmkmuSLNg",
+        "weapon": "XM1014",
+        "quality": "Normal",
+        "rarity": "Consumer Grade",
+        "rarity_color": "b0c3d9",
+        "exterior": "Minimal Wear",
+        "wear_rating": 0.13864779472351074,
+        "pattern_template": 64,
+        "market_price": {
+          "lowest_price": 0.05,
+          "median_price": 0.04,
+          "volume": "65"
+        }
+      },
+      {
+        "assetid": "35386822291",
+        "name": "Dual Berettas | Colony (Minimal Wear)",
+        "type": "Consumer Grade Pistol",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL0kp_0-B1I4M29eKVuJc-eD3WZz-tJvOhuRz39wRx2smzVyIqtJ3OQaARzDschFO5esxm5mtHiM-7l5wCN3ohBxSz63zQJsHg_UethgQ",
+        "weapon": "Dual Berettas",
+        "quality": "Normal",
+        "rarity": "Consumer Grade",
+        "rarity_color": "b0c3d9",
+        "exterior": "Minimal Wear",
+        "wear_rating": 0.14575017988681793,
+        "pattern_template": 721,
+        "market_price": {
+          "lowest_price": 0.05,
+          "median_price": 0.05,
+          "volume": "54"
+        }
+      },
+      {
+        "assetid": "34320340655",
+        "name": "Tec-9 | Groundwater (Minimal Wear)",
+        "type": "Consumer Grade Pistol",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLlm5W5wjFU0P2iYbJoH_yaCW-Ej7om4eQ6H3zrxEwk4T-HmN78dirCb1MmA8Z3Re8D5hS5x9KzYrvkslPAy9USDDHRuWI",
+        "weapon": "Tec-9",
+        "quality": "Normal",
+        "rarity": "Consumer Grade",
+        "rarity_color": "b0c3d9",
+        "exterior": "Minimal Wear",
+        "wear_rating": 0.12768250703811646,
+        "pattern_template": 673,
+        "market_price": {
+          "lowest_price": 0.05,
+          "median_price": 0.05,
+          "volume": "95"
+        }
+      },
+      {
+        "assetid": "36987199039",
+        "name": "Sealed Graffiti | Tilt (Bazooka Pink)",
+        "type": "Base Grade Graffiti",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/IzMF03bi9WpSBq-S-ekoE33L-iLqGFHVaU25ZzQNQcXdB2ozio1RrlIWFK3UfvMYB8UsvjiMXojflsZalyxSh31CIyHz2GZ-KuFpPsrTzBG0pO-CI3X5byXdYXjYSwk9RLoLMmnRrzv047vGE2rKFO8lQwgGKKIN9mRMO8yNaxA70dMVu2u_0UdyEhk6f9BKZAarxm1OM7xzkCNAUXUFGtI",
+        "quality": "Normal",
+        "rarity": "Base Grade",
+        "rarity_color": "b0c3d9",
+        "market_price": {
+          "lowest_price": 0.04,
+          "median_price": 0.04,
+          "volume": "71"
+        }
+      },
+      {
+        "assetid": "38162379534",
+        "name": "AUG | Storm (Field-Tested)",
+        "type": "Consumer Grade Rifle",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwi5Hf7i1k_OaheqlrMv-dGlidxOp_pewnSnu3whhx52iHztb6JHPBOlRxA5MhQLZfuxiwm921P-yw4QCL2dlEzzK-0H3Orez9yg",
+        "weapon": "AUG",
+        "quality": "Normal",
+        "rarity": "Consumer Grade",
+        "rarity_color": "b0c3d9",
+        "exterior": "Field-Tested",
+        "wear_rating": 0.15907315909862518,
+        "pattern_template": 552,
+        "market_price": {
+          "lowest_price": 0.03,
+          "median_price": 0.04,
+          "volume": "206"
+        }
+      },
+      {
+        "assetid": "38132394930",
+        "name": "SCAR-20 | Contractor (Field-Tested)",
+        "type": "Consumer Grade Sniper Rifle",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLinZfyr3Jk_P2ReKluH_2WCm6FzKAk4eQ9HnzlxEkm4jmGz4yrcCmXZwcoXMdyRbEI4xTrxNe2Nuvr5gDXlcsbmlOceO9R",
+        "weapon": "SCAR-20",
+        "quality": "Normal",
+        "rarity": "Consumer Grade",
+        "rarity_color": "b0c3d9",
+        "exterior": "Field-Tested",
+        "wear_rating": 0.2288472205400467,
+        "pattern_template": 135,
+        "market_price": {
+          "lowest_price": 0.03,
+          "median_price": 0.03,
+          "volume": "249"
+        }
+      },
+      {
+        "assetid": "36017809882",
+        "name": "AUG | Storm (Battle-Scarred)",
+        "type": "Consumer Grade Rifle",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwi5Hf7i1k_OaheqlrMv-dGliYxO9gqa8wTXi3xRhz527cy92sIy-XOlMlCscmTeUJtUHpmtXvNbzhslTXj4JE02yg2UPm390x",
+        "weapon": "AUG",
+        "quality": "Normal",
+        "rarity": "Consumer Grade",
+        "rarity_color": "b0c3d9",
+        "exterior": "Battle-Scarred",
+        "wear_rating": 0.7882253527641296,
+        "pattern_template": 640,
+        "market_price": {
+          "lowest_price": 0.03,
+          "median_price": 0.04,
+          "volume": "27"
+        }
+      },
+      {
+        "assetid": "35430804710",
+        "name": "R8 Revolver | Bone Mask (Field-Tested)",
+        "type": "Consumer Grade Pistol",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLjm4Dv8TRe_c29eJt5IeCWMWqVxedjva8-Ti22kxt_6ziHzIv4dXvCP1IhC5t4ROAJsxfsm4fmNbjh7leNjINH02yg2UPpnWsG",
+        "weapon": "R8 Revolver",
+        "quality": "Normal",
+        "rarity": "Consumer Grade",
+        "rarity_color": "b0c3d9",
+        "exterior": "Field-Tested",
+        "wear_rating": 0.25343120098114014,
+        "pattern_template": 41,
+        "market_price": {
+          "lowest_price": 0.03,
+          "median_price": 0.04,
+          "volume": "72"
+        }
+      },
+      {
+        "assetid": "34758077627",
+        "name": "Nova | Predator (Field-Tested)",
+        "type": "Consumer Grade Shotgun",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL_kYDhwjFL0OirarZsI_GeMWqVxedjva9rHC_nlxx24jnXmY2pJ3qVZw51C5V4EeQJthbtx9K2MruztgOMj4NB02yg2XPmt0BC",
+        "weapon": "Nova",
+        "quality": "Normal",
+        "rarity": "Consumer Grade",
+        "rarity_color": "b0c3d9",
+        "exterior": "Field-Tested",
+        "wear_rating": 0.24574899673461914,
+        "pattern_template": 487,
+        "market_price": {
+          "lowest_price": 0.03,
+          "median_price": 0.04,
+          "volume": "388"
+        }
+      },
+      {
+        "assetid": "34718073472",
+        "name": "SCAR-20 | Contractor (Well-Worn)",
+        "type": "Consumer Grade Sniper Rifle",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLinZfyr3Jk_P2ReKluH_2WCm6FzKAk4eQ9HnzlxEkm4jmGz4yrcCmXZwcoXMdyRbEI4xTrxNe2Nuvr5gDXlcsbmlOceO9R",
+        "weapon": "SCAR-20",
+        "quality": "Normal",
+        "rarity": "Consumer Grade",
+        "rarity_color": "b0c3d9",
+        "exterior": "Well-Worn",
+        "wear_rating": 0.4277331531047821,
+        "pattern_template": 403,
+        "market_price": {
+          "lowest_price": 0.03,
+          "median_price": 0.03,
+          "volume": "26"
+        }
+      },
+      {
+        "assetid": "41635541884",
+        "name": "Premier Season One Medal",
+        "type": "Extraordinary Collectible",
+        "tradable": false,
+        "marketable": false,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJWk3ka5VeTr0M-gJnSZ9hll5oL541z1fg70n4Xv8x0K0PGhYapSJffdDTXIkb4m4rI8Gnq3lkQi5j7cwtn7I3ufPwUoX8BwQ-QPtkOxlYXuNfSiuVIwlMz5Qg",
+        "quality": "Normal",
+        "rarity": "Extraordinary",
+        "rarity_color": "eb4b4b"
+      }
+    ],
+    "total_items": 53,
+    "estimated_value": 1561.08,
+    "profile": {
+      "avatar_url": "https://avatars.steamstatic.com/9db7203e019a5a012d7aaac1db10b1fcf5c86b8f_full.jpg",
+      "profile_url": "https://steamcommunity.com/profiles/76561198813259767/",
+      "persona_state": 1,
+      "persona_state_text": "Online",
+      "time_created": 1518249630,
+      "country_code": "US",
+      "real_name": "",
+      "game_name": "Deadlock"
+    }
   }
 }

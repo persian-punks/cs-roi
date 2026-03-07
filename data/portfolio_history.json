@@ -1,8 +1,8 @@
 [
   {
     "date": "2026-03-06",
-    "total_value": 5053.81,
-    "item_count": 164,
+    "total_value": 6614.89,
+    "item_count": 217,
     "profiles": {
       "76561199093084778": {
         "username": "remilio",
@@ -18,6 +18,11 @@
         "username": "JIGGLES",
         "value": 1129.21,
         "item_count": 44
+      },
+      "76561198813259767": {
+        "username": "Dalt",
+        "value": 1561.08,
+        "item_count": 53
       }
     }
   }
