@@ -18,8 +18,8 @@
         "wear_rating": 0.37917032837867737,
         "pattern_template": 990,
         "market_price": {
-          "lowest_price": 999.47,
-          "median_price": 978.0,
+          "lowest_price": 1000.0,
+          "median_price": 999.47,
           "volume": "2"
         }
       },
@@ -38,9 +38,9 @@
         "wear_rating": 0.3731813430786133,
         "pattern_template": 606,
         "market_price": {
-          "lowest_price": 398.41,
-          "median_price": 413.66,
-          "volume": "4"
+          "lowest_price": 394.36,
+          "median_price": 387.4,
+          "volume": "6"
         }
       },
       {
@@ -59,9 +59,9 @@
         "wear_rating": 0.019391456618905067,
         "pattern_template": 19,
         "market_price": {
-          "lowest_price": 338.5,
-          "median_price": 332.51,
-          "volume": "13"
+          "lowest_price": 343.43,
+          "median_price": 322.51,
+          "volume": "10"
         }
       },
       {
@@ -79,9 +79,9 @@
         "wear_rating": 0.3061072528362274,
         "pattern_template": 972,
         "market_price": {
-          "lowest_price": 285.0,
-          "median_price": 262.57,
-          "volume": "7"
+          "lowest_price": 276.0,
+          "median_price": 266.79,
+          "volume": "8"
         }
       },
       {
@@ -100,9 +100,9 @@
         "wear_rating": 0.13774330914020538,
         "pattern_template": 151,
         "market_price": {
-          "lowest_price": 200.97,
-          "median_price": 172.99,
-          "volume": "8"
+          "lowest_price": 202.11,
+          "median_price": 197.35,
+          "volume": "10"
         }
       },
       {
@@ -121,7 +121,7 @@
         "wear_rating": 0.40193939208984375,
         "pattern_template": 702,
         "market_price": {
-          "lowest_price": 183.28,
+          "lowest_price": 183.37,
           "median_price": null,
           "volume": null
         }
@@ -142,9 +142,9 @@
         "wear_rating": 0.11202782392501831,
         "pattern_template": 566,
         "market_price": {
-          "lowest_price": 174.05,
-          "median_price": 170.03,
-          "volume": "12"
+          "lowest_price": 182.0,
+          "median_price": 175.0,
+          "volume": "8"
         }
       },
       {
@@ -163,7 +163,7 @@
         "wear_rating": 0.16829648613929749,
         "pattern_template": 304,
         "market_price": {
-          "lowest_price": 161.93,
+          "lowest_price": 162.15,
           "median_price": null,
           "volume": null
         }
@@ -184,9 +184,9 @@
         "wear_rating": 0.05813810974359512,
         "pattern_template": 197,
         "market_price": {
-          "lowest_price": 147.98,
-          "median_price": 142.77,
-          "volume": "10"
+          "lowest_price": 154.4,
+          "median_price": 138.0,
+          "volume": "13"
         }
       },
       {
@@ -204,8 +204,8 @@
         "wear_rating": 0.3853617012500763,
         "pattern_template": 759,
         "market_price": {
-          "lowest_price": 130.64,
-          "median_price": 131.26,
+          "lowest_price": 128.0,
+          "median_price": 131.21,
           "volume": "3"
         }
       },
@@ -225,9 +225,29 @@
         "wear_rating": 0.32599395513534546,
         "pattern_template": 678,
         "market_price": {
-          "lowest_price": 107.31,
-          "median_price": 99.79,
-          "volume": "3"
+          "lowest_price": 111.36,
+          "median_price": 107.33,
+          "volume": "4"
+        }
+      },
+      {
+        "assetid": "49816413470",
+        "name": "\u2605 Hand Wraps | Giraffe (Battle-Scarred)",
+        "type": "\u2605 Extraordinary Gloves",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu4vx603vRA_Olpfu-TVJ7uK9V6xsLvSEHGaA_uJzsfVhSjuqqhsmsS-MmbD-KDnGOFB1ZcolFKFDrBC-kdOzZrnhswyPgo8QyHj42Hwc7C5q4esCBaQh86zUh13BZ7Q-4ZIdZKHwNIXWsds",
+        "quality": "\u2605",
+        "rarity": "Extraordinary",
+        "rarity_color": "eb4b4b",
+        "exterior": "Battle-Scarred",
+        "wear_rating": 0.5894170999526978,
+        "pattern_template": 986,
+        "market_price": {
+          "lowest_price": 80.1,
+          "median_price": 80.0,
+          "volume": "6"
         }
       },
       {
@@ -246,29 +266,9 @@
         "wear_rating": 0.3308850824832916,
         "pattern_template": 812,
         "market_price": {
-          "lowest_price": 80.39,
-          "median_price": 76.76,
-          "volume": "96"
-        }
-      },
-      {
-        "assetid": "49816413470",
-        "name": "\u2605 Hand Wraps | Giraffe (Battle-Scarred)",
-        "type": "\u2605 Extraordinary Gloves",
-        "tradable": true,
-        "marketable": true,
-        "amount": "1",
-        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu4vx603vRA_Olpfu-TVJ7uK9V6xsLvSEHGaA_uJzsfVhSjuqqhsmsS-MmbD-KDnGOFB1ZcolFKFDrBC-kdOzZrnhswyPgo8QyHj42Hwc7C5q4esCBaQh86zUh13BZ7Q-4ZIdZKHwNIXWsds",
-        "quality": "\u2605",
-        "rarity": "Extraordinary",
-        "rarity_color": "eb4b4b",
-        "exterior": "Battle-Scarred",
-        "wear_rating": 0.5894170999526978,
-        "pattern_template": 986,
-        "market_price": {
-          "lowest_price": 78.46,
-          "median_price": 78.46,
-          "volume": "10"
+          "lowest_price": 77.79,
+          "median_price": 71.63,
+          "volume": "89"
         }
       },
       {
@@ -287,30 +287,9 @@
         "wear_rating": 0.23507753014564514,
         "pattern_template": 524,
         "market_price": {
-          "lowest_price": 75.3,
-          "median_price": 74.26,
-          "volume": "130"
-        }
-      },
-      {
-        "assetid": "49667098507",
-        "name": "\u2605 Shadow Daggers | Bright Water (Factory New)",
-        "type": "\u2605 Covert Knife",
-        "tradable": true,
-        "marketable": true,
-        "amount": "1",
-        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL6kJ_m-B1L-uGmV6x0H_-QC2ae_uV4uedscHDjqhEutDWR1NapdiiWblJxCpdyROVftBS9lNa1Meng5wXd3oJEyy_7ji1J6ilu6-0cEf1yYi7ebTk",
-        "weapon": "Shadow Daggers",
-        "quality": "\u2605",
-        "rarity": "Covert",
-        "rarity_color": "eb4b4b",
-        "exterior": "Factory New",
-        "wear_rating": 0.05993734300136566,
-        "pattern_template": 12,
-        "market_price": {
-          "lowest_price": 74.93,
-          "median_price": 74.63,
-          "volume": "13"
+          "lowest_price": 75.0,
+          "median_price": 75.8,
+          "volume": "158"
         }
       },
       {
@@ -329,9 +308,30 @@
         "wear_rating": 0.40902256965637207,
         "pattern_template": 296,
         "market_price": {
-          "lowest_price": 73.23,
-          "median_price": 60.71,
-          "volume": "1"
+          "lowest_price": 73.32,
+          "median_price": 60.0,
+          "volume": "4"
+        }
+      },
+      {
+        "assetid": "49667098507",
+        "name": "\u2605 Shadow Daggers | Bright Water (Factory New)",
+        "type": "\u2605 Covert Knife",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL6kJ_m-B1L-uGmV6x0H_-QC2ae_uV4uedscHDjqhEutDWR1NapdiiWblJxCpdyROVftBS9lNa1Meng5wXd3oJEyy_7ji1J6ilu6-0cEf1yYi7ebTk",
+        "weapon": "Shadow Daggers",
+        "quality": "\u2605",
+        "rarity": "Covert",
+        "rarity_color": "eb4b4b",
+        "exterior": "Factory New",
+        "wear_rating": 0.05993734300136566,
+        "pattern_template": 12,
+        "market_price": {
+          "lowest_price": 71.57,
+          "median_price": 70.75,
+          "volume": "10"
         }
       },
       {
@@ -350,9 +350,9 @@
         "wear_rating": 0.5883638858795166,
         "pattern_template": 124,
         "market_price": {
-          "lowest_price": 48.69,
-          "median_price": 41.92,
-          "volume": "8"
+          "lowest_price": 46.08,
+          "median_price": 42.61,
+          "volume": "4"
         }
       },
       {
@@ -371,9 +371,9 @@
         "wear_rating": 0.3338506817817688,
         "pattern_template": 249,
         "market_price": {
-          "lowest_price": 44.96,
-          "median_price": 44.85,
-          "volume": "14"
+          "lowest_price": 44.99,
+          "median_price": 45.5,
+          "volume": "9"
         }
       },
       {
@@ -392,9 +392,9 @@
         "wear_rating": 0.4073992669582367,
         "pattern_template": 534,
         "market_price": {
-          "lowest_price": 42.98,
-          "median_price": 44.79,
-          "volume": "19"
+          "lowest_price": 43.95,
+          "median_price": 39.93,
+          "volume": "17"
         }
       },
       {
@@ -413,9 +413,9 @@
         "wear_rating": 0.11325906217098236,
         "pattern_template": 827,
         "market_price": {
-          "lowest_price": 42.58,
-          "median_price": 41.0,
-          "volume": "21"
+          "lowest_price": 42.05,
+          "median_price": 43.5,
+          "volume": "17"
         }
       },
       {
@@ -434,9 +434,9 @@
         "wear_rating": 0.14215019345283508,
         "pattern_template": 727,
         "market_price": {
-          "lowest_price": 21.59,
-          "median_price": 19.52,
-          "volume": "5"
+          "lowest_price": 19.73,
+          "median_price": 18.57,
+          "volume": "4"
         }
       },
       {
@@ -455,9 +455,9 @@
         "wear_rating": 0.06495282799005508,
         "pattern_template": 146,
         "market_price": {
-          "lowest_price": 20.53,
+          "lowest_price": 19.64,
           "median_price": 19.05,
-          "volume": "6"
+          "volume": "1"
         }
       },
       {
@@ -476,9 +476,9 @@
         "wear_rating": 0.07399731129407883,
         "pattern_template": 161,
         "market_price": {
-          "lowest_price": 17.34,
-          "median_price": 18.15,
-          "volume": "31"
+          "lowest_price": 15.61,
+          "median_price": 17.41,
+          "volume": "26"
         }
       },
       {
@@ -497,9 +497,9 @@
         "wear_rating": 0.12569619715213776,
         "pattern_template": 418,
         "market_price": {
-          "lowest_price": 9.77,
-          "median_price": 9.75,
-          "volume": "2"
+          "lowest_price": 9.85,
+          "median_price": 9.68,
+          "volume": "3"
         }
       },
       {
@@ -519,8 +519,8 @@
         "pattern_template": 258,
         "market_price": {
           "lowest_price": 9.04,
-          "median_price": 9.03,
-          "volume": "239"
+          "median_price": 9.44,
+          "volume": "274"
         }
       },
       {
@@ -539,9 +539,9 @@
         "wear_rating": 0.20625938475131989,
         "pattern_template": 737,
         "market_price": {
-          "lowest_price": 6.23,
-          "median_price": 5.91,
-          "volume": "10"
+          "lowest_price": 6.55,
+          "median_price": 6.52,
+          "volume": "19"
         }
       },
       {
@@ -556,9 +556,9 @@
         "rarity": "High Grade",
         "rarity_color": "4b69ff",
         "market_price": {
-          "lowest_price": 4.07,
-          "median_price": 3.99,
-          "volume": "97"
+          "lowest_price": 4.64,
+          "median_price": 4.42,
+          "volume": "110"
         }
       },
       {
@@ -577,9 +577,9 @@
         "wear_rating": 0.16079546511173248,
         "pattern_template": 270,
         "market_price": {
-          "lowest_price": 3.68,
-          "median_price": 3.5,
-          "volume": "33"
+          "lowest_price": 3.79,
+          "median_price": 3.49,
+          "volume": "43"
         }
       },
       {
@@ -594,9 +594,9 @@
         "rarity": "High Grade",
         "rarity_color": "4b69ff",
         "market_price": {
-          "lowest_price": 2.44,
-          "median_price": 2.3,
-          "volume": "119"
+          "lowest_price": 2.67,
+          "median_price": 2.67,
+          "volume": "126"
         }
       },
       {
@@ -611,9 +611,9 @@
         "rarity": "High Grade",
         "rarity_color": "4b69ff",
         "market_price": {
-          "lowest_price": 2.04,
-          "median_price": 2.04,
-          "volume": "160"
+          "lowest_price": 2.02,
+          "median_price": 2.02,
+          "volume": "231"
         }
       },
       {
@@ -685,6 +685,57 @@
         }
       },
       {
+        "assetid": "49682289943",
+        "name": "Sticker | T On Cat",
+        "type": "High Grade Sticker",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJai0ki7VeTHjMmuOHaC619h7dempU3oTx7witjj-HsCv6P2avVrI_SXVmSWxeoj6bFtTnznl0RwtTyHw9moeSmTOlQlFNIuEofCjY9p",
+        "quality": "Normal",
+        "rarity": "High Grade",
+        "rarity_color": "4b69ff",
+        "market_price": {
+          "lowest_price": 1.09,
+          "median_price": 1.06,
+          "volume": "1"
+        }
+      },
+      {
+        "assetid": "49682289941",
+        "name": "Sticker | T On Cat",
+        "type": "High Grade Sticker",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJai0ki7VeTHjMmuOHaC619h7dempU3oTx7witjj-HsCv6P2avVrI_SXVmSWxeoj6bFtTnznl0RwtTyHw9moeSmTOlQlFNIuEofCjY9p",
+        "quality": "Normal",
+        "rarity": "High Grade",
+        "rarity_color": "4b69ff",
+        "market_price": {
+          "lowest_price": 1.09,
+          "median_price": 1.06,
+          "volume": "1"
+        }
+      },
+      {
+        "assetid": "49682289939",
+        "name": "Sticker | T On Cat",
+        "type": "High Grade Sticker",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJai0ki7VeTHjMmuOHaC619h7dempU3oTx7witjj-HsCv6P2avVrI_SXVmSWxeoj6bFtTnznl0RwtTyHw9moeSmTOlQlFNIuEofCjY9p",
+        "quality": "Normal",
+        "rarity": "High Grade",
+        "rarity_color": "4b69ff",
+        "market_price": {
+          "lowest_price": 1.09,
+          "median_price": 1.06,
+          "volume": "1"
+        }
+      },
+      {
         "assetid": "49839157092",
         "name": "StatTrak\u2122 UMP-45 | Arctic Wolf (Well-Worn)",
         "type": "StatTrak\u2122 Restricted SMG",
@@ -700,60 +751,9 @@
         "wear_rating": 0.43642425537109375,
         "pattern_template": 232,
         "market_price": {
-          "lowest_price": 1.09,
-          "median_price": 1.11,
-          "volume": "5"
-        }
-      },
-      {
-        "assetid": "49682289943",
-        "name": "Sticker | T On Cat",
-        "type": "High Grade Sticker",
-        "tradable": true,
-        "marketable": true,
-        "amount": "1",
-        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJai0ki7VeTHjMmuOHaC619h7dempU3oTx7witjj-HsCv6P2avVrI_SXVmSWxeoj6bFtTnznl0RwtTyHw9moeSmTOlQlFNIuEofCjY9p",
-        "quality": "Normal",
-        "rarity": "High Grade",
-        "rarity_color": "4b69ff",
-        "market_price": {
-          "lowest_price": 1.06,
-          "median_price": 1.09,
-          "volume": "3"
-        }
-      },
-      {
-        "assetid": "49682289941",
-        "name": "Sticker | T On Cat",
-        "type": "High Grade Sticker",
-        "tradable": true,
-        "marketable": true,
-        "amount": "1",
-        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJai0ki7VeTHjMmuOHaC619h7dempU3oTx7witjj-HsCv6P2avVrI_SXVmSWxeoj6bFtTnznl0RwtTyHw9moeSmTOlQlFNIuEofCjY9p",
-        "quality": "Normal",
-        "rarity": "High Grade",
-        "rarity_color": "4b69ff",
-        "market_price": {
-          "lowest_price": 1.06,
-          "median_price": 1.09,
-          "volume": "3"
-        }
-      },
-      {
-        "assetid": "49682289939",
-        "name": "Sticker | T On Cat",
-        "type": "High Grade Sticker",
-        "tradable": true,
-        "marketable": true,
-        "amount": "1",
-        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJai0ki7VeTHjMmuOHaC619h7dempU3oTx7witjj-HsCv6P2avVrI_SXVmSWxeoj6bFtTnznl0RwtTyHw9moeSmTOlQlFNIuEofCjY9p",
-        "quality": "Normal",
-        "rarity": "High Grade",
-        "rarity_color": "4b69ff",
-        "market_price": {
-          "lowest_price": 1.06,
-          "median_price": 1.09,
-          "volume": "3"
+          "lowest_price": 1.08,
+          "median_price": 1.02,
+          "volume": "4"
         }
       },
       {
@@ -774,7 +774,7 @@
         "market_price": {
           "lowest_price": 0.11,
           "median_price": 0.11,
-          "volume": "924"
+          "volume": "790"
         }
       },
       {
@@ -793,9 +793,9 @@
         "wear_rating": 0.20133209228515625,
         "pattern_template": 82,
         "market_price": {
-          "lowest_price": 0.09,
-          "median_price": 0.09,
-          "volume": "1,182"
+          "lowest_price": 0.1,
+          "median_price": 0.1,
+          "volume": "1,221"
         }
       },
       {
@@ -810,9 +810,9 @@
         "rarity": "Base Grade",
         "rarity_color": "b0c3d9",
         "market_price": {
-          "lowest_price": 0.06,
-          "median_price": 0.06,
-          "volume": "118"
+          "lowest_price": 0.05,
+          "median_price": 0.04,
+          "volume": "51"
         }
       },
       {
@@ -833,7 +833,7 @@
         "market_price": {
           "lowest_price": 0.03,
           "median_price": 0.04,
-          "volume": "273"
+          "volume": "425"
         }
       },
       {
@@ -854,7 +854,7 @@
         "market_price": {
           "lowest_price": 0.03,
           "median_price": 0.03,
-          "volume": "113"
+          "volume": "46"
         }
       },
       {
@@ -875,7 +875,7 @@
         "market_price": {
           "lowest_price": 0.03,
           "median_price": 0.04,
-          "volume": "328"
+          "volume": "291"
         }
       },
       {
@@ -904,7 +904,17 @@
       }
     ],
     "total_items": 46,
-    "estimated_value": 3795.05
+    "estimated_value": 3794.91,
+    "profile": {
+      "avatar_url": "https://avatars.steamstatic.com/9513c796138046c8e3c2e03f917ed5de92fe3a88_full.jpg",
+      "profile_url": "https://steamcommunity.com/profiles/76561199093084778/",
+      "persona_state": 1,
+      "persona_state_text": "Online",
+      "time_created": 1600914961,
+      "country_code": "",
+      "real_name": "",
+      "game_name": "Counter-Strike 2"
+    }
   },
   "76561199199624887": {
     "username": "Ringo",
@@ -925,9 +935,9 @@
         "wear_rating": 0.13496100902557373,
         "pattern_template": 412,
         "market_price": {
-          "lowest_price": 31.36,
-          "median_price": 26.69,
-          "volume": "2"
+          "lowest_price": 29.8,
+          "median_price": null,
+          "volume": null
         }
       },
       {
@@ -942,9 +952,9 @@
         "rarity": "High Grade",
         "rarity_color": "4b69ff",
         "market_price": {
-          "lowest_price": 22.44,
-          "median_price": 21.17,
-          "volume": "33"
+          "lowest_price": 23.16,
+          "median_price": 23.16,
+          "volume": "36"
         }
       },
       {
@@ -959,9 +969,9 @@
         "rarity": "Extraordinary",
         "rarity_color": "eb4b4b",
         "market_price": {
-          "lowest_price": 20.37,
-          "median_price": 17.79,
-          "volume": "13"
+          "lowest_price": 21.06,
+          "median_price": 20.71,
+          "volume": "12"
         }
       },
       {
@@ -980,8 +990,8 @@
         "wear_rating": 0.12802854180335999,
         "pattern_template": 237,
         "market_price": {
-          "lowest_price": 10.17,
-          "median_price": 9.55,
+          "lowest_price": 10.06,
+          "median_price": 9.5,
           "volume": "22"
         }
       },
@@ -1001,9 +1011,9 @@
         "wear_rating": 0.12362594902515411,
         "pattern_template": 473,
         "market_price": {
-          "lowest_price": 7.59,
-          "median_price": 7.97,
-          "volume": "36"
+          "lowest_price": 7.67,
+          "median_price": 8.06,
+          "volume": "30"
         }
       },
       {
@@ -1022,9 +1032,9 @@
         "wear_rating": 0.10128984600305557,
         "pattern_template": 160,
         "market_price": {
-          "lowest_price": 6.67,
-          "median_price": 6.12,
-          "volume": "64"
+          "lowest_price": 6.56,
+          "median_price": 6.4,
+          "volume": "58"
         }
       },
       {
@@ -1043,9 +1053,9 @@
         "wear_rating": 0.05638850852847099,
         "pattern_template": 27,
         "market_price": {
-          "lowest_price": 3.26,
-          "median_price": null,
-          "volume": null
+          "lowest_price": 3.12,
+          "median_price": 2.91,
+          "volume": "1"
         }
       },
       {
@@ -1064,9 +1074,9 @@
         "wear_rating": 0.04418754577636719,
         "pattern_template": 335,
         "market_price": {
-          "lowest_price": 2.64,
-          "median_price": 2.59,
-          "volume": "25"
+          "lowest_price": 2.5,
+          "median_price": 2.45,
+          "volume": "13"
         }
       },
       {
@@ -1085,9 +1095,9 @@
         "wear_rating": 0.004327896982431412,
         "pattern_template": 476,
         "market_price": {
-          "lowest_price": 2.45,
-          "median_price": 2.42,
-          "volume": "14"
+          "lowest_price": 2.44,
+          "median_price": 2.46,
+          "volume": "22"
         }
       },
       {
@@ -1102,9 +1112,9 @@
         "rarity": "High Grade",
         "rarity_color": "4b69ff",
         "market_price": {
-          "lowest_price": 2.42,
-          "median_price": 1.48,
-          "volume": "18"
+          "lowest_price": 2.38,
+          "median_price": 2.34,
+          "volume": "23"
         }
       },
       {
@@ -1123,9 +1133,9 @@
         "wear_rating": 0.267648845911026,
         "pattern_template": 314,
         "market_price": {
-          "lowest_price": 2.15,
-          "median_price": 1.82,
-          "volume": "23"
+          "lowest_price": 2.0,
+          "median_price": 2.11,
+          "volume": "31"
         }
       },
       {
@@ -1144,9 +1154,9 @@
         "wear_rating": 0.6434667706489563,
         "pattern_template": 655,
         "market_price": {
-          "lowest_price": 1.74,
-          "median_price": 1.74,
-          "volume": "118"
+          "lowest_price": 1.76,
+          "median_price": 1.66,
+          "volume": "126"
         }
       },
       {
@@ -1161,9 +1171,9 @@
         "rarity": "High Grade",
         "rarity_color": "4b69ff",
         "market_price": {
-          "lowest_price": 1.46,
-          "median_price": 1.47,
-          "volume": "13"
+          "lowest_price": 1.65,
+          "median_price": 1.55,
+          "volume": "15"
         }
       },
       {
@@ -1182,9 +1192,9 @@
         "wear_rating": 0.19962802529335022,
         "pattern_template": 111,
         "market_price": {
-          "lowest_price": 1.3,
-          "median_price": 1.34,
-          "volume": "792"
+          "lowest_price": 1.4,
+          "median_price": 1.41,
+          "volume": "814"
         }
       },
       {
@@ -1203,9 +1213,30 @@
         "wear_rating": 0.4485066831111908,
         "pattern_template": 598,
         "market_price": {
-          "lowest_price": 1.15,
-          "median_price": 1.11,
-          "volume": "48"
+          "lowest_price": 1.09,
+          "median_price": 1.01,
+          "volume": "30"
+        }
+      },
+      {
+        "assetid": "48981104323",
+        "name": "Tec-9 | Bamboozle (Field-Tested)",
+        "type": "Restricted Pistol",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLlm5W5wiFO0Oara_1SIvGeDGif_uNztOh8QmfgkUsjsWuBytiqc3iUbwAlApZ0FO4MtBnqxt2zNerq5A2Ijo8XzH2rkGoXuVswnRyj",
+        "weapon": "Tec-9",
+        "quality": "Normal",
+        "rarity": "Restricted",
+        "rarity_color": "8847ff",
+        "exterior": "Field-Tested",
+        "wear_rating": 0.30228716135025024,
+        "pattern_template": 566,
+        "market_price": {
+          "lowest_price": 1.07,
+          "median_price": 1.08,
+          "volume": "108"
         }
       },
       {
@@ -1224,9 +1255,9 @@
         "wear_rating": 0.00804418046027422,
         "pattern_template": 557,
         "market_price": {
-          "lowest_price": 1.01,
-          "median_price": 1.02,
-          "volume": "545"
+          "lowest_price": 1.04,
+          "median_price": 0.99,
+          "volume": "544"
         }
       },
       {
@@ -1246,29 +1277,8 @@
         "pattern_template": 5,
         "market_price": {
           "lowest_price": 1.0,
-          "median_price": 0.99,
-          "volume": "129"
-        }
-      },
-      {
-        "assetid": "48981104323",
-        "name": "Tec-9 | Bamboozle (Field-Tested)",
-        "type": "Restricted Pistol",
-        "tradable": true,
-        "marketable": true,
-        "amount": "1",
-        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLlm5W5wiFO0Oara_1SIvGeDGif_uNztOh8QmfgkUsjsWuBytiqc3iUbwAlApZ0FO4MtBnqxt2zNerq5A2Ijo8XzH2rkGoXuVswnRyj",
-        "weapon": "Tec-9",
-        "quality": "Normal",
-        "rarity": "Restricted",
-        "rarity_color": "8847ff",
-        "exterior": "Field-Tested",
-        "wear_rating": 0.30228716135025024,
-        "pattern_template": 566,
-        "market_price": {
-          "lowest_price": 0.96,
-          "median_price": 0.98,
-          "volume": "91"
+          "median_price": 1.0,
+          "volume": "118"
         }
       },
       {
@@ -1287,9 +1297,9 @@
         "wear_rating": 0.16605931520462036,
         "pattern_template": 791,
         "market_price": {
-          "lowest_price": 0.87,
-          "median_price": 0.97,
-          "volume": "873"
+          "lowest_price": 0.99,
+          "median_price": 0.95,
+          "volume": "942"
         }
       },
       {
@@ -1308,9 +1318,9 @@
         "wear_rating": 0.23575352132320404,
         "pattern_template": 111,
         "market_price": {
-          "lowest_price": 0.84,
-          "median_price": 0.76,
-          "volume": "532"
+          "lowest_price": 0.81,
+          "median_price": 0.81,
+          "volume": "464"
         }
       },
       {
@@ -1330,8 +1340,8 @@
         "pattern_template": 770,
         "market_price": {
           "lowest_price": 0.8,
-          "median_price": 0.8,
-          "volume": "56"
+          "median_price": 0.7,
+          "volume": "88"
         }
       },
       {
@@ -1352,28 +1362,7 @@
         "market_price": {
           "lowest_price": 0.65,
           "median_price": 0.67,
-          "volume": "1,888"
-        }
-      },
-      {
-        "assetid": "35069285512",
-        "name": "G3SG1 | Orange Crash (Field-Tested)",
-        "type": "Mil-Spec Grade Sniper Rifle",
-        "tradable": true,
-        "marketable": true,
-        "amount": "1",
-        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL2zYXnrB1I_82pO7dqcc-eB2uZ1ed3v_NoQS62qhAitzSQl8H9cynCaVJyA5N2TeIMsxK_lYDkZO_i4FOPiYoUzX74jXxBuyo_t7kAT-N7rXXSkQvV",
-        "weapon": "G3SG1",
-        "quality": "Normal",
-        "rarity": "Mil-Spec Grade",
-        "rarity_color": "4b69ff",
-        "exterior": "Field-Tested",
-        "wear_rating": 0.18157872557640076,
-        "pattern_template": 5,
-        "market_price": {
-          "lowest_price": 0.63,
-          "median_price": 0.63,
-          "volume": "141"
+          "volume": "1,793"
         }
       },
       {
@@ -1393,7 +1382,7 @@
         "pattern_template": 52,
         "market_price": {
           "lowest_price": 0.62,
-          "median_price": 0.62,
+          "median_price": 0.61,
           "volume": "165"
         }
       },
@@ -1413,9 +1402,9 @@
         "wear_rating": 0.18335071206092834,
         "pattern_template": 356,
         "market_price": {
-          "lowest_price": 0.61,
+          "lowest_price": 0.62,
           "median_price": 0.61,
-          "volume": "35"
+          "volume": "61"
         }
       },
       {
@@ -1434,9 +1423,30 @@
         "wear_rating": 0.09163495898246765,
         "pattern_template": 503,
         "market_price": {
-          "lowest_price": 0.57,
-          "median_price": 0.58,
-          "volume": "671"
+          "lowest_price": 0.55,
+          "median_price": 0.55,
+          "volume": "600"
+        }
+      },
+      {
+        "assetid": "35069285512",
+        "name": "G3SG1 | Orange Crash (Field-Tested)",
+        "type": "Mil-Spec Grade Sniper Rifle",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL2zYXnrB1I_82pO7dqcc-eB2uZ1ed3v_NoQS62qhAitzSQl8H9cynCaVJyA5N2TeIMsxK_lYDkZO_i4FOPiYoUzX74jXxBuyo_t7kAT-N7rXXSkQvV",
+        "weapon": "G3SG1",
+        "quality": "Normal",
+        "rarity": "Mil-Spec Grade",
+        "rarity_color": "4b69ff",
+        "exterior": "Field-Tested",
+        "wear_rating": 0.18157872557640076,
+        "pattern_template": 5,
+        "market_price": {
+          "lowest_price": 0.55,
+          "median_price": 0.56,
+          "volume": "54"
         }
       },
       {
@@ -1455,9 +1465,30 @@
         "wear_rating": 0.3377852141857147,
         "pattern_template": 316,
         "market_price": {
-          "lowest_price": 0.38,
-          "median_price": 0.38,
-          "volume": "235"
+          "lowest_price": 0.4,
+          "median_price": 0.46,
+          "volume": "283"
+        }
+      },
+      {
+        "assetid": "43451479325",
+        "name": "M4A4 | Choppa (Minimal Wear)",
+        "type": "Mil-Spec Grade Rifle",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8ypexwi8P7qaRb7ZoJf6sDWadztF6ueZhW2fjl05-6mzVmdmgcHOTZgIhXpJ1RO5c4Bjql9DjMunhsgOL34gUnnr-kGoXuTonsfJ3",
+        "weapon": "M4A4",
+        "quality": "Normal",
+        "rarity": "Mil-Spec Grade",
+        "rarity_color": "4b69ff",
+        "exterior": "Minimal Wear",
+        "wear_rating": 0.09349938482046127,
+        "pattern_template": 47,
+        "market_price": {
+          "lowest_price": 0.37,
+          "median_price": 0.37,
+          "volume": "402"
         }
       },
       {
@@ -1477,29 +1508,8 @@
         "pattern_template": 132,
         "market_price": {
           "lowest_price": 0.36,
-          "median_price": 0.37,
-          "volume": "191"
-        }
-      },
-      {
-        "assetid": "43451479325",
-        "name": "M4A4 | Choppa (Minimal Wear)",
-        "type": "Mil-Spec Grade Rifle",
-        "tradable": true,
-        "marketable": true,
-        "amount": "1",
-        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8ypexwi8P7qaRb7ZoJf6sDWadztF6ueZhW2fjl05-6mzVmdmgcHOTZgIhXpJ1RO5c4Bjql9DjMunhsgOL34gUnnr-kGoXuTonsfJ3",
-        "weapon": "M4A4",
-        "quality": "Normal",
-        "rarity": "Mil-Spec Grade",
-        "rarity_color": "4b69ff",
-        "exterior": "Minimal Wear",
-        "wear_rating": 0.09349938482046127,
-        "pattern_template": 47,
-        "market_price": {
-          "lowest_price": 0.36,
-          "median_price": 0.35,
-          "volume": "394"
+          "median_price": 0.36,
+          "volume": "202"
         }
       },
       {
@@ -1519,8 +1529,8 @@
         "pattern_template": 487,
         "market_price": {
           "lowest_price": 0.36,
-          "median_price": 0.23,
-          "volume": "23"
+          "median_price": 0.36,
+          "volume": "33"
         }
       },
       {
@@ -1539,9 +1549,9 @@
         "wear_rating": 0.24506813287734985,
         "pattern_template": 479,
         "market_price": {
-          "lowest_price": 0.31,
-          "median_price": 0.33,
-          "volume": "412"
+          "lowest_price": 0.32,
+          "median_price": 0.32,
+          "volume": "506"
         }
       },
       {
@@ -1560,9 +1570,9 @@
         "wear_rating": 0.02944563515484333,
         "pattern_template": 388,
         "market_price": {
-          "lowest_price": 0.29,
-          "median_price": 0.29,
-          "volume": "163"
+          "lowest_price": 0.26,
+          "median_price": 0.27,
+          "volume": "110"
         }
       },
       {
@@ -1581,30 +1591,9 @@
         "wear_rating": 0.10108128190040588,
         "pattern_template": 878,
         "market_price": {
-          "lowest_price": 0.25,
-          "median_price": 0.25,
-          "volume": "384"
-        }
-      },
-      {
-        "assetid": "32749893433",
-        "name": "StatTrak\u2122 MP5-SD | Desert Strike (Battle-Scarred)",
-        "type": "StatTrak\u2122 Mil-Spec Grade SMG",
-        "tradable": true,
-        "marketable": true,
-        "amount": "1",
-        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8jsPz-R1Y-s2jePFSJPWAC3WE_v1iouhiSha7kBwxqnPVyd_8JSnFZlUoDJV5ReZZtROwx9flYenlsQXdjIgWyS7-i3tB7i9v_a9cBnJnHnVf",
-        "weapon": "MP5-SD",
-        "quality": "StatTrak\u2122",
-        "rarity": "Mil-Spec Grade",
-        "rarity_color": "4b69ff",
-        "exterior": "Battle-Scarred",
-        "wear_rating": 0.5558942556381226,
-        "pattern_template": 185,
-        "market_price": {
           "lowest_price": 0.24,
-          "median_price": 0.21,
-          "volume": "4"
+          "median_price": 0.25,
+          "volume": "417"
         }
       },
       {
@@ -1623,9 +1612,30 @@
         "wear_rating": 0.02279149927198887,
         "pattern_template": 397,
         "market_price": {
-          "lowest_price": 0.2,
-          "median_price": 0.19,
-          "volume": "45"
+          "lowest_price": 0.24,
+          "median_price": 0.23,
+          "volume": "59"
+        }
+      },
+      {
+        "assetid": "32749893433",
+        "name": "StatTrak\u2122 MP5-SD | Desert Strike (Battle-Scarred)",
+        "type": "StatTrak\u2122 Mil-Spec Grade SMG",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8jsPz-R1Y-s2jePFSJPWAC3WE_v1iouhiSha7kBwxqnPVyd_8JSnFZlUoDJV5ReZZtROwx9flYenlsQXdjIgWyS7-i3tB7i9v_a9cBnJnHnVf",
+        "weapon": "MP5-SD",
+        "quality": "StatTrak\u2122",
+        "rarity": "Mil-Spec Grade",
+        "rarity_color": "4b69ff",
+        "exterior": "Battle-Scarred",
+        "wear_rating": 0.5558942556381226,
+        "pattern_template": 185,
+        "market_price": {
+          "lowest_price": 0.21,
+          "median_price": 0.2,
+          "volume": "3"
         }
       },
       {
@@ -1640,9 +1650,30 @@
         "rarity": "Base Grade",
         "rarity_color": "b0c3d9",
         "market_price": {
-          "lowest_price": 0.16,
-          "median_price": 0.16,
-          "volume": "169"
+          "lowest_price": 0.17,
+          "median_price": 0.18,
+          "volume": "137"
+        }
+      },
+      {
+        "assetid": "49396219709",
+        "name": "Galil AR | Green Apple (Minimal Wear)",
+        "type": "Industrial Grade Rifle",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL2n5rp8SNJ0OGhV6N_JfWdMWuZxuZi_rI5H3_iwR9_4GSHmNuhcinDPQQgWZd5QLEJuka6koK1Mu6z7wDf2YhbjXKp2JcVlJI",
+        "weapon": "Galil AR",
+        "quality": "Normal",
+        "rarity": "Industrial Grade",
+        "rarity_color": "5e98d9",
+        "exterior": "Minimal Wear",
+        "wear_rating": 0.08707085251808167,
+        "pattern_template": 471,
+        "market_price": {
+          "lowest_price": 0.14,
+          "median_price": 0.14,
+          "volume": "3,736"
         }
       },
       {
@@ -1662,29 +1693,8 @@
         "pattern_template": 747,
         "market_price": {
           "lowest_price": 0.14,
-          "median_price": 0.14,
-          "volume": "607"
-        }
-      },
-      {
-        "assetid": "49396219709",
-        "name": "Galil AR | Green Apple (Minimal Wear)",
-        "type": "Industrial Grade Rifle",
-        "tradable": true,
-        "marketable": true,
-        "amount": "1",
-        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL2n5rp8SNJ0OGhV6N_JfWdMWuZxuZi_rI5H3_iwR9_4GSHmNuhcinDPQQgWZd5QLEJuka6koK1Mu6z7wDf2YhbjXKp2JcVlJI",
-        "weapon": "Galil AR",
-        "quality": "Normal",
-        "rarity": "Industrial Grade",
-        "rarity_color": "5e98d9",
-        "exterior": "Minimal Wear",
-        "wear_rating": 0.08707085251808167,
-        "pattern_template": 471,
-        "market_price": {
-          "lowest_price": 0.13,
           "median_price": 0.13,
-          "volume": "2,659"
+          "volume": "627"
         }
       },
       {
@@ -1704,8 +1714,8 @@
         "pattern_template": 135,
         "market_price": {
           "lowest_price": 0.13,
-          "median_price": 0.14,
-          "volume": "704"
+          "median_price": 0.13,
+          "volume": "742"
         }
       },
       {
@@ -1724,9 +1734,9 @@
         "wear_rating": 0.44792619347572327,
         "pattern_template": 638,
         "market_price": {
-          "lowest_price": 0.12,
+          "lowest_price": 0.13,
           "median_price": 0.1,
-          "volume": "443"
+          "volume": "370"
         }
       },
       {
@@ -1746,8 +1756,8 @@
         "pattern_template": 848,
         "market_price": {
           "lowest_price": 0.11,
-          "median_price": 0.1,
-          "volume": "59"
+          "median_price": 0.12,
+          "volume": "98"
         }
       },
       {
@@ -1768,7 +1778,7 @@
         "market_price": {
           "lowest_price": 0.11,
           "median_price": 0.11,
-          "volume": "1,054"
+          "volume": "1,209"
         }
       },
       {
@@ -1783,9 +1793,9 @@
         "rarity": "Base Grade",
         "rarity_color": "b0c3d9",
         "market_price": {
-          "lowest_price": 0.1,
-          "median_price": 0.14,
-          "volume": "133"
+          "lowest_price": 0.09,
+          "median_price": 0.1,
+          "volume": "178"
         }
       },
       {
@@ -1806,24 +1816,7 @@
         "market_price": {
           "lowest_price": 0.05,
           "median_price": 0.05,
-          "volume": "78"
-        }
-      },
-      {
-        "assetid": "32924433817",
-        "name": "Sealed Graffiti | Toasted (Monster Purple)",
-        "type": "Base Grade Graffiti",
-        "tradable": true,
-        "marketable": true,
-        "amount": "1",
-        "image_url": "https://community.akamai.steamstatic.com/economy/image/IzMF03bi9WpSBq-S-ekoE33L-iLqGFHVaU25ZzQNQcXdB2ozio1RrlIWFK3UfvMYB8UsvjiMXojflsZalyxSh31CIyHz2GZ-KuFpPsrTzBG0rO2BBTqgPGPGLHSKTQ0_H-ZZNjyP-Tb0sLmUFmvPRLl5S1gHfKVQ-zJMPJuAIVJjg5FYpGm3hUloEgIhYslfLVm-nnJKN-AvsM1r",
-        "quality": "Normal",
-        "rarity": "Base Grade",
-        "rarity_color": "b0c3d9",
-        "market_price": {
-          "lowest_price": 0.05,
-          "median_price": 0.05,
-          "volume": "67"
+          "volume": "96"
         }
       },
       {
@@ -1840,7 +1833,7 @@
         "market_price": {
           "lowest_price": 0.04,
           "median_price": 0.04,
-          "volume": "24"
+          "volume": "31"
         }
       },
       {
@@ -1857,7 +1850,7 @@
         "market_price": {
           "lowest_price": 0.04,
           "median_price": 0.04,
-          "volume": "16"
+          "volume": "22"
         }
       },
       {
@@ -1874,7 +1867,7 @@
         "market_price": {
           "lowest_price": 0.04,
           "median_price": 0.04,
-          "volume": "17"
+          "volume": "18"
         }
       },
       {
@@ -1891,7 +1884,7 @@
         "market_price": {
           "lowest_price": 0.04,
           "median_price": 0.04,
-          "volume": "26"
+          "volume": "7"
         }
       },
       {
@@ -1908,7 +1901,7 @@
         "market_price": {
           "lowest_price": 0.04,
           "median_price": 0.04,
-          "volume": "13"
+          "volume": "11"
         }
       },
       {
@@ -1925,7 +1918,24 @@
         "market_price": {
           "lowest_price": 0.04,
           "median_price": 0.04,
-          "volume": "31"
+          "volume": "12"
+        }
+      },
+      {
+        "assetid": "32924433817",
+        "name": "Sealed Graffiti | Toasted (Monster Purple)",
+        "type": "Base Grade Graffiti",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/IzMF03bi9WpSBq-S-ekoE33L-iLqGFHVaU25ZzQNQcXdB2ozio1RrlIWFK3UfvMYB8UsvjiMXojflsZalyxSh31CIyHz2GZ-KuFpPsrTzBG0rO2BBTqgPGPGLHSKTQ0_H-ZZNjyP-Tb0sLmUFmvPRLl5S1gHfKVQ-zJMPJuAIVJjg5FYpGm3hUloEgIhYslfLVm-nnJKN-AvsM1r",
+        "quality": "Normal",
+        "rarity": "Base Grade",
+        "rarity_color": "b0c3d9",
+        "market_price": {
+          "lowest_price": 0.04,
+          "median_price": 0.05,
+          "volume": "47"
         }
       },
       {
@@ -1942,7 +1952,7 @@
         "market_price": {
           "lowest_price": 0.04,
           "median_price": 0.04,
-          "volume": "18"
+          "volume": "9"
         }
       },
       {
@@ -1958,8 +1968,8 @@
         "rarity_color": "b0c3d9",
         "market_price": {
           "lowest_price": 0.04,
-          "median_price": 0.04,
-          "volume": "40"
+          "median_price": 0.03,
+          "volume": "21"
         }
       },
       {
@@ -1979,8 +1989,8 @@
         "pattern_template": 566,
         "market_price": {
           "lowest_price": 0.03,
-          "median_price": 0.04,
-          "volume": "441"
+          "median_price": 0.03,
+          "volume": "432"
         }
       },
       {
@@ -1997,7 +2007,7 @@
         "market_price": {
           "lowest_price": 0.03,
           "median_price": 0.04,
-          "volume": "444"
+          "volume": "424"
         }
       },
       {
@@ -2013,8 +2023,8 @@
         "rarity_color": "8847ff",
         "market_price": {
           "lowest_price": 0.03,
-          "median_price": 0.04,
-          "volume": "565"
+          "median_price": 0.03,
+          "volume": "637"
         }
       },
       {
@@ -2031,7 +2041,7 @@
         "market_price": {
           "lowest_price": 0.03,
           "median_price": 0.04,
-          "volume": "723"
+          "volume": "705"
         }
       },
       {
@@ -2048,7 +2058,7 @@
         "market_price": {
           "lowest_price": 0.03,
           "median_price": 0.04,
-          "volume": "594"
+          "volume": "608"
         }
       },
       {
@@ -2251,7 +2261,17 @@
       }
     ],
     "total_items": 74,
-    "estimated_value": 130.05
+    "estimated_value": 129.69,
+    "profile": {
+      "avatar_url": "https://avatars.steamstatic.com/7d2e0873d3009d7be51fc5deb1f9a1a4f3ac401d_full.jpg",
+      "profile_url": "https://steamcommunity.com/profiles/76561199199624887/",
+      "persona_state": 0,
+      "persona_state_text": "Offline",
+      "time_created": 1629160517,
+      "country_code": "US",
+      "real_name": "Ringo",
+      "game_name": ""
+    }
   },
   "76561199090094051": {
     "username": "JIGGLES",
@@ -2272,9 +2292,9 @@
         "wear_rating": 0.13821183145046234,
         "pattern_template": 379,
         "market_price": {
-          "lowest_price": 566.58,
-          "median_price": 559.78,
-          "volume": "1"
+          "lowest_price": 567.73,
+          "median_price": null,
+          "volume": null
         }
       },
       {
@@ -2292,9 +2312,9 @@
         "wear_rating": 0.4284733235836029,
         "pattern_template": 170,
         "market_price": {
-          "lowest_price": 373.63,
+          "lowest_price": 373.79,
           "median_price": 306.61,
-          "volume": "3"
+          "volume": "1"
         }
       },
       {
@@ -2309,9 +2329,9 @@
         "rarity": "High Grade",
         "rarity_color": "4b69ff",
         "market_price": {
-          "lowest_price": 34.61,
-          "median_price": 34.61,
-          "volume": "11"
+          "lowest_price": 35.99,
+          "median_price": 34.47,
+          "volume": "7"
         }
       },
       {
@@ -2330,9 +2350,9 @@
         "wear_rating": 0.06960813701152802,
         "pattern_template": 647,
         "market_price": {
-          "lowest_price": 34.35,
-          "median_price": 35.35,
-          "volume": "9"
+          "lowest_price": 34.21,
+          "median_price": 33.01,
+          "volume": "6"
         }
       },
       {
@@ -2351,9 +2371,9 @@
         "wear_rating": 0.02713681384921074,
         "pattern_template": 930,
         "market_price": {
-          "lowest_price": 34.04,
-          "median_price": 29.99,
-          "volume": "9"
+          "lowest_price": 32.91,
+          "median_price": 32.5,
+          "volume": "11"
         }
       },
       {
@@ -2372,9 +2392,9 @@
         "wear_rating": 0.1480037420988083,
         "pattern_template": 59,
         "market_price": {
-          "lowest_price": 21.18,
-          "median_price": 21.25,
-          "volume": "154"
+          "lowest_price": 22.22,
+          "median_price": 20.91,
+          "volume": "182"
         }
       },
       {
@@ -2393,9 +2413,9 @@
         "wear_rating": 0.14815621078014374,
         "pattern_template": 604,
         "market_price": {
-          "lowest_price": 15.55,
-          "median_price": 14.74,
-          "volume": "236"
+          "lowest_price": 14.81,
+          "median_price": 15.16,
+          "volume": "256"
         }
       },
       {
@@ -2414,9 +2434,9 @@
         "wear_rating": 0.23911766707897186,
         "pattern_template": 764,
         "market_price": {
-          "lowest_price": 11.54,
-          "median_price": 14.97,
-          "volume": "67"
+          "lowest_price": 12.84,
+          "median_price": 12.32,
+          "volume": "75"
         }
       },
       {
@@ -2435,9 +2455,9 @@
         "wear_rating": 0.04046078026294708,
         "pattern_template": 604,
         "market_price": {
-          "lowest_price": 7.47,
-          "median_price": 7.62,
-          "volume": "2"
+          "lowest_price": 7.37,
+          "median_price": 7.38,
+          "volume": "1"
         }
       },
       {
@@ -2456,9 +2476,9 @@
         "wear_rating": 0.36532020568847656,
         "pattern_template": 847,
         "market_price": {
-          "lowest_price": 5.09,
-          "median_price": 5.1,
-          "volume": "33"
+          "lowest_price": 5.07,
+          "median_price": 4.94,
+          "volume": "48"
         }
       },
       {
@@ -2477,9 +2497,9 @@
         "wear_rating": 0.1000937893986702,
         "pattern_template": 673,
         "market_price": {
-          "lowest_price": 4.62,
-          "median_price": 4.6,
-          "volume": "73"
+          "lowest_price": 4.44,
+          "median_price": 4.4,
+          "volume": "71"
         }
       },
       {
@@ -2498,9 +2518,9 @@
         "wear_rating": 0.08163782954216003,
         "pattern_template": 74,
         "market_price": {
-          "lowest_price": 2.72,
-          "median_price": 4.0,
-          "volume": "6"
+          "lowest_price": 2.91,
+          "median_price": 2.76,
+          "volume": "10"
         }
       },
       {
@@ -2519,9 +2539,9 @@
         "wear_rating": 0.11437668651342392,
         "pattern_template": 579,
         "market_price": {
-          "lowest_price": 2.56,
-          "median_price": 2.57,
-          "volume": "21"
+          "lowest_price": 2.67,
+          "median_price": 2.6,
+          "volume": "20"
         }
       },
       {
@@ -2540,9 +2560,9 @@
         "wear_rating": 0.0985848531126976,
         "pattern_template": 118,
         "market_price": {
-          "lowest_price": 1.78,
-          "median_price": 1.7,
-          "volume": "388"
+          "lowest_price": 1.95,
+          "median_price": 1.89,
+          "volume": "440"
         }
       },
       {
@@ -2562,46 +2582,8 @@
         "pattern_template": 349,
         "market_price": {
           "lowest_price": 1.68,
-          "median_price": 1.67,
-          "volume": "138"
-        }
-      },
-      {
-        "assetid": "49862043236",
-        "name": "StatTrak\u2122 Music Kit | Hundredth, FREE",
-        "type": "StatTrak\u2122 High Grade Music Kit",
-        "tradable": true,
-        "marketable": true,
-        "amount": "1",
-        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIijyEKzb_3d19nuPW6Z4URw8JP81Qm2DxunzsWypXcL7qD4bf1vcfaXDT6Vmbol5eA8GH3hzU8l4WrSw92udXyJLlh3C_9f1qc",
-        "quality": "StatTrak\u2122",
-        "rarity": "High Grade",
-        "rarity_color": "4b69ff",
-        "market_price": {
-          "lowest_price": 1.44,
-          "median_price": 1.41,
-          "volume": "91"
-        }
-      },
-      {
-        "assetid": "49691422205",
-        "name": "MP9 | Goo (Field-Tested)",
-        "type": "Restricted SMG",
-        "tradable": true,
-        "marketable": true,
-        "amount": "1",
-        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8js_f_jdk4uL3V6NiL8-eC2OZ1OM4srloF3DjwE4m6j6BzIr8JXuRb1BxDcEjRbIMsxXrm9buN-Lk5QXXjJUFk3vJsJCGkg",
-        "weapon": "MP9",
-        "quality": "Normal",
-        "rarity": "Restricted",
-        "rarity_color": "8847ff",
-        "exterior": "Field-Tested",
-        "wear_rating": 0.15162408351898193,
-        "pattern_template": 129,
-        "market_price": {
-          "lowest_price": 1.32,
-          "median_price": 1.33,
-          "volume": "126"
+          "median_price": 1.77,
+          "volume": "180"
         }
       },
       {
@@ -2620,9 +2602,47 @@
         "wear_rating": 0.42409712076187134,
         "pattern_template": 809,
         "market_price": {
-          "lowest_price": 1.31,
-          "median_price": 1.29,
-          "volume": "7"
+          "lowest_price": 1.43,
+          "median_price": 1.38,
+          "volume": "13"
+        }
+      },
+      {
+        "assetid": "49862043236",
+        "name": "StatTrak\u2122 Music Kit | Hundredth, FREE",
+        "type": "StatTrak\u2122 High Grade Music Kit",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIijyEKzb_3d19nuPW6Z4URw8JP81Qm2DxunzsWypXcL7qD4bf1vcfaXDT6Vmbol5eA8GH3hzU8l4WrSw92udXyJLlh3C_9f1qc",
+        "quality": "StatTrak\u2122",
+        "rarity": "High Grade",
+        "rarity_color": "4b69ff",
+        "market_price": {
+          "lowest_price": 1.41,
+          "median_price": 1.4,
+          "volume": "75"
+        }
+      },
+      {
+        "assetid": "49691422205",
+        "name": "MP9 | Goo (Field-Tested)",
+        "type": "Restricted SMG",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8js_f_jdk4uL3V6NiL8-eC2OZ1OM4srloF3DjwE4m6j6BzIr8JXuRb1BxDcEjRbIMsxXrm9buN-Lk5QXXjJUFk3vJsJCGkg",
+        "weapon": "MP9",
+        "quality": "Normal",
+        "rarity": "Restricted",
+        "rarity_color": "8847ff",
+        "exterior": "Field-Tested",
+        "wear_rating": 0.15162408351898193,
+        "pattern_template": 129,
+        "market_price": {
+          "lowest_price": 1.41,
+          "median_price": 1.18,
+          "volume": "118"
         }
       },
       {
@@ -2641,9 +2661,9 @@
         "wear_rating": 0.3633635938167572,
         "pattern_template": 291,
         "market_price": {
-          "lowest_price": 1.08,
-          "median_price": 1.04,
-          "volume": "81"
+          "lowest_price": 1.21,
+          "median_price": 1.15,
+          "volume": "106"
         }
       },
       {
@@ -2662,9 +2682,9 @@
         "wear_rating": 0.26251548528671265,
         "pattern_template": 994,
         "market_price": {
-          "lowest_price": 1.0,
-          "median_price": 1.01,
-          "volume": "1,644"
+          "lowest_price": 1.05,
+          "median_price": 1.04,
+          "volume": "1,608"
         }
       },
       {
@@ -2684,8 +2704,8 @@
         "pattern_template": 478,
         "market_price": {
           "lowest_price": 0.72,
-          "median_price": 0.72,
-          "volume": "634"
+          "median_price": 0.71,
+          "volume": "646"
         }
       },
       {
@@ -2705,8 +2725,8 @@
         "pattern_template": 946,
         "market_price": {
           "lowest_price": 0.43,
-          "median_price": 0.44,
-          "volume": "172"
+          "median_price": 0.38,
+          "volume": "145"
         }
       },
       {
@@ -2725,9 +2745,9 @@
         "wear_rating": 0.060418542474508286,
         "pattern_template": 672,
         "market_price": {
-          "lowest_price": 0.19,
-          "median_price": 0.18,
-          "volume": "144"
+          "lowest_price": 0.2,
+          "median_price": 0.2,
+          "volume": "198"
         }
       },
       {
@@ -2746,9 +2766,30 @@
         "wear_rating": 0.11861812323331833,
         "pattern_template": 56,
         "market_price": {
-          "lowest_price": 0.17,
-          "median_price": 0.14,
-          "volume": "195"
+          "lowest_price": 0.16,
+          "median_price": 0.18,
+          "volume": "210"
+        }
+      },
+      {
+        "assetid": "31835163154",
+        "name": "Souvenir SG 553 | Bleached (Factory New)",
+        "type": "Souvenir Consumer Grade Rifle",
+        "tradable": true,
+        "marketable": true,
+        "amount": "1",
+        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLimcO1qx1I_82qbbdoMuSsHWyFzeJlj-1gSCGn20Uk5WTSytmqJH6XbwMoA8RyRuBY4Ea6kNC2Y-Oz7gbc3o9HxS2r2n5XrnE8gS50bog",
+        "weapon": "SG 553",
+        "quality": "Souvenir",
+        "rarity": "Consumer Grade",
+        "rarity_color": "b0c3d9",
+        "exterior": "Factory New",
+        "wear_rating": 0.06303976476192474,
+        "pattern_template": 406,
+        "market_price": {
+          "lowest_price": 0.06,
+          "median_price": 0.05,
+          "volume": "168"
         }
       },
       {
@@ -2767,9 +2808,9 @@
         "wear_rating": 0.21020139753818512,
         "pattern_template": 977,
         "market_price": {
-          "lowest_price": 0.07,
+          "lowest_price": 0.06,
           "median_price": 0.07,
-          "volume": "374"
+          "volume": "427"
         }
       },
       {
@@ -2788,9 +2829,9 @@
         "wear_rating": 0.6240149736404419,
         "pattern_template": 477,
         "market_price": {
-          "lowest_price": 0.06,
-          "median_price": 0.05,
-          "volume": "37"
+          "lowest_price": 0.05,
+          "median_price": 0.06,
+          "volume": "85"
         }
       },
       {
@@ -2810,8 +2851,8 @@
         "pattern_template": 104,
         "market_price": {
           "lowest_price": 0.04,
-          "median_price": 0.03,
-          "volume": "346"
+          "median_price": 0.05,
+          "volume": "259"
         }
       },
       {
@@ -2832,7 +2873,7 @@
         "market_price": {
           "lowest_price": 0.04,
           "median_price": 0.04,
-          "volume": "295"
+          "volume": "690"
         }
       },
       {
@@ -2848,29 +2889,8 @@
         "rarity_color": "b0c3d9",
         "market_price": {
           "lowest_price": 0.04,
-          "median_price": 0.04,
-          "volume": "19"
-        }
-      },
-      {
-        "assetid": "31835163154",
-        "name": "Souvenir SG 553 | Bleached (Factory New)",
-        "type": "Souvenir Consumer Grade Rifle",
-        "tradable": true,
-        "marketable": true,
-        "amount": "1",
-        "image_url": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLimcO1qx1I_82qbbdoMuSsHWyFzeJlj-1gSCGn20Uk5WTSytmqJH6XbwMoA8RyRuBY4Ea6kNC2Y-Oz7gbc3o9HxS2r2n5XrnE8gS50bog",
-        "weapon": "SG 553",
-        "quality": "Souvenir",
-        "rarity": "Consumer Grade",
-        "rarity_color": "b0c3d9",
-        "exterior": "Factory New",
-        "wear_rating": 0.06303976476192474,
-        "pattern_template": 406,
-        "market_price": {
-          "lowest_price": 0.04,
-          "median_price": 0.06,
-          "volume": "167"
+          "median_price": 0.05,
+          "volume": "26"
         }
       },
       {
@@ -2907,8 +2927,8 @@
         "pattern_template": 51,
         "market_price": {
           "lowest_price": 0.03,
-          "median_price": 0.04,
-          "volume": "708"
+          "median_price": 0.03,
+          "volume": "895"
         }
       },
       {
@@ -2929,7 +2949,7 @@
         "market_price": {
           "lowest_price": 0.03,
           "median_price": 0.04,
-          "volume": "194"
+          "volume": "302"
         }
       },
       {
@@ -2949,8 +2969,8 @@
         "pattern_template": 535,
         "market_price": {
           "lowest_price": 0.03,
-          "median_price": 0.07,
-          "volume": "935"
+          "median_price": 0.04,
+          "volume": "378"
         }
       },
       {
@@ -2971,7 +2991,7 @@
         "market_price": {
           "lowest_price": 0.03,
           "median_price": 0.04,
-          "volume": "109"
+          "volume": "112"
         }
       },
       {
@@ -2991,8 +3011,8 @@
         "pattern_template": 749,
         "market_price": {
           "lowest_price": 0.03,
-          "median_price": 0.04,
-          "volume": "2,325"
+          "median_price": 0.03,
+          "volume": "771"
         }
       },
       {
@@ -3013,7 +3033,7 @@
         "market_price": {
           "lowest_price": 0.03,
           "median_price": 0.04,
-          "volume": "106"
+          "volume": "65"
         }
       },
       {
@@ -3033,8 +3053,8 @@
         "pattern_template": 602,
         "market_price": {
           "lowest_price": 0.03,
-          "median_price": 0.04,
-          "volume": "145"
+          "median_price": 0.03,
+          "volume": "112"
         }
       },
       {
@@ -3051,7 +3071,7 @@
         "market_price": {
           "lowest_price": 0.03,
           "median_price": 0.04,
-          "volume": "80"
+          "volume": "31"
         }
       },
       {
@@ -3068,7 +3088,7 @@
         "market_price": {
           "lowest_price": 0.03,
           "median_price": 0.04,
-          "volume": "80"
+          "volume": "31"
         }
       },
       {
@@ -3121,6 +3141,16 @@
       }
     ],
     "total_items": 44,
-    "estimated_value": 1125.66
+    "estimated_value": 1129.21,
+    "profile": {
+      "avatar_url": "https://avatars.steamstatic.com/a00b9231305d73e47676d55f09f5b7a24c9e4d13_full.jpg",
+      "profile_url": "https://steamcommunity.com/profiles/76561199090094051/",
+      "persona_state": 1,
+      "persona_state_text": "Online",
+      "time_created": 1599857907,
+      "country_code": "IR",
+      "real_name": "",
+      "game_name": ""
+    }
   }
 }

@@ -11,6 +11,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 STEAM_ID = os.getenv("STEAM_ID")
+STEAM_API_KEY = os.getenv("STEAM_API_KEY", "")
 
 DEFAULT_STEAM_IDS = [STEAM_ID]
 APP_ID = 730      # CS2
@@ -30,6 +31,14 @@ HEADERS = {
 }
 
 
+PLAYER_SUMMARIES_URL = "https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/"
+
+PERSONA_STATES = {
+    0: "Offline", 1: "Online", 2: "Busy",
+    3: "Away", 4: "Snooze", 5: "Looking to Trade", 6: "Looking to Play",
+}
+
+
 def fetch_username(steam_id):
     """Fetch the display name for a Steam ID from their profile page."""
     try:
@@ -41,6 +50,40 @@ def fetch_username(steam_id):
     except Exception:
         pass
     return None
+
+
+def fetch_player_summaries(steam_ids):
+    """Fetch rich profile data via Steam Web API (requires STEAM_API_KEY).
+
+    Returns a dict of steam_id -> profile info, or {} if no API key.
+    """
+    if not STEAM_API_KEY:
+        return {}
+    try:
+        params = {"key": STEAM_API_KEY, "steamids": ",".join(steam_ids)}
+        resp = requests.get(PLAYER_SUMMARIES_URL, params=params, headers=HEADERS, timeout=10)
+        if not resp.ok:
+            print(f"  ⚠️ Steam API returned HTTP {resp.status_code} — skipping profile enrichment.")
+            return {}
+        data = resp.json()
+        result = {}
+        for player in data.get("response", {}).get("players", []):
+            sid = player.get("steamid", "")
+            state = player.get("personastate", 0)
+            result[sid] = {
+                "avatar_url": player.get("avatarfull", ""),
+                "profile_url": player.get("profileurl", ""),
+                "persona_state": state,
+                "persona_state_text": PERSONA_STATES.get(state, "Offline"),
+                "time_created": player.get("timecreated"),
+                "country_code": player.get("loccountrycode", ""),
+                "real_name": player.get("realname", ""),
+                "game_name": player.get("gameextrainfo", ""),
+            }
+        return result
+    except Exception as e:
+        print(f"  ⚠️ Failed to fetch player summaries: {e}")
+        return {}
 
 
 def fetch_inventory(steam_id):
@@ -281,6 +324,11 @@ def main():
 
     print(f"Processing {len(steam_ids)} profile(s)...\n")
 
+    # Fetch rich profile data via Steam API (if key is available)
+    player_summaries = fetch_player_summaries(steam_ids)
+    if player_summaries:
+        print(f"  ✅ Fetched profile data for {len(player_summaries)} player(s) via Steam API.\n")
+
     all_profiles = {}  # steam_id -> {items, total_value}
     price_cache = {}   # shared across profiles to avoid redundant lookups
     grand_total = 0.0
@@ -317,12 +365,16 @@ def main():
         profile_value = print_profile_summary(steam_id, items)
         grand_total += profile_value
 
-        all_profiles[steam_id] = {
+        profile_data = {
             "username": username,
             "items": items,
             "total_items": len(items),
             "estimated_value": round(profile_value, 2),
         }
+        # Merge in rich profile data from Steam API
+        if steam_id in player_summaries:
+            profile_data["profile"] = player_summaries[steam_id]
+        all_profiles[steam_id] = profile_data
         print()
 
     # Grand total

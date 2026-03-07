@@ -343,19 +343,61 @@ def generate_item_card(item):
 </div>"""
 
 
+def _profile_extra_html(steam_id, profile):
+    """Build optional HTML for enriched profile data (avatar, status, etc.)."""
+    p = profile.get("profile", {})
+    if not p:
+        return "", ""
+    avatar = p.get("avatar_url", "")
+    url = p.get("profile_url", "")
+    state = p.get("persona_state_text", "Offline")
+    state_cls = "online" if p.get("persona_state", 0) in (1, 5, 6) else "offline"
+    game = p.get("game_name", "")
+    country = p.get("country_code", "")
+    created = p.get("time_created")
+    age_str = ""
+    if created:
+        from datetime import datetime, timezone
+        dt = datetime.fromtimestamp(created, tz=timezone.utc)
+        years = round((datetime.now(timezone.utc) - dt).days / 365.25, 1)
+        age_str = f'<span>Account Age: <b>{years} yrs</b> (since {dt.strftime("%b %Y")})</span>'
+    avatar_html = (
+        f'<a href="{url}" target="_blank" class="profile-avatar-link">'
+        f'<img src="{avatar}" class="profile-avatar" alt="" />'
+        f'<span class="status-dot {state_cls}"></span></a>'
+    ) if avatar else ""
+    extra_meta = ""
+    if game:
+        extra_meta += f'<span class="in-game">🎮 In-Game: <b>{game}</b></span>'
+    elif state:
+        extra_meta += f'<span class="persona-state {state_cls}">● {state}</span>'
+    if country:
+        extra_meta += f'<span>🌍 {country}</span>'
+    if age_str:
+        extra_meta += age_str
+    if url:
+        extra_meta += f'<a href="{url}" target="_blank" class="profile-link">View Profile ↗</a>'
+    return avatar_html, extra_meta
+
+
 def generate_profile_section(steam_id, profile, rank):
     username = profile.get("username") or steam_id
     items = profile.get("items", [])
     total_value = profile.get("estimated_value", 0)
     error = profile.get("error")
+    avatar_html, extra_meta = _profile_extra_html(steam_id, profile)
 
     section = f"""<section class="profile-section" data-steam-id="{steam_id}">
     <div class="profile-header">
-        <h2>{'⚠️' if error else '👤'} {username}</h2>
-        <div class="profile-meta">
-            <span>Steam ID: <code>{steam_id}</code></span>
-            <span>Items: <b>{len(items)}</b></span>
-            <span>Estimated Value: <b class="accent-green">{format_price(total_value)}</b></span>
+        {avatar_html}
+        <div class="profile-header-info">
+            <h2>{'⚠️' if error else ''} {username}</h2>
+            <div class="profile-meta">
+                <span>Steam ID: <code>{steam_id}</code></span>
+                <span>Items: <b>{len(items)}</b></span>
+                <span>Estimated Value: <b class="accent-green">{format_price(total_value)}</b></span>
+                {extra_meta}
+            </div>
         </div>
     </div>"""
 
@@ -442,7 +484,10 @@ def build_inventory_content(data):
             uname = prof.get("username") or sid
             val = prof.get("estimated_value", 0)
             count = prof.get("total_items", len(prof.get("items", [])))
+            avatar = prof.get("profile", {}).get("avatar_url", "")
+            av_tag = f'<img src="{avatar}" class="lb-avatar" alt="" />' if avatar else ''
             rows += (f'<div class="leaderboard-row"><span class="medal">{medal}</span>'
+                     f'{av_tag}'
                      f'<span class="lb-name">{uname}</span>'
                      f'<span class="lb-value">{format_price(val)}</span>'
                      f'<span class="lb-count">{count} items</span></div>')
@@ -569,10 +614,29 @@ def generate_dashboard(data, price_data, input_file, portfolio_history=None,
     inventory_content = build_inventory_content(data)
     charts_content = build_charts_content()
 
-    # Build account selector options HTML
-    account_options = '<option value="all">All Accounts</option>'
-    for sid, uname in profiles_meta.items():
-        account_options += f'<option value="{sid}">{uname}</option>'
+    # Build account switcher HTML (avatar buttons instead of <select>)
+    profiles_extra = {}
+    for sid, prof in data.items():
+        profiles_extra[sid] = prof.get("profile", {})
+    profiles_extra_json = json.dumps(profiles_extra)
+
+    account_switcher_items = ''
+    for sid in data:
+        uname = profiles_meta.get(sid, sid)
+        avatar = data[sid].get("profile", {}).get("avatar_url", "")
+        state = data[sid].get("profile", {}).get("persona_state", 0)
+        state_cls = "online" if state in (1, 5, 6) else "offline"
+        if avatar:
+            account_switcher_items += (
+                f'<button class="acct-btn" data-account="{sid}" title="{uname}">'
+                f'<img src="{avatar}" alt="{uname}" />'
+                f'<span class="acct-dot {state_cls}"></span></button>'
+            )
+        else:
+            account_switcher_items += (
+                f'<button class="acct-btn" data-account="{sid}" title="{uname}">'
+                f'<span class="acct-initial">{uname[0].upper()}</span></button>'
+            )
 
     html = f"""<!DOCTYPE html>
 <html lang="en">
@@ -628,19 +692,103 @@ def generate_dashboard(data, price_data, input_file, portfolio_history=None,
     align-items: center;
     gap: 16px;
   }}
-  #accountSelect {{
-    background: var(--card-bg);
-    color: #fff;
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 6px 12px;
-    font-size: 0.85em;
-    cursor: pointer;
-    outline: none;
-    transition: border-color 0.2s;
+  /* ── Account Switcher (avatar buttons) ── */
+  .acct-switcher {{
+    display: flex;
+    align-items: center;
+    gap: 6px;
   }}
-  #accountSelect:hover, #accountSelect:focus {{
+  .acct-btn {{
+    position: relative;
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    background: var(--card-bg);
+    cursor: pointer;
+    padding: 0;
+    overflow: hidden;
+    transition: all 0.2s;
+    color: #8f98a0;
+    font-size: 0.65em;
+    font-weight: 700;
+  }}
+  .acct-btn img {{
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+  }}
+  .acct-btn:hover {{
     border-color: var(--accent);
+    transform: scale(1.1);
+  }}
+  .acct-btn.active {{
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px rgba(102,192,244,0.3);
+  }}
+  .acct-btn.acct-all {{
+    font-size: 0.6em;
+    font-weight: 800;
+    color: #8f98a0;
+    letter-spacing: 0.03em;
+  }}
+  .acct-btn.acct-all.active {{ color: var(--accent); }}
+  .acct-dot, .status-dot {{
+    position: absolute;
+    bottom: 0; right: 0;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    border: 2px solid var(--header-bg);
+  }}
+  .acct-dot.online, .status-dot.online {{ background: #a4d007; }}
+  .acct-dot.offline, .status-dot.offline {{ background: #8f98a0; }}
+  .acct-initial {{
+    display: flex; align-items: center; justify-content: center;
+    width: 100%; height: 100%;
+    font-size: 1.6em;
+    color: #c6d4df;
+  }}
+
+  /* ── Enriched profile header ── */
+  .profile-header {{
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }}
+  .profile-avatar-link {{
+    position: relative;
+    flex-shrink: 0;
+  }}
+  .profile-avatar {{
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    object-fit: cover;
+  }}
+  .profile-header-info {{ flex: 1; min-width: 0; }}
+  .profile-meta {{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    align-items: center;
+    font-size: 0.85em;
+    color: #8f98a0;
+    margin-top: 4px;
+  }}
+  .persona-state.online {{ color: #a4d007; }}
+  .in-game {{ color: #90ba3c; }}
+  .profile-link {{
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 0.85em;
+  }}
+  .profile-link:hover {{ text-decoration: underline; }}
+  .lb-avatar {{
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid var(--border);
+    vertical-align: middle;
+    margin-right: 4px;
   }}
   .tab-nav {{
     display: flex;
@@ -1063,7 +1211,10 @@ def generate_dashboard(data, price_data, input_file, portfolio_history=None,
   <div class="header-top">
     <h1>🎮 CS2 Dashboard</h1>
     <div class="header-right">
-      <select id="accountSelect">{account_options}</select>
+      <div class="acct-switcher" id="accountSwitcher">
+        <button class="acct-btn acct-all active" data-account="all" title="All Accounts">ALL</button>
+        {account_switcher_items}
+      </div>
       <span class="timestamp">Generated on {now}</span>
     </div>
   </div>
@@ -1204,9 +1355,13 @@ document.querySelectorAll('.tab-nav button').forEach(btn => {{
 // ═══════════════════════════════════════════════════════════════════
 //  Account switcher
 // ═══════════════════════════════════════════════════════════════════
-document.getElementById('accountSelect').addEventListener('change', e => {{
-  currentAccount = e.target.value;
+function switchAccount(acctKey) {{
+  currentAccount = acctKey;
   const ad = getAccountData();
+
+  // Update active button
+  document.querySelectorAll('.acct-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('.acct-btn[data-account="' + acctKey + '"]').classList.add('active');
 
   // Update active data references
   ITEMS         = ad.charts;
@@ -1270,6 +1425,10 @@ document.getElementById('accountSelect').addEventListener('change', e => {{
     predictionsInitialized = false;
     initPredictions();
   }}
+}}
+
+document.querySelectorAll('.acct-btn').forEach(btn => {{
+  btn.addEventListener('click', () => switchAccount(btn.dataset.account));
 }});
 
 // ═══════════════════════════════════════════════════════════════════
