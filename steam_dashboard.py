@@ -1222,7 +1222,8 @@ def generate_dashboard(data, price_data, input_file, portfolio_history=None,
 
 <header>
   <div class="header-top">
-    <h1>🎮 CS2 Dashboard</h1>
+    <h1>▄︻テ══━一💥CS2 Capital Management LLC</h1>
+    <p>You call it gambling. We call it researching asymmetric payoff structures.</p>
     <div class="header-right">
       <div class="acct-switcher" id="accountSwitcher">
         <button class="acct-btn acct-all active" data-account="all" title="All Accounts">ALL</button>
